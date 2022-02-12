@@ -80,7 +80,8 @@ class Client:
         :class:`list` of :class:`.Item`
         """
 
-        params = {"app_id": app_id, "currency": currency, "tradable": tradable}
+        _tradable = str(tradable).lower()
+        params = {"app_id": app_id, "currency": currency, "tradable": _tradable}
         data = await self.http.get_items(params=params)
         return [Item(data=item) for item in data]
 
@@ -136,4 +137,8 @@ class Client:
         """
         params = {"page": page, "limit": limit, "order": order}
         data = await self.http.get_account_transactions(params=params)
-        return [Transaction(data=transaction) for transaction in data["data"]] if data else []
+        return (
+            [Transaction(data=transaction) for transaction in data["data"]]
+            if data
+            else []
+        )

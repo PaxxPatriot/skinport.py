@@ -95,14 +95,18 @@ class ValidationError(HTTPException):
 class InvalidRequest(HTTPException):
     pass
 
+
 class AuthenticationError(HTTPException):
     pass
+
 
 class InsufficientFunds(HTTPException):
     pass
 
+
 class InvalidScope(HTTPException):
     pass
+
 
 class NotFound(HTTPException):
     pass
