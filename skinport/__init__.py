@@ -22,6 +22,7 @@ from .errors import *
 from .item import *
 from .sale import *
 from .transaction import *
+from .iterators import *
 
 
 class VersionInfo(NamedTuple):
