@@ -37,7 +37,9 @@ import aiohttp
 
 from . import __version__
 from .errors import (
+    AuthenticationError,
     Forbidden,
+    InsufficientFunds,
     NotFound,
     InternalServerError,
 )
@@ -110,31 +112,23 @@ class HTTPClient:
             if response.status in {500, 503}:
                 raise InternalServerError(response, data)
 
-            if response.status == 403:
+            if response.status == 401:
+                raise AuthenticationError(response, data)
+            elif response.status == 402:
+                raise InsufficientFunds(response, data)
+            elif response.status == 403:
                 raise Forbidden(response, data)
             elif response.status == 404:
                 raise NotFound(response, data)
 
     async def get_items(self, **parameters: Any):
-        """
-        Get a list of items.
-        """
         return await self.request(Route("GET", "/items"), **parameters)
 
     async def get_sales_history(self, **parameters: Any):
-        """
-        Get a list of sales history.
-        """
         return await self.request(Route("GET", "/sales/history"), **parameters)
 
     async def get_sales_out_of_stock(self, **parameters: Any):
-        """
-        Get a list of sales history.
-        """
         return await self.request(Route("GET", "/sales/out-of-stock"), **parameters)
 
     async def get_account_transactions(self, **parameters: Any):
-        """
-        Get a list of account transactions.
-        """
         return await self.request(Route("GET", "/account/transactions"), **parameters)
