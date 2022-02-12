@@ -36,6 +36,7 @@ __all__ = (
     "NotFound",
     "Forbidden",
     "InternalServerError",
+    "NoMoreItems",
 )
 
 
@@ -117,4 +118,8 @@ class Forbidden(HTTPException):
 
 
 class InternalServerError(HTTPException):
+    pass
+
+
+class NoMoreItems(SkinportException):
     pass

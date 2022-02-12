@@ -23,6 +23,7 @@ SOFTWARE.
 """
 
 from typing import List
+
 from .enums import AppID, Currency
 from .errors import ParamRequired, AuthenticationError
 
@@ -31,6 +32,8 @@ from .sale import Sale
 from .transaction import Transaction
 
 from .item import Item, ItemWithSales, ItemOutOfStock
+
+from .iterators import TransactionAsyncIterator
 
 __all__ = ("Client",)
 
@@ -113,7 +116,7 @@ class Client:
         self, *, page: int = 1, limit: int = 100, order: str = "desc"
     ) -> List[Transaction]:
         """
-        Returns a :class:`list` of :class:`.Item`.
+        Returns a :class:`list` of :class:`.Transaction`.
 
         Parameters
         ----------
@@ -129,7 +132,7 @@ class Client:
 
         Returns
         -------
-        :class:`list` of :class:`.Item`
+        :class:`list` of :class:`.Transaction`
 
         Raises
         ------
@@ -142,3 +145,17 @@ class Client:
             if data
             else []
         )
+
+    async def fetch_all_account_transactions(self) -> List[Transaction]:
+        """
+        Returns an AsyncIterator that iterates over all transactions of the authenticated client.
+
+        Returns
+        -------
+        :class:`TransactionAsyncIterator` of :class:`.Item`
+
+        Raises
+        ------
+        :exception:`.AuthenticationError`
+        """
+        return TransactionAsyncIterator(self.http.get_account_transactions)
