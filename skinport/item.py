@@ -27,6 +27,12 @@ from typing import Optional, List
 from .enums import Currency
 from .sale import LastXDays, Sale
 
+__all__ = (
+    "Item",
+    "ItemWithSales",
+    "ItemOutOfStock",
+)
+
 
 class Item:
     """Represents an item."""
@@ -59,7 +65,9 @@ class Item:
         self._updated_at = data.get("updated_at")
 
     def __repr__(self) -> str:
-        return f"<Item {self._market_hash_name}>"
+        return (
+            f"<Item {self._market_hash_name} {self._currency} {self._suggested_price}>"
+        )
 
     def __str__(self) -> str:
         return f"{self._market_hash_name}"

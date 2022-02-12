@@ -22,7 +22,12 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-from enum import Enum
+from enum import Enum, IntEnum
+
+__all__ = (
+    "Currency",
+    "AppID",
+)
 
 
 class Currency(Enum):
@@ -42,3 +47,10 @@ class Currency(Enum):
     sek = "SEK"
     try_ = "TRY"
     usd = "USD"
+
+
+class AppID(IntEnum):
+    csgo = 730
+    dota2 = 570
+    rust = 252490
+    tf2 = 440

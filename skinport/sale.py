@@ -25,7 +25,12 @@ SOFTWARE.
 import datetime
 from typing import Optional
 
-from skinport.enums import Currency
+from .enums import Currency
+
+__all__ = (
+    "Sale",
+    "LastXDays",
+)
 
 
 class Sale:
