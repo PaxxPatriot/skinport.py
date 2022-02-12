@@ -63,7 +63,7 @@ class Client:
         currency: Currency = "EUR",
         tradable: bool = False
     ) -> List[Item]:
-        """
+        """*coroutine*
         Returns a :class:`list` of :class:`.Item`.
 
         Parameters
@@ -95,6 +95,22 @@ class Client:
         app_id: int = 730,
         currency: Currency = "EUR"
     ) -> List[ItemWithSales]:
+        """*coroutine*
+        Returns a :class:`list` of :class:`.ItemWithSales`.
+
+        Parameters
+        ----------
+        app_id: :class:`.AppID`
+            The app_id for the inventory's game.
+            Defaults to ``730``.
+        currency: :class:`.Currency`
+            The currency for pricing.
+            Defaults to ``EUR``.
+
+        Returns
+        -------
+        :class:`list` of :class:`.ItemWithSales`
+        """
         if market_hash_name is None:
             raise ParamRequired("market_hash_name is required")
         params = {
@@ -108,6 +124,22 @@ class Client:
     async def get_sales_out_of_stock(
         self, *, app_id: int = 730, currency: Currency = "EUR"
     ) -> List[ItemOutOfStock]:
+        """*coroutine*
+        Returns a :class:`list` of :class:`.ItemOutOfStock`.
+
+        Parameters
+        ----------
+        app_id: :class:`.AppID`
+            The app_id for the inventory's game.
+            Defaults to ``730``.
+        currency: :class:`.Currency`
+            The currency for pricing.
+            Defaults to ``EUR``.
+
+        Returns
+        -------
+        :class:`list` of :class:`.ItemOutOfStock`
+        """
         params = {"app_id": app_id, "currency": currency}
         data = await self.http.get_sales_out_of_stock(params=params)
         return [ItemOutOfStock(data=sale) for sale in data]
@@ -115,7 +147,7 @@ class Client:
     async def get_account_transactions(
         self, *, page: int = 1, limit: int = 100, order: str = "desc"
     ) -> List[Transaction]:
-        """
+        """*coroutine*
         Returns a :class:`list` of :class:`.Transaction`.
 
         Parameters
@@ -136,7 +168,7 @@ class Client:
 
         Raises
         ------
-        :exception:`.AuthenticationError`
+        :exc:`.AuthenticationError`
         """
         params = {"page": page, "limit": limit, "order": order}
         data = await self.http.get_account_transactions(params=params)
@@ -150,12 +182,13 @@ class Client:
         """
         Returns an AsyncIterator that iterates over all transactions of the authenticated client.
 
+
         Returns
         -------
         :class:`TransactionAsyncIterator` of :class:`.Item`
 
         Raises
         ------
-        :exception:`.AuthenticationError`
+        :exc:`.AuthenticationError`
         """
         return TransactionAsyncIterator(self.http.get_account_transactions)
