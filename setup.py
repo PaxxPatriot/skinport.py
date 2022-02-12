@@ -14,6 +14,9 @@ with open("skinport/__init__.py") as f:
 if not version:
     raise RuntimeError("version is not set")
 
+with open("README.md") as readme_file:
+    long_description = readme_file.read()
+
 packages = [
     "skinport",
 ]
@@ -25,6 +28,8 @@ setup(
     packages=packages,
     license="MIT",
     description="A Python wrapper for the Skinport API",
+    long_description=long_description,
+    long_description_content_type="text/markdown",
     install_requires=requirements,
     classifiers=[
         "Development Status :: 3 - Alpha",
