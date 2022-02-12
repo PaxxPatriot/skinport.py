@@ -46,6 +46,12 @@ The following exceptions are thrown by the library.
 
 .. autoexception:: NotFound
 
+.. autoexception:: AuthenticationError
+
+.. autoexception:: InsufficientFunds
+
+.. autoexception:: InvalidScope
+
 .. autoexception:: Forbidden
 
 .. autoexception:: InternalServerError

@@ -31,6 +31,7 @@ author = "PaxxPatriot"
 extensions = [
     "sphinx.ext.autodoc",
     "sphinx.ext.intersphinx",
+    "sphinx.ext.napoleon"
 ]
 
 autodoc_member_order = "bysource"
