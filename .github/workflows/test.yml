@@ -22,5 +22,8 @@ jobs:
           pip install .
       - name: Run tests
         working-directory: ./tests
+        env:
+          CLIENT_ID: ${{ secrets.CLIENT_ID }}
+          CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
         run: |
           python -m unittest
