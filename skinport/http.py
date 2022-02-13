@@ -59,20 +59,16 @@ class Route:
 class HTTPClient:
     def __init__(self) -> None:
         self.token = None
-        self.__session = None
+        self.__session = aiohttp.ClientSession()
+        self.auth = None
 
         user_agent = "skinport.py {0}) Python/{1[0]}.{1[1]} aiohttp/{2}"
         self.user_agent: str = user_agent.format(
             __version__, sys.version_info, aiohttp.__version__
         )
 
-    async def set_token(self, client_id: str, client_secret: str) -> Optional[str]:
-        self.__session = aiohttp.ClientSession()
-        if client_id and client_secret:
-            self.token = base64.b64encode(
-                f"{client_id}:{client_secret}".encode()
-            ).decode()
-        return None
+    def set_auth(self, client_id: str, client_secret: str) -> Optional[str]:
+        self.auth = aiohttp.BasicAuth(login=client_id, password=client_secret)
 
     async def close(self) -> None:
         if self.__session:
@@ -100,7 +96,7 @@ class HTTPClient:
         if params:
             kwargs["params"] = params
 
-        async with self.__session.request(method, url, **kwargs) as response:
+        async with self.__session.request(method, url, auth=self.auth, **kwargs) as response:
             _log.debug(f"{method} {url} with {kwargs} has returned {response.status}")
 
             data = await response.json()

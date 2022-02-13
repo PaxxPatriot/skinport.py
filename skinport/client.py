@@ -43,8 +43,8 @@ class Client:
         self.http: HTTPClient = HTTPClient()
         self._closed = False
 
-    async def login(self, client_id: str = None, client_secret: str = None):
-        await self.http.set_token(client_id, client_secret)
+    def set_auth(self, client_id: str = None, client_secret: str = None):
+        self.http.set_auth(client_id, client_secret)
 
     async def close(self) -> None:
         """*coroutine*
