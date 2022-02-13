@@ -21,5 +21,6 @@ jobs:
           pip install .
       - name: Run tests
         working-directory: ./tests
+        environment: Test environment
         run: |
           python -m unittest
