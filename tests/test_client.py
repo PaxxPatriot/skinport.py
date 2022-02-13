@@ -11,7 +11,6 @@ import config
 class SkinportTestCase(unittest.IsolatedAsyncioTestCase):
     async def asyncSetUp(self):
         self.client = skinport.Client()
-        self.client.set_auth(client_id=config.client_id, client_secret=config.client_secret)
 
     async def test_get_items(self):
         await self.client.get_items()
@@ -35,6 +34,10 @@ class SkinportTestCase(unittest.IsolatedAsyncioTestCase):
     async def test_get_account_transactions(self):
         with self.assertRaises(AuthenticationError):
             await self.client.get_account_transactions()
+
+    async def test_get_account_inventory(self):
+        self.client.set_auth(client_id=config.client_id, client_secret=config.client_secret)
+        await self.client.get_account_transactions()
 
     async def asyncTearDown(self):
         await self.client.close()
