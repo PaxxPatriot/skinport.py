@@ -96,7 +96,9 @@ class HTTPClient:
         if params:
             kwargs["params"] = params
 
-        async with self.__session.request(method, url, auth=self.auth, **kwargs) as response:
+        async with self.__session.request(
+            method, url, auth=self.auth, **kwargs
+        ) as response:
             _log.debug(f"{method} {url} with {kwargs} has returned {response.status}")
 
             data = await response.json()
