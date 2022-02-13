@@ -22,7 +22,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-import base64
 import logging
 import sys
 from typing import (
@@ -31,11 +30,9 @@ from typing import (
     Iterable,
     Optional,
 )
-from urllib.parse import quote as _uriquote
 
 import aiohttp
 
-from . import __version__
 from .errors import (
     AuthenticationError,
     Forbidden,
@@ -43,6 +40,8 @@ from .errors import (
     NotFound,
     InternalServerError,
 )
+from skinport import __version__
+
 
 _log = logging.getLogger(__name__)
 
@@ -64,10 +63,10 @@ class HTTPClient:
 
         user_agent = "skinport.py {0}) Python/{1[0]}.{1[1]} aiohttp/{2}"
         self.user_agent: str = user_agent.format(
-            __version__, sys.version_info, aiohttp.__version__
-        )
+            __version__, sys.version_info, str(aiohttp.__version__)
+        )  #
 
-    def set_auth(self, client_id: str, client_secret: str) -> Optional[str]:
+    def set_auth(self, client_id: str, client_secret: str) -> None:
         self.auth = aiohttp.BasicAuth(login=client_id, password=client_secret)
 
     async def close(self) -> None:
@@ -79,7 +78,7 @@ class HTTPClient:
         route: Route,
         params: Optional[Iterable[Dict[str, Any]]] = None,
         **kwargs: Any,
-    ):
+    ) -> Any:
         method = route.method
         url = route.url
 
@@ -119,14 +118,14 @@ class HTTPClient:
             elif response.status == 404:
                 raise NotFound(response, data)
 
-    async def get_items(self, **parameters: Any):
+    async def get_items(self, **parameters: Any) -> Dict[str, Any]:
         return await self.request(Route("GET", "/items"), **parameters)
 
-    async def get_sales_history(self, **parameters: Any):
+    async def get_sales_history(self, **parameters: Any) -> Dict[str, Any]:
         return await self.request(Route("GET", "/sales/history"), **parameters)
 
-    async def get_sales_out_of_stock(self, **parameters: Any):
+    async def get_sales_out_of_stock(self, **parameters: Any) -> Dict[str, Any]:
         return await self.request(Route("GET", "/sales/out-of-stock"), **parameters)
 
-    async def get_account_transactions(self, **parameters: Any):
+    async def get_account_transactions(self, **parameters: Any) -> Dict[str, Any]:
         return await self.request(Route("GET", "/account/transactions"), **parameters)
