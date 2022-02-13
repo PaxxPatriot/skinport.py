@@ -60,7 +60,7 @@ class Client:
         self,
         *,
         app_id: AppID = AppID.csgo,
-        currency: Currency = "EUR",
+        currency: Currency = Currency.eur,
         tradable: bool = False
     ) -> List[Item]:
         """*coroutine*
@@ -84,7 +84,7 @@ class Client:
         """
 
         _tradable = str(tradable).lower()
-        params = {"app_id": app_id, "currency": currency, "tradable": _tradable}
+        params = {"app_id": app_id, "currency": currency.value, "tradable": _tradable}
         data = await self.http.get_items(params=params)
         return [Item(data=item) for item in data]
 
@@ -93,7 +93,7 @@ class Client:
         market_hash_name: List[str] = None,
         *,
         app_id: int = 730,
-        currency: Currency = "EUR"
+        currency: Currency = Currency.eur
     ) -> List[ItemWithSales]:
         """*coroutine*
         Returns a :class:`list` of :class:`.ItemWithSales`.
@@ -116,7 +116,7 @@ class Client:
         params = {
             "market_hash_name": market_hash_name,
             "app_id": app_id,
-            "currency": currency,
+            "currency": currency.value,
         }
         data = await self.http.get_sales_history(params=params)
         return [ItemWithSales(data=sale) for sale in data]
