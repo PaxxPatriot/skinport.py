@@ -24,6 +24,8 @@ packages = [
 setup(
     name="skinport.py",
     author="PaxxPatriot",
+    author_email="skinport.py@gmail.com",
+    url="https://github.com/PaxxPatriot/skinport.py",
     version=version,
     packages=packages,
     license="MIT",
