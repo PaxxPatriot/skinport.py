@@ -53,7 +53,7 @@ class Item:
 
     def __init__(self, *, data) -> None:
         self._market_hash_name = data.get("market_hash_name")
-        self._currency = data.get("currency")
+        self._currency = Currency(data.get("currency"))
         self._suggested_price = data.get("suggested_price")
         self._item_page = data.get("item_page")
         self._market_page = data.get("market_page")
@@ -61,8 +61,8 @@ class Item:
         self._max_price = data.get("max_price")
         self._mean_price = data.get("mean_price")
         self._quantity = data.get("quantity")
-        self._created_at = data.get("created_at")
-        self._updated_at = data.get("updated_at")
+        self._created_at = datetime.datetime.fromtimestamp(data.get("created_at"))
+        self._updated_at = datetime.datetime.fromtimestamp(data.get("updated_at"))
 
     def __repr__(self) -> str:
         return (

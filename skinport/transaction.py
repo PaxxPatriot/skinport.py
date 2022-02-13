@@ -100,8 +100,12 @@ class Transaction:
         self._items = []
         if data.get("items") is not None:
             self._items = [TransactionItem(data=item) for item in data.get("items")]
-        self._created_at = data.get("created_at")
-        self._updated_at = data.get("updated_at")
+        self._created_at = datetime.datetime.strptime(
+            data.get("created_at"), "%Y-%m-%dT%H:%M:%S.%fZ"
+        )
+        self._updated_at = datetime.datetime.strptime(
+            data.get("updated_at"), "%Y-%m-%dT%H:%M:%S.%fZ"
+        )
 
     def __repr__(self) -> str:
         return f"<Transaction {self._transaction_id}>"
