@@ -53,7 +53,7 @@ class Item:
 
     def __init__(self, *, data) -> None:
         self._market_hash_name = data.get("market_hash_name")
-        self._currency = Currency(data.get("currency"))
+        self._currency = data.get("currency")
         self._suggested_price = data.get("suggested_price")
         self._item_page = data.get("item_page")
         self._market_page = data.get("market_page")
@@ -61,8 +61,8 @@ class Item:
         self._max_price = data.get("max_price")
         self._mean_price = data.get("mean_price")
         self._quantity = data.get("quantity")
-        self._created_at = datetime.datetime.fromtimestamp(data.get("created_at"))
-        self._updated_at = datetime.datetime.fromtimestamp(data.get("updated_at"))
+        self._created_at = data.get("created_at")
+        self._updated_at = data.get("updated_at")
 
     def __repr__(self) -> str:
         return (
@@ -74,58 +74,58 @@ class Item:
 
     @property
     def market_hash_name(self) -> str:
-        """:class:`str` Returns the name of the item under it displayed on skinport.com"""
+        """:class:`str` Returns the name of the item under it displayed on skinport.com."""
         return self._market_hash_name
 
     @property
     def currency(self) -> Currency:
-        """:class:`str` Returns the currency of the item"""
-        return self._currency
+        """:class:`str` Returns the currency of the item."""
+        return Currency(self._currency)
 
     @property
-    def suggested_price(self) -> float:
-        """:class:`str` Returns the suggested price of the item"""
+    def suggested_price(self) -> Optional[float]:
+        """:class:`str` Returns the suggested price of the item."""
         return self._suggested_price
 
     @property
     def item_page(self) -> str:
-        """:class:`str` Returns the item page of the item"""
+        """:class:`str` Returns the item page of the item."""
         return self._item_page
 
     @property
     def market_page(self) -> str:
-        """:class:`str` Returns the market page of the item"""
+        """:class:`str` Returns the market page of the item."""
         return self._market_page
 
     @property
     def min_price(self) -> Optional[float]:
-        """:class:`str` Returns the min price of the item"""
+        """:class:`str` Returns the min price of the item."""
         return self._min_price
 
     @property
     def max_price(self) -> Optional[float]:
-        """:class:`str` Returns the max price of the item"""
+        """:class:`str` Returns the max price of the item."""
         return self._max_price
 
     @property
     def mean_price(self) -> Optional[float]:
-        """:class:`str` Returns the mean price of the item"""
+        """:class:`str` Returns the mean price of the item."""
         return self._mean_price
 
     @property
     def quantity(self) -> int:
-        """:class:`str` Returns the quantity of the item"""
+        """:class:`str` Returns the quantity of the item."""
         return self._quantity
 
     @property
     def created_at(self) -> datetime.datetime:
-        """:class:`str` Returns the created at of the item"""
-        return self._created_at
+        """:class:`str` Returns the created at of the item."""
+        return datetime.datetime.fromtimestamp(self._created_at)
 
     @property
     def updated_at(self) -> datetime.datetime:
-        """:class:`str` Returns the updated at of the item"""
-        return self._updated_at
+        """:class:`str` Returns the updated at of the item."""
+        return datetime.datetime.fromtimestamp(self._updated_at)
 
 
 class ItemOutOfStock:
@@ -155,32 +155,32 @@ class ItemOutOfStock:
 
     @property
     def market_hash_name(self) -> str:
-        """:class:`str` Returns the market hash name of the item"""
+        """:class:`str` Returns the market hash name of the item."""
         return self._market_hash_name
 
     @property
-    def version(self) -> str:
-        """:class:`str` Returns the version of the item"""
+    def version(self) -> Optional[str]:
+        """:class:`str` Returns the version of the item."""
         return self._version
 
     @property
     def currency(self) -> Currency:
-        """:class:`str` Returns the currency of the item"""
-        return self._currency
+        """:class:`str` Returns the currency of the item."""
+        return Currency(self._currency)
 
     @property
     def suggested_price(self) -> float:
-        """:class:`str` Returns the suggested price of the item"""
+        """:class:`str` Returns the suggested price of the item."""
         return self._suggested_price
 
     @property
     def avg_sale_price(self) -> float:
-        """:class:`str` Returns the avg sale price of the item"""
+        """:class:`str` Returns the avg sale price of the item."""
         return self._avg_sale_price
 
     @property
-    def sales_last_90d(self) -> float:
-        """:class:`str` Returns the sales last 90d of the item"""
+    def sales_last_90d(self) -> int:
+        """:class:`str` Returns the sales last 90d of the item."""
         return self._sales_last_90d
 
 
@@ -201,10 +201,10 @@ class ItemWithSales:
         self._currency = data.get("currency")
         self._item_page = data.get("item_page")
         self._market_page = data.get("market_page")
-        self._sales = [Sale(data=sale) for sale in data.get("sales")]
-        self._last_7_days = LastXDays(data=data.get("last_7_days"))
-        self._last_30_days = LastXDays(data=data.get("last_30_days"))
-        self._last_90_days = LastXDays(data=data.get("last_90_days"))
+        self._sales = data.get("sales")
+        self._last_7_days = data.get("last_7_days")
+        self._last_30_days = data.get("last_30_days")
+        self._last_90_days = data.get("last_90_days")
 
     def __repr__(self) -> str:
         return f"<ItemWithSales {self._market_hash_name} Sales={len(self._sales)}>"
@@ -214,40 +214,40 @@ class ItemWithSales:
 
     @property
     def market_hash_name(self) -> str:
-        """:class:`str` Returns the name of the item under it displayed on skinport.com"""
+        """:class:`str` Returns the name of the item under it displayed on skinport.com."""
         return self._market_hash_name
 
     @property
     def currency(self) -> Currency:
-        """:class:`str` Returns the currency of the item"""
-        return self._currency
+        """:class:`str` Returns the currency of the item."""
+        return Currency(self._currency)
 
     @property
     def item_page(self) -> str:
-        """:class:`str` Returns the item page of the item"""
+        """:class:`str` Returns the item page of the item."""
         return self._item_page
 
     @property
     def market_page(self) -> str:
-        """:class:`str` Returns the market page of the item"""
+        """:class:`str` Returns the market page of the item."""
         return self._market_page
 
     @property
     def sales(self) -> List[Sale]:
-        """:class:`str` Returns the sales of the item"""
-        return self._sales
+        """:class:`str` Returns the sales of the item."""
+        return [Sale(data=sale) for sale in self._sales]
 
     @property
     def last_7_days(self) -> LastXDays:
-        """:class:`str` Returns the last 7 days of the item"""
-        return self._last_7_days
+        """:class:`str` Returns the last 7 days of the item."""
+        return LastXDays(data=self._last_7_days)
 
     @property
     def last_30_days(self) -> LastXDays:
-        """:class:`str` Returns the last 30 days of the item"""
-        return self._last_30_days
+        """:class:`str` Returns the last 30 days of the item."""
+        return LastXDays(data=self._last_30_days)
 
     @property
     def last_90_days(self) -> LastXDays:
-        """:class:`str` Returns the last 90 days of the item"""
-        return self._last_90_days
+        """:class:`str` Returns the last 90 days of the item."""
+        return LastXDays(data=self._last_90_days)
