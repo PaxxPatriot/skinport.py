@@ -17,9 +17,16 @@ Quick Example
 --------------
 
 ```Python
+import asyncio
+
 import skinport
 
-client = skinport.Client()
-# Get a list of all listed CS:GO items on skinport.com
-client.get_items()
+async def main():
+  client = skinport.Client()
+  # Get a list of all listed CS:GO items on skinport.com
+  items = await client.get_items()
+  print(items)
+
+if __name__ == "__main__":
+    asyncio.run(main())
 ```
