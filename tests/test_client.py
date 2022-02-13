@@ -5,11 +5,13 @@ import skinport
 
 from skinport import AuthenticationError, Currency
 
+import config
+
 
 class SkinportTestCase(unittest.IsolatedAsyncioTestCase):
     async def asyncSetUp(self):
         self.client = skinport.Client()
-        await self.client.login()
+        self.client.set_auth(client_id=config.client_id, client_secret=config.client_secret)
 
     async def test_get_items(self):
         await self.client.get_items()
