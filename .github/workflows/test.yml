@@ -5,6 +5,7 @@ on: [push, pull_request]
 jobs:
   test:
     runs-on: ubuntu-latest
+    environment: Test environment
     strategy:
       matrix:
         python-version: ['3.8', '3.9', '3.10']
@@ -21,6 +22,5 @@ jobs:
           pip install .
       - name: Run tests
         working-directory: ./tests
-        environment: Test environment
         run: |
           python -m unittest
