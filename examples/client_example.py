@@ -8,7 +8,6 @@ from skinport.enums import AppID
 async def main():
     client = skinport.Client()
     counter = Counter()
-    await client.login()
     try:
         transactions = await client.get_account_transactions(limit=10)
         for transaction in transactions:
