@@ -29,7 +29,7 @@ from .errors import ParamRequired, AuthenticationError
 
 from .http import HTTPClient
 from .sale import Sale
-from .transaction import Transaction
+from .transaction import Credit, Withdraw, Purchase
 
 from .item import Item, ItemWithSales, ItemOutOfStock
 
@@ -146,7 +146,7 @@ class Client:
 
     async def get_account_transactions(
         self, *, page: int = 1, limit: int = 100, order: str = "desc"
-    ) -> List[Transaction]:
+    ) -> List[Credit | Withdraw | Purchase]:
         """*coroutine*
         Returns a :class:`list` of :class:`.Transaction`.
 
@@ -172,13 +172,19 @@ class Client:
         """
         params = {"page": page, "limit": limit, "order": order}
         data = await self.http.get_account_transactions(params=params)
-        return (
-            [Transaction(data=transaction) for transaction in data["data"]]
-            if data
-            else []
-        )
 
-    async def fetch_all_account_transactions(self) -> List[Transaction]:
+        transactions = []
+        for transaction in data["data"]:
+            if transaction["type"] == "credit":
+                transactions.append(Credit(data=transaction))
+            elif transaction["type"] == "withdraw":
+                transactions.append(Withdraw(data=transaction))
+            elif transaction["type"] == "purchase":
+                transactions.append(Purchase(data=transaction))
+
+        return transactions
+
+    async def fetch_all_account_transactions(self) -> TransactionAsyncIterator:
         """
         Returns an AsyncIterator that iterates over all transactions of the authenticated client.
 
