@@ -23,11 +23,11 @@ SOFTWARE.
 """
 
 import datetime
-from typing import List
+from typing import Any, Dict, List
 
 from .enums import Currency
 
-__all__ = ("Transaction", "TransactionItem")
+__all__ = ("Transaction", "TransactionItem", "Credit", "Purchase", "Withdraw")
 
 
 class TransactionItem:
@@ -40,11 +40,11 @@ class TransactionItem:
         "_buyer_country",
     )
 
-    def __init__(self, *, data) -> None:
-        self._sale_id = data.get("sale_id")
-        self._market_hash_name = data.get("market_hash_name")
-        self._seller_country = data.get("seller_country")
-        self._buyer_country = data.get("buyer_country")
+    def __init__(self, *, data: Dict[str, Any]) -> None:
+        self._sale_id: int = data.get("sale_id", 0)
+        self._market_hash_name: str = data.get("market_hash_name", "")
+        self._seller_country: str = data.get("seller_country", "")
+        self._buyer_country: str = data.get("buyer_country", "")
 
     def __repr__(self) -> str:
         return f"TransactionItem({{'sale_id': {self._sale_id}, 'market_hash_name': {self._market_hash_name}, 'seller_country': {self._seller_country}, 'buyer_country': {self._buyer_country}}})"
@@ -53,7 +53,7 @@ class TransactionItem:
         return self._market_hash_name
 
     @property
-    def sale_id(self) -> str:
+    def sale_id(self) -> int:
         """Returns the sale ID."""
         return self._sale_id
 
@@ -86,17 +86,17 @@ class Transaction:
         "_updated_at",
     )
 
-    def __init__(self, *, data) -> None:
-        self._transaction_id = data.get("id")
-        self._type = data.get("type")
-        self._status = data.get("status")
-        self._amount = data.get("amount")
-        self._currency = data.get("currency")
-        self._created_at = data.get("created_at")
-        self._updated_at = data.get("updated_at")
+    def __init__(self, *, data: Dict[str, Any]) -> None:
+        self._transaction_id: int = data.get("id", 0)
+        self._type: str = data.get("type", "")
+        self._status: str = data.get("status", "")
+        self._amount: int = data.get("amount", 0)
+        self._currency: str = data.get("currency", Currency.eur.value)
+        self._created_at: str = data.get("created_at", "1970-01-01T00:00:00.000Z")
+        self._updated_at: str = data.get("updated_at", "1970-01-01T00:00:00.000Z")
 
     @property
-    def transaction_id(self) -> str:
+    def transaction_id(self) -> int:
         """Returns the sale ID."""
         return self._transaction_id
 
@@ -111,14 +111,14 @@ class Transaction:
         return self._status
 
     @property
-    def amount(self) -> str:
+    def amount(self) -> int:
         """Returns the transaction amount."""
         return self._amount
 
     @property
     def currency(self) -> Currency:
         """Returns the transaction currency."""
-        return self._currency
+        return Currency(self._currency)
 
     @property
     def created_at(self) -> datetime.datetime:
@@ -140,11 +140,11 @@ class Credit(Transaction):
         "_items",
     )
 
-    def __init__(self, *, data) -> None:
+    def __init__(self, *, data: Dict[str, Any]) -> None:
         super().__init__(data=data)
-        self._sub_type = data.get("sub_type")
-        self._fee = data.get("fee")
-        self._items = [TransactionItem(data=item) for item in data.get("items")]
+        self._sub_type = data.get("sub_type", "")
+        self._fee = data.get("fee", 0.0)
+        self._items = [TransactionItem(data=item) for item in data.get("items", [])]
 
     def __repr__(self) -> str:
         return f"Credit({{'transaction_id': {self._transaction_id}, 'type': {self._type}, 'status': {self._status}, 'amount': {self._amount}, 'currency': {self._currency}, 'created_at': {self._created_at}, 'updated_at': {self._updated_at}, 'sub_type': {self._sub_type}, 'fee': {self._fee}, 'items': {self._items}}}"
@@ -155,7 +155,7 @@ class Credit(Transaction):
         return self._sub_type
 
     @property
-    def fee(self) -> str:
+    def fee(self) -> float:
         """Returns the transaction fee."""
         return self._fee
 
@@ -170,9 +170,9 @@ class Purchase(Transaction):
 
     __slots__ = ("_items",)
 
-    def __init__(self, *, data) -> None:
+    def __init__(self, *, data: Dict[str, Any]) -> None:
         super().__init__(data=data)
-        self._items = [TransactionItem(data=item) for item in data.get("items")]
+        self._items = [TransactionItem(data=item) for item in data.get("items", [])]
 
     def __repr__(self) -> str:
         return f"Purchase({{'transaction_id': {self._transaction_id}, 'type': {self._type}, 'status': {self._status}, 'amount': {self._amount}, 'currency': {self._currency}, 'created_at': {self._created_at}, 'updated_at': {self._updated_at}, 'items': {self._items}}}"
@@ -186,7 +186,7 @@ class Purchase(Transaction):
 class Withdraw(Transaction):
     """Represents a withdraw transaction."""
 
-    def __init__(self, *, data) -> None:
+    def __init__(self, *, data: Dict[str, Any]) -> None:
         super().__init__(data=data)
 
     def __repr__(self) -> str:

@@ -25,10 +25,8 @@ SOFTWARE.
 from typing import List
 
 from .enums import AppID, Currency
-from .errors import ParamRequired, AuthenticationError
 
 from .http import HTTPClient
-from .sale import Sale
 from .transaction import Credit, Withdraw, Purchase
 
 from .item import Item, ItemWithSales, ItemOutOfStock
@@ -43,7 +41,7 @@ class Client:
         self.http: HTTPClient = HTTPClient()
         self._closed = False
 
-    def set_auth(self, client_id: str = None, client_secret: str = None):
+    def set_auth(self, *, client_id: str, client_secret: str):
         self.http.set_auth(client_id, client_secret)
 
     async def close(self) -> None:
@@ -90,11 +88,11 @@ class Client:
 
     async def get_sales_history(
         self,
-        market_hash_name: List[str] = None,
+        market_hash_name: List[str] = [],
         *,
         app_id: int = 730,
         currency: Currency = Currency.eur
-    ) -> List[ItemWithSales]:
+    ) -> List[ItemWithSales]:  # sourcery skip: default-mutable-arg
         """*coroutine*
         Returns a :class:`list` of :class:`.ItemWithSales`.
 
@@ -111,8 +109,8 @@ class Client:
         -------
         :class:`list` of :class:`.ItemWithSales`
         """
-        if market_hash_name is None:
-            raise ParamRequired("market_hash_name is required")
+        if not market_hash_name:
+            raise ValueError("market_hash_name is required")
         params = {
             "market_hash_name": market_hash_name,
             "app_id": app_id,
@@ -122,7 +120,7 @@ class Client:
         return [ItemWithSales(data=sale) for sale in data]
 
     async def get_sales_out_of_stock(
-        self, *, app_id: int = 730, currency: Currency = "EUR"
+        self, *, app_id: int = 730, currency: Currency = Currency.eur
     ) -> List[ItemOutOfStock]:
         """*coroutine*
         Returns a :class:`list` of :class:`.ItemOutOfStock`.
@@ -140,7 +138,7 @@ class Client:
         -------
         :class:`list` of :class:`.ItemOutOfStock`
         """
-        params = {"app_id": app_id, "currency": currency}
+        params = {"app_id": app_id, "currency": currency.value}
         data = await self.http.get_sales_out_of_stock(params=params)
         return [ItemOutOfStock(data=sale) for sale in data]
 
@@ -173,7 +171,7 @@ class Client:
         params = {"page": page, "limit": limit, "order": order}
         data = await self.http.get_account_transactions(params=params)
 
-        transactions = []
+        transactions: List[Credit | Withdraw | Purchase] = []
         for transaction in data["data"]:
             if transaction["type"] == "credit":
                 transactions.append(Credit(data=transaction))
