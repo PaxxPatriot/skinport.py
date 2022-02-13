@@ -79,12 +79,9 @@ class Transaction:
     __slots__ = (
         "_transaction_id",
         "_type",
-        "_sub_type",
         "_status",
         "_amount",
-        "_fee",
         "_currency",
-        "_items",
         "_created_at",
         "_updated_at",
     )
@@ -92,26 +89,11 @@ class Transaction:
     def __init__(self, *, data) -> None:
         self._transaction_id = data.get("id")
         self._type = data.get("type")
-        self._sub_type = data.get("sub_type")
         self._status = data.get("status")
         self._amount = data.get("amount")
-        self._fee = data.get("fee")
         self._currency = data.get("currency")
-        self._items = []
-        if data.get("items") is not None:
-            self._items = [TransactionItem(data=item) for item in data.get("items")]
-        self._created_at = datetime.datetime.strptime(
-            data.get("created_at"), "%Y-%m-%dT%H:%M:%S.%fZ"
-        )
-        self._updated_at = datetime.datetime.strptime(
-            data.get("updated_at"), "%Y-%m-%dT%H:%M:%S.%fZ"
-        )
-
-    def __repr__(self) -> str:
-        return f"<Transaction {self._transaction_id}>"
-
-    def __str__(self) -> str:
-        return str(self._transaction_id)
+        self._created_at = data.get("created_at")
+        self._updated_at = data.get("updated_at")
 
     @property
     def transaction_id(self) -> str:
@@ -124,11 +106,6 @@ class Transaction:
         return self._type
 
     @property
-    def sub_type(self) -> str:
-        """Returns the transaction sub type."""
-        return self._sub_type
-
-    @property
     def status(self) -> str:
         """Returns the transaction status."""
         return self._status
@@ -139,26 +116,78 @@ class Transaction:
         return self._amount
 
     @property
-    def fee(self) -> str:
-        """Returns the transaction fee."""
-        return self._fee
-
-    @property
     def currency(self) -> Currency:
         """Returns the transaction currency."""
         return self._currency
+
+    @property
+    def created_at(self) -> datetime.datetime:
+        """Returns the date and time the transaction was created."""
+        return datetime.datetime.strptime(self._created_at, "%Y-%m-%dT%H:%M:%S.%fZ")
+
+    @property
+    def updated_at(self) -> datetime.datetime:
+        """Returns the date and time the transaction was updated."""
+        return datetime.datetime.strptime(self._updated_at, "%Y-%m-%dT%H:%M:%S.%fZ")
+
+
+class Credit(Transaction):
+    """Represents a credit transaction."""
+
+    __slots__ = (
+        "_sub_type",
+        "_fee",
+        "_items",
+    )
+
+    def __init__(self, *, data) -> None:
+        super().__init__(data=data)
+        self._sub_type = data.get("sub_type")
+        self._fee = data.get("fee")
+        self._items = [TransactionItem(data=item) for item in data.get("items")]
+
+    def __repr__(self) -> str:
+        return f"Credit({{'transaction_id': {self._transaction_id}, 'type': {self._type}, 'status': {self._status}, 'amount': {self._amount}, 'currency': {self._currency}, 'created_at': {self._created_at}, 'updated_at': {self._updated_at}, 'sub_type': {self._sub_type}, 'fee': {self._fee}, 'items': {self._items}}}"
+
+    @property
+    def sub_type(self) -> str:
+        """Returns the transaction sub type."""
+        return self._sub_type
+
+    @property
+    def fee(self) -> str:
+        """Returns the transaction fee."""
+        return self._fee
 
     @property
     def items(self) -> List[TransactionItem]:
         """Returns the transaction items."""
         return self._items
 
-    @property
-    def created_at(self) -> datetime.datetime:
-        """Returns the date and time the transaction was created."""
-        return self._created_at
+
+class Purchase(Transaction):
+    """Represents a purchase transaction."""
+
+    __slots__ = ("_items",)
+
+    def __init__(self, *, data) -> None:
+        super().__init__(data=data)
+        self._items = [TransactionItem(data=item) for item in data.get("items")]
+
+    def __repr__(self) -> str:
+        return f"Purchase({{'transaction_id': {self._transaction_id}, 'type': {self._type}, 'status': {self._status}, 'amount': {self._amount}, 'currency': {self._currency}, 'created_at': {self._created_at}, 'updated_at': {self._updated_at}, 'items': {self._items}}}"
 
     @property
-    def updated_at(self) -> datetime.datetime:
-        """Returns the date and time the transaction was updated."""
-        return self._updated_at
+    def items(self) -> List[TransactionItem]:
+        """Returns the transaction items."""
+        return self._items
+
+
+class Withdraw(Transaction):
+    """Represents a withdraw transaction."""
+
+    def __init__(self, *, data) -> None:
+        super().__init__(data=data)
+
+    def __repr__(self) -> str:
+        return f"Withdraw({{'transaction_id': {self._transaction_id}, 'type': {self._type}, 'status': {self._status}, 'amount': {self._amount}, 'currency': {self._currency}, 'created_at': {self._created_at}, 'updated_at': {self._updated_at}}}"

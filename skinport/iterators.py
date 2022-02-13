@@ -24,7 +24,7 @@ SOFTWARE.
 
 import asyncio
 
-from skinport.transaction import Transaction
+from .transaction import Credit, Purchase, Withdraw
 
 from .errors import NoMoreItems
 
@@ -52,7 +52,7 @@ class TransactionAsyncIterator:
     async def flatten(self):
         return [element async for element in self]
 
-    async def next(self) -> Transaction:
+    async def next(self) -> Credit | Withdraw | Purchase:
         if self.transactions.empty():
             await self.fill_transactions()
 
@@ -69,7 +69,12 @@ class TransactionAsyncIterator:
         transactions = data.get("data")
 
         for t in reversed(transactions):
-            self.transactions.put_nowait(Transaction(data=t))
+            if t["type"] == "credit":
+                self.transactions.put_nowait(Credit(data=t))
+            elif t["type"] == "withdraw":
+                self.transactions.put_nowait(Withdraw(data=t))
+            elif t["type"] == "purchase":
+                self.transactions.put_nowait(Purchase(data=t))
 
         self.previous_token = data["pagination"].get("page")
         self.next_token = data["pagination"].get("page") + 1
