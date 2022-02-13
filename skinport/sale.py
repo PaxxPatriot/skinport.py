@@ -43,13 +43,10 @@ class Sale:
     def __init__(self, *, data) -> None:
         self._price = data.get("price")
         self._wear_value = data.get("wear_value")
-        self._sale_at = datetime.datetime.fromtimestamp(data.get("sale_at"))
+        self._sale_at = data.get("sale_at")
 
     def __repr__(self) -> str:
         return f"Sale({{'price': {self._price}, 'wear_value': {self._wear_value}, 'sale_at': {self._sale_at}}})"
-
-    def __str__(self) -> str:
-        return f"{self._id}"
 
     @property
     def price(self) -> float:
@@ -64,7 +61,7 @@ class Sale:
     @property
     def sale_at(self) -> datetime.datetime:
         """Returns the date and time the item was sold."""
-        return self._sale_at
+        return datetime.datetime.fromtimestamp(self._sale_at)
 
 
 class LastXDays:
@@ -84,9 +81,6 @@ class LastXDays:
 
     def __repr__(self) -> str:
         return f"LastXDays({{'min': {self._min}, 'max': {self._max}, 'avg': {self._avg}, 'volume': {self._volume}}}"
-
-    def __str__(self) -> str:
-        return f"Min: {self._min} - Max: {self._max} - Avg: {self._avg} - Volume: {self._volume}"
 
     @property
     def min(self) -> Optional[float]:

@@ -36,7 +36,9 @@ class SkinportTestCase(unittest.IsolatedAsyncioTestCase):
             await self.client.get_account_transactions()
 
     async def test_get_account_inventory(self):
-        self.client.set_auth(client_id=config.client_id, client_secret=config.client_secret)
+        self.client.set_auth(
+            client_id=config.client_id, client_secret=config.client_secret
+        )
         await self.client.get_account_transactions()
 
     async def asyncTearDown(self):
