@@ -61,8 +61,8 @@ class Item:
         self._max_price = data.get("max_price")
         self._mean_price = data.get("mean_price")
         self._quantity = data.get("quantity", 0)
-        self._created_at = data.get("created_at")
-        self._updated_at = data.get("updated_at")
+        self._created_at = data.get("created_at", 0)
+        self._updated_at = data.get("updated_at", 0)
 
     def __repr__(self) -> str:
         return (
@@ -118,22 +118,14 @@ class Item:
         return self._quantity
 
     @property
-    def created_at(self) -> Optional[datetime.datetime]:
+    def created_at(self) -> datetime.datetime:
         """:class:`str` Returns the created at of the item."""
-        return (
-            datetime.datetime.fromtimestamp(self._created_at)
-            if self._created_at
-            else None
-        )
+        return datetime.datetime.fromtimestamp(self._created_at)
 
     @property
-    def updated_at(self) -> Optional[datetime.datetime]:
+    def updated_at(self) -> datetime.datetime:
         """:class:`str` Returns the updated at of the item."""
-        return (
-            datetime.datetime.fromtimestamp(self._updated_at)
-            if self._updated_at
-            else None
-        )
+        return datetime.datetime.fromtimestamp(self._updated_at)
 
 
 class ItemOutOfStock:
