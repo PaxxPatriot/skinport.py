@@ -6,11 +6,22 @@
 Welcome to skinport.py's documentation!
 =======================================
 
+
+Getting started
+-----------------
+- **First steps:** :doc:`logging`
+
+
+Manual
+-------
+
 .. toctree::
    :maxdepth: 4
    :caption: Contents:
 
    api
+
+
 
 
 
