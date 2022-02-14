@@ -111,7 +111,7 @@ class Client:
         if not market_hash_names:
             raise ParamRequired("At least one market_hash_name is required.")
         params = {
-            "market_hash_name": list(market_hash_names),
+            "market_hash_name": ",".join(market_hash_names),
             "app_id": app_id,
             "currency": currency.value,
         }
