@@ -23,8 +23,11 @@ class SkinportTestCase(unittest.IsolatedAsyncioTestCase):
         items = await self.client.get_items()
         self.assertIsInstance(items[0].created_at, datetime.datetime)
 
-    async def test_get_sales_history(self):
-        await self.client.get_sales_history("Yeti Coated Wrench (Minimal Wear)")
+    async def test_get_sales_history_one_arg(self):
+        await self.client.get_sales_history("Prisma Case Key")
+
+    async def test_get_sales_history_multi_arg(self):
+        await self.client.get_sales_history("Prisma Case Key", "Clutch Case Key", "Glove Case Key")
 
     async def test_get_sales_history_param_required(self):
         with self.assertRaises(ParamRequired):
