@@ -24,9 +24,7 @@ class SkinportTestCase(unittest.IsolatedAsyncioTestCase):
         self.assertIsInstance(items[0].created_at, datetime.datetime)
 
     async def test_get_sales_history(self):
-        await self.client.get_sales_history(
-            market_hash_name=["Yeti Coated Wrench (Minimal Wear)"]
-        )
+        await self.client.get_sales_history("Yeti Coated Wrench (Minimal Wear)")
 
     async def test_get_sales_history_param_required(self):
         with self.assertRaises(ParamRequired):
