@@ -23,7 +23,7 @@ SOFTWARE.
 """
 
 import datetime
-from typing import Optional, List
+from typing import Any, Dict, Optional, List
 from .enums import Currency
 from .sale import LastXDays, Sale
 
@@ -51,16 +51,16 @@ class Item:
         "_updated_at",
     )
 
-    def __init__(self, *, data) -> None:
-        self._market_hash_name = data.get("market_hash_name")
+    def __init__(self, *, data: Dict[str, Any]) -> None:
+        self._market_hash_name = data.get("market_hash_name", "")
         self._currency = data.get("currency")
         self._suggested_price = data.get("suggested_price")
-        self._item_page = data.get("item_page")
-        self._market_page = data.get("market_page")
+        self._item_page = data.get("item_page", "")
+        self._market_page = data.get("market_page", "")
         self._min_price = data.get("min_price")
         self._max_price = data.get("max_price")
         self._mean_price = data.get("mean_price")
-        self._quantity = data.get("quantity")
+        self._quantity = data.get("quantity", 0)
         self._created_at = data.get("created_at")
         self._updated_at = data.get("updated_at")
 
@@ -118,14 +118,22 @@ class Item:
         return self._quantity
 
     @property
-    def created_at(self) -> datetime.datetime:
+    def created_at(self) -> Optional[datetime.datetime]:
         """:class:`str` Returns the created at of the item."""
-        return datetime.datetime.fromtimestamp(self._created_at)
+        return (
+            datetime.datetime.fromtimestamp(self._created_at)
+            if self._created_at
+            else None
+        )
 
     @property
-    def updated_at(self) -> datetime.datetime:
+    def updated_at(self) -> Optional[datetime.datetime]:
         """:class:`str` Returns the updated at of the item."""
-        return datetime.datetime.fromtimestamp(self._updated_at)
+        return (
+            datetime.datetime.fromtimestamp(self._updated_at)
+            if self._updated_at
+            else None
+        )
 
 
 class ItemOutOfStock:
@@ -139,13 +147,13 @@ class ItemOutOfStock:
         "_sales_last_90d",
     )
 
-    def __init__(self, *, data) -> None:
-        self._market_hash_name = data.get("market_hash_name")
+    def __init__(self, *, data: Dict[str, Any]) -> None:
+        self._market_hash_name = data.get("market_hash_name", "")
         self._version = data.get("version")
         self._currency = data.get("currency")
-        self._suggested_price = data.get("suggested_price")
-        self._avg_sale_price = data.get("avg_sale_price")
-        self._sales_last_90d = data.get("sales_last_90d")
+        self._suggested_price = data.get("suggested_price", 0.0)
+        self._avg_sale_price = data.get("avg_sale_price", 0.0)
+        self._sales_last_90d = data.get("sales_last_90d", 0)
 
     def __repr__(self) -> str:
         return f"SaleOutOfStock({{'market_hash_name': {self._market_hash_name}, 'version': {self._version}, 'currency': {self._currency}, 'suggested_price': {self._suggested_price}, 'avg_sale_price': {self._avg_sale_price}, 'sales_last_90d': {self._sales_last_90d}}}"
@@ -196,15 +204,15 @@ class ItemWithSales:
         "_last_90_days",
     )
 
-    def __init__(self, *, data) -> None:
-        self._market_hash_name = data.get("market_hash_name")
+    def __init__(self, *, data: Dict[str, Any]) -> None:
+        self._market_hash_name = data.get("market_hash_name", "")
         self._currency = data.get("currency")
-        self._item_page = data.get("item_page")
-        self._market_page = data.get("market_page")
-        self._sales = data.get("sales")
-        self._last_7_days = data.get("last_7_days")
-        self._last_30_days = data.get("last_30_days")
-        self._last_90_days = data.get("last_90_days")
+        self._item_page = data.get("item_page", "")
+        self._market_page = data.get("market_page", "")
+        self._sales = data.get("sales", [])
+        self._last_7_days = data.get("last_7_days", {})
+        self._last_30_days = data.get("last_30_days", {})
+        self._last_90_days = data.get("last_90_days", {})
 
     def __repr__(self) -> str:
         return f"<ItemWithSales {self._market_hash_name} Sales={len(self._sales)}>"

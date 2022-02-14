@@ -23,7 +23,7 @@ SOFTWARE.
 """
 
 import datetime
-from typing import Optional
+from typing import Any, Dict, Optional
 
 __all__ = (
     "Sale",
@@ -40,10 +40,10 @@ class Sale:
         "_sale_at",
     )
 
-    def __init__(self, *, data) -> None:
-        self._price = data.get("price")
-        self._wear_value = data.get("wear_value")
-        self._sale_at = data.get("sale_at")
+    def __init__(self, *, data: Dict[str, Any]) -> None:
+        self._price: float = data.get("price", 0.0)
+        self._wear_value: Optional[float] = data.get("wear_value")
+        self._sale_at: Optional[int] = data.get("sale_at")
 
     def __repr__(self) -> str:
         return f"Sale({{'price': {self._price}, 'wear_value': {self._wear_value}, 'sale_at': {self._sale_at}}})"
@@ -59,9 +59,9 @@ class Sale:
         return self._wear_value
 
     @property
-    def sale_at(self) -> datetime.datetime:
+    def sale_at(self) -> Optional[datetime.datetime]:
         """Returns the date and time the item was sold."""
-        return datetime.datetime.fromtimestamp(self._sale_at)
+        return datetime.datetime.fromtimestamp(self._sale_at) if self._sale_at else None
 
 
 class LastXDays:
@@ -73,11 +73,11 @@ class LastXDays:
         "_volume",
     )
 
-    def __init__(self, *, data) -> None:
+    def __init__(self, *, data: Dict[str, Any]) -> None:
         self._min = data.get("min")
         self._max = data.get("max")
         self._avg = data.get("avg")
-        self._volume = data.get("volume")
+        self._volume: int = data.get("volume", 0)
 
     def __repr__(self) -> str:
         return f"LastXDays({{'min': {self._min}, 'max': {self._max}, 'avg': {self._avg}, 'volume': {self._volume}}}"
