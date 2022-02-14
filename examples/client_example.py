@@ -14,7 +14,6 @@ async def main():
     except skinport.AuthenticationError:
         print("Authentication failed")
 
-
     items = await client.get_items(app_id=AppID.tf2)
     print(len(items))
 
