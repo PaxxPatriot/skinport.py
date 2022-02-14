@@ -27,7 +27,9 @@ class SkinportTestCase(unittest.IsolatedAsyncioTestCase):
         await self.client.get_sales_history("Prisma Case Key")
 
     async def test_get_sales_history_multi_arg(self):
-        await self.client.get_sales_history("Prisma Case Key", "Clutch Case Key", "Glove Case Key")
+        await self.client.get_sales_history(
+            "Prisma Case Key", "Clutch Case Key", "Glove Case Key"
+        )
 
     async def test_get_sales_history_param_required(self):
         with self.assertRaises(ParamRequired):
