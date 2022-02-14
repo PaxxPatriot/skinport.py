@@ -26,6 +26,7 @@ from typing import Dict, List, Any, Tuple
 
 __all__ = (
     "SkinportException",
+    "ClientException",
     "HTTPException",
     "ParamRequired",
     "ValidationError",
@@ -44,6 +45,15 @@ class SkinportException(Exception):
     """Base exception class for skinport.py
 
     Ideally speaking, this could be caught to handle any exceptions raised from this library.
+    """
+
+    pass
+
+
+class ClientException(SkinportException):
+    """Exception that's raised when an operation in the :class:`Client` fails.
+
+    These are usually for exceptions that happened due to user input.
     """
 
     pass
@@ -85,15 +95,15 @@ class HTTPException(SkinportException):
         super().__init__(fmt.format(self.response, self.text))
 
 
-class ParamRequired(HTTPException):
+class ParamRequired(ClientException):
     pass
 
 
-class ValidationError(HTTPException):
+class ValidationError(ClientException):
     pass
 
 
-class InvalidRequest(HTTPException):
+class InvalidRequest(ClientException):
     pass
 
 

@@ -3,7 +3,7 @@ import unittest
 
 import skinport
 
-from skinport import AuthenticationError, Currency
+from skinport import AuthenticationError, Currency, ParamRequired
 
 import config
 
@@ -27,6 +27,10 @@ class SkinportTestCase(unittest.IsolatedAsyncioTestCase):
         await self.client.get_sales_history(
             market_hash_name=["Yeti Coated Wrench (Minimal Wear)"]
         )
+
+    async def test_get_sales_history_param_required(self):
+        with self.assertRaises(ParamRequired):
+            await self.client.get_sales_history()
 
     async def test_get_sales_out_of_stock(self):
         await self.client.get_sales_out_of_stock()

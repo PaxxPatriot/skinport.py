@@ -24,14 +24,14 @@ SOFTWARE.
 
 from typing import List
 
-from .enums import AppID, Currency
 
+from .enums import AppID, Currency
+from .errors import ParamRequired
 from .http import HTTPClient
+from .item import Item, ItemWithSales, ItemOutOfStock
+from .iterators import TransactionAsyncIterator
 from .transaction import Credit, Withdraw, Purchase
 
-from .item import Item, ItemWithSales, ItemOutOfStock
-
-from .iterators import TransactionAsyncIterator
 
 __all__ = ("Client",)
 
@@ -88,7 +88,7 @@ class Client:
 
     async def get_sales_history(
         self,
-        market_hash_name: List[str] = [],
+        market_hash_name: List[str],
         *,
         app_id: int = 730,
         currency: Currency = Currency.eur
@@ -110,7 +110,7 @@ class Client:
         :class:`list` of :class:`.ItemWithSales`
         """
         if not market_hash_name:
-            raise ValueError("market_hash_name is required")
+            raise ParamRequired("market_hash_name is required")
         params = {
             "market_hash_name": market_hash_name,
             "app_id": app_id,
