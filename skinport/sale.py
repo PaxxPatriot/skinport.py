@@ -37,16 +37,16 @@ class Sale:
     __slots__ = (
         "_price",
         "_wear_value",
-        "_sale_at",
+        "_sold_at",
     )
 
     def __init__(self, *, data: Dict[str, Any]) -> None:
         self._price: float = data.get("price", 0.0)
         self._wear_value: Optional[float] = data.get("wear_value")
-        self._sale_at: Optional[int] = data.get("sale_at")
+        self._sold_at: Optional[int] = data.get("sold_at")
 
     def __repr__(self) -> str:
-        return f"Sale({{'price': {self._price}, 'wear_value': {self._wear_value}, 'sale_at': {self._sale_at}}})"
+        return f"Sale({{'price': {self._price}, 'wear_value': {self._wear_value}, 'sold_at': {self._sold_at}}})"
 
     @property
     def price(self) -> float:
@@ -59,9 +59,9 @@ class Sale:
         return self._wear_value
 
     @property
-    def sale_at(self) -> Optional[datetime.datetime]:
+    def sold_at(self) -> Optional[datetime.datetime]:
         """Returns the date and time the item was sold."""
-        return datetime.datetime.fromtimestamp(self._sale_at) if self._sale_at else None
+        return datetime.datetime.fromtimestamp(self._sold_at) if self._sold_at else None
 
 
 class LastXDays:
