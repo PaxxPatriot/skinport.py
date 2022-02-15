@@ -6,6 +6,16 @@ Installing
 
 **Python 3.10 or higher is required**
 
+To install the library, you can just run the following command:
+
+```bash
+# Linux/macOS
+$ python3 -m pip install -U skinport.py
+
+# Windows
+> py -3 -m pip install -U skinport.py
+```
+
 To install the development version, do the following:
 ```bash
 $ git clone https://github.com/PaxxPatriot/skinport.py
