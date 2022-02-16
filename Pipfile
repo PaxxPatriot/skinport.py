@@ -6,6 +6,7 @@ name = "pypi"
 [packages]
 aiohttp = "*"
 sphinx = "*"
+sphinx_rtd_theme = "*"
 
 [dev-packages]
 
