@@ -23,6 +23,7 @@ SOFTWARE.
 """
 
 import asyncio
+from typing import Any, Callable, Coroutine, Dict, List, Optional, Union
 
 from .transaction import Credit, Purchase, Withdraw
 
@@ -30,13 +31,21 @@ from .errors import NoMoreItems
 
 
 class TransactionAsyncIterator:
-    def __init__(self, getter, limit=None, pagination_token=1, *args, **kwargs):
+    def __init__(
+        self,
+        getter: Callable[..., Coroutine[Any, Any, Any]],
+        limit: Optional[int] = None,
+        pagination_token: int = 1,
+        **kwargs: Dict[str, Any]
+    ) -> None:
         self.limit = limit
-        self.transactions = asyncio.Queue()
         self.has_more = True
         self.getter = getter
         self.kwargs = kwargs
 
+        self.transactions: asyncio.Queue[
+            Union[Credit, Withdraw, Purchase]
+        ] = asyncio.Queue()
         self.previous_token = pagination_token
         self.next_token = pagination_token
 
@@ -52,7 +61,7 @@ class TransactionAsyncIterator:
     async def flatten(self):
         return [element async for element in self]
 
-    async def next(self) -> Credit | Withdraw | Purchase:
+    async def next(self) -> Union[Credit, Withdraw, Purchase]:
         if self.transactions.empty():
             await self.fill_transactions()
 
@@ -65,8 +74,8 @@ class TransactionAsyncIterator:
         if not self.has_more:
             raise NoMoreItems
 
-        data = await self.getter()
-        transactions = data.get("data")
+        data: Dict[str, Any] = await self.getter()
+        transactions: List[Dict[str, Any]] = data.get("data", [])
 
         for t in reversed(transactions):
             if t["type"] == "credit":

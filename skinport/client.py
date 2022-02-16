@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-from typing import List
+from typing import List, Union
 
 
 from .enums import AppID, Currency
@@ -143,7 +143,7 @@ class Client:
 
     async def get_account_transactions(
         self, *, page: int = 1, limit: int = 100, order: str = "desc"
-    ) -> List[Credit | Withdraw | Purchase]:
+    ) -> List[Union[Credit, Withdraw, Purchase]]:
         """*coroutine*
         Returns a :class:`list` of :class:`.Transaction`.
 
@@ -170,7 +170,7 @@ class Client:
         params = {"page": page, "limit": limit, "order": order}
         data = await self.http.get_account_transactions(params=params)
 
-        transactions: List[Credit | Withdraw | Purchase] = []
+        transactions: List[Union[Credit, Withdraw, Purchase]] = []
         for transaction in data["data"]:
             if transaction["type"] == "credit":
                 transactions.append(Credit(data=transaction))
