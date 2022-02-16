@@ -28,6 +28,7 @@ from typing import (
     Any,
     Dict,
     Iterable,
+    List,
     Optional,
 )
 
@@ -120,13 +121,13 @@ class HTTPClient:
                 raise NotFound(response, data)
             raise HTTPException(response, data)
 
-    async def get_items(self, **parameters: Any) -> Dict[str, Any]:
+    async def get_items(self, **parameters: Any) -> List[Dict[str, Any]]:
         return await self.request(Route("GET", "/items"), **parameters)
 
-    async def get_sales_history(self, **parameters: Any) -> Dict[str, Any]:
+    async def get_sales_history(self, **parameters: Any) -> List[Dict[str, Any]]:
         return await self.request(Route("GET", "/sales/history"), **parameters)
 
-    async def get_sales_out_of_stock(self, **parameters: Any) -> Dict[str, Any]:
+    async def get_sales_out_of_stock(self, **parameters: Any) -> List[Dict[str, Any]]:
         return await self.request(Route("GET", "/sales/out-of-stock"), **parameters)
 
     async def get_account_transactions(self, **parameters: Any) -> Dict[str, Any]:
