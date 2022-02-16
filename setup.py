@@ -1,10 +1,6 @@
 from setuptools import setup
 import re
 
-requirements = []
-with open("requirements.txt") as f:
-    requirements = f.read().splitlines()
-
 version = ""
 with open("skinport/__init__.py") as f:
     version = re.search(
@@ -32,7 +28,9 @@ setup(
     description="A Python wrapper for the Skinport API",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    install_requires=requirements,
+    install_requires=[
+        "aiohttp",
+    ],
     classifiers=[
         "Development Status :: 3 - Alpha",
         "License :: OSI Approved :: MIT License",
