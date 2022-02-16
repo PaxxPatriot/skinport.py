@@ -110,17 +110,15 @@ class HTTPClient:
             if response.status in {500, 503}:
                 raise InternalServerError(response, data)
 
-            match response.status:
-                case 401:
-                    raise AuthenticationError(response, data)
-                case 402:
-                    raise InsufficientFunds(response, data)
-                case 403:
-                    raise Forbidden(response, data)
-                case 404:
-                    raise NotFound(response, data)
-                case _:
-                    raise HTTPException(response, data)
+            if response.status == 401:
+                raise AuthenticationError(response, data)
+            if response.status == 402:
+                raise InsufficientFunds(response, data)
+            if response.status == 403:
+                raise Forbidden(response, data)
+            if response.status == 404:
+                raise NotFound(response, data)
+            raise HTTPException(response, data)
 
     async def get_items(self, **parameters: Any) -> Dict[str, Any]:
         return await self.request(Route("GET", "/items"), **parameters)
