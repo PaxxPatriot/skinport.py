@@ -14,7 +14,7 @@ __version__ = "0.2.2"
 __path__ = __import__("pkgutil").extend_path(__path__, __name__)
 
 import logging
-from typing import NamedTuple, Literal
+from typing import NamedTuple
 
 from .client import *
 from .enums import *
@@ -29,7 +29,7 @@ class VersionInfo(NamedTuple):
     major: int
     minor: int
     micro: int
-    releaselevel: Literal["alpha", "beta", "candidate", "final"]
+    releaselevel: str
     serial: int
 
 
