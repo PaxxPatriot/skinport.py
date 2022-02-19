@@ -64,9 +64,7 @@ class HTTPClient:
         self.auth = None
 
         user_agent = "skinport.py {0}) Python/{1[0]}.{1[1]} aiohttp/{2}"
-        self.user_agent: str = user_agent.format(
-            __version__, sys.version_info, str(aiohttp.__version__)
-        )  #
+        self.user_agent: str = user_agent.format(__version__, sys.version_info, str(aiohttp.__version__))  #
 
     def set_auth(self, client_id: str, client_secret: str) -> None:
         self.auth = aiohttp.BasicAuth(login=client_id, password=client_secret)
@@ -97,9 +95,7 @@ class HTTPClient:
         if params:
             kwargs["params"] = params
 
-        async with self.__session.request(
-            method, url, auth=self.auth, **kwargs
-        ) as response:
+        async with self.__session.request(method, url, auth=self.auth, **kwargs) as response:
             _log.debug(f"{method} {url} with {kwargs} has returned {response.status}")
 
             data = await response.json()

@@ -59,7 +59,7 @@ class Client:
         *,
         app_id: AppID = AppID.csgo,
         currency: Currency = Currency.eur,
-        tradable: bool = False
+        tradable: bool = False,
     ) -> List[Item]:
         """*coroutine*
         Returns a :class:`list` of :class:`.Item`.
@@ -82,7 +82,11 @@ class Client:
         """
 
         _tradable = str(tradable).lower()
-        params = {"app_id": app_id, "currency": currency.value, "tradable": _tradable}
+        params = {
+            "app_id": app_id,
+            "currency": currency.value,
+            "tradable": _tradable,
+        }
         data = await self.http.get_items(params=params)
         return [Item(data=item) for item in data]
 
@@ -90,7 +94,7 @@ class Client:
         self,
         *market_hash_names: str,
         app_id: int = 730,
-        currency: Currency = Currency.eur
+        currency: Currency = Currency.eur,
     ) -> List[ItemWithSales]:  # sourcery skip: default-mutable-arg
         """*coroutine*
         Returns a :class:`list` of :class:`.ItemWithSales`.
