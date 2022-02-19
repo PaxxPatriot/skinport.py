@@ -65,9 +65,7 @@ class Item:
         self._updated_at = data.get("updated_at", 0)
 
     def __repr__(self) -> str:
-        return (
-            f"<Item {self._market_hash_name} {self._currency} {self._suggested_price}>"
-        )
+        return f"<Item market_hash_name={self._market_hash_name} market_page={self._market_page} quantity={self._quantity}>"
 
     def __str__(self) -> str:
         return f"{self._market_hash_name}"
@@ -207,7 +205,7 @@ class ItemWithSales:
         self._last_90_days = data.get("last_90_days", {})
 
     def __repr__(self) -> str:
-        return f"<ItemWithSales {self._market_hash_name} Sales={len(self._sales)}>"
+        return f"<ItemWithSales market_hash_name={self._market_hash_name} Sales={len(self._sales)}>"
 
     def __str__(self) -> str:
         return f"{self._market_hash_name}"
