@@ -36,16 +36,14 @@ class TransactionAsyncIterator:
         getter: Callable[..., Coroutine[Any, Any, Any]],
         limit: Optional[int] = None,
         pagination_token: int = 1,
-        **kwargs: Dict[str, Any]
+        **kwargs: Dict[str, Any],
     ) -> None:
         self.limit = limit
         self.has_more = True
         self.getter = getter
         self.kwargs = kwargs
 
-        self.transactions: asyncio.Queue[
-            Union[Credit, Withdraw, Purchase]
-        ] = asyncio.Queue()
+        self.transactions: asyncio.Queue[Union[Credit, Withdraw, Purchase]] = asyncio.Queue()
         self.previous_token = pagination_token
         self.next_token = pagination_token
 
