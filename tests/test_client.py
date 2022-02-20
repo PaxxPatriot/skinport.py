@@ -1,5 +1,8 @@
+import asyncio
 import datetime
+from typing import Optional
 import unittest
+import sys
 
 import skinport
 
@@ -8,7 +11,12 @@ from skinport import AuthenticationError, Currency, ParamRequired
 import config
 
 
-class SkinportTestCase(unittest.IsolatedAsyncioTestCase):
+class SkinportClientTestCase(unittest.IsolatedAsyncioTestCase):
+    def run(self, result: Optional[unittest.TestResult] = None):
+        if sys.version_info[0] == 3 and sys.version_info[1] >= 8 and sys.platform.startswith('win'):
+            asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
+        return super().run(result)
+
     async def asyncSetUp(self):
         self.client = skinport.Client()
 
@@ -27,9 +35,7 @@ class SkinportTestCase(unittest.IsolatedAsyncioTestCase):
         await self.client.get_sales_history("Prisma Case Key")
 
     async def test_get_sales_history_multi_arg(self):
-        await self.client.get_sales_history(
-            "Prisma Case Key", "Clutch Case Key", "Glove Case Key"
-        )
+        await self.client.get_sales_history("Prisma Case Key", "Clutch Case Key", "Glove Case Key")
 
     async def test_get_sales_history_param_required(self):
         with self.assertRaises(ParamRequired):
@@ -43,9 +49,7 @@ class SkinportTestCase(unittest.IsolatedAsyncioTestCase):
             await self.client.get_account_transactions()
 
     async def test_get_account_inventory(self):
-        self.client.set_auth(
-            client_id=config.client_id, client_secret=config.client_secret
-        )
+        self.client.set_auth(client_id=config.client_id, client_secret=config.client_secret)
         await self.client.get_account_transactions()
 
     async def asyncTearDown(self):
