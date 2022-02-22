@@ -72,61 +72,62 @@ class Item:
 
     @property
     def market_hash_name(self) -> str:
-        """:class:`str` Returns the name of the item under it displayed on skinport.com."""
+        """:class:`str`: Returns the name of the item under it displayed on skinport.com."""
         return self._market_hash_name
 
     @property
     def currency(self) -> Currency:
-        """:class:`str` Returns the currency of the item."""
+        """:class:`Currency`: Returns the currency of the item."""
         return Currency(self._currency)
 
     @property
     def suggested_price(self) -> Optional[float]:
-        """:class:`str` Returns the suggested price of the item."""
+        """Optional[:class:`float`]: Returns the suggested price of the item."""
         return self._suggested_price
 
     @property
     def item_page(self) -> str:
-        """:class:`str` Returns the item page of the item."""
+        """:class:`str`: Returns the item page of the item."""
         return self._item_page
 
     @property
     def market_page(self) -> str:
-        """:class:`str` Returns the market page of the item."""
+        """:class:`str`: Returns the market page of the item."""
         return self._market_page
 
     @property
     def min_price(self) -> Optional[float]:
-        """:class:`str` Returns the min price of the item."""
+        """Optional[:class:`float`]: Returns the min price of the item."""
         return self._min_price
 
     @property
     def max_price(self) -> Optional[float]:
-        """:class:`str` Returns the max price of the item."""
+        """Optional[:class:`float`]: Returns the max price of the item."""
         return self._max_price
 
     @property
     def mean_price(self) -> Optional[float]:
-        """:class:`str` Returns the mean price of the item."""
+        """Optional[:class:`float`]: Returns the mean price of the item."""
         return self._mean_price
 
     @property
     def quantity(self) -> int:
-        """:class:`str` Returns the quantity of the item."""
+        """:class:`int`: Returns the quantity of the item."""
         return self._quantity
 
     @property
     def created_at(self) -> datetime.datetime:
-        """:class:`str` Returns the created at of the item."""
+        """:class:`datetime.datetime`: Returns the created at of the item."""
         return datetime.datetime.fromtimestamp(self._created_at)
 
     @property
     def updated_at(self) -> datetime.datetime:
-        """:class:`str` Returns the updated at of the item."""
+        """:class:`datetime.datetime`: Returns the updated at of the item."""
         return datetime.datetime.fromtimestamp(self._updated_at)
 
 
 class ItemOutOfStock:
+    """Represents an item which is out of stock."""
 
     __slots__ = (
         "_market_hash_name",
@@ -158,31 +159,33 @@ class ItemOutOfStock:
 
     @property
     def version(self) -> Optional[str]:
-        """:class:`str` Returns the version of the item."""
+        """Optional[:class:`str`]: Returns the version of the item."""
         return self._version
 
     @property
     def currency(self) -> Currency:
-        """:class:`str` Returns the currency of the item."""
+        """:class:`Currency`: Returns the currency of the item."""
         return Currency(self._currency)
 
     @property
-    def suggested_price(self) -> float:
-        """:class:`str` Returns the suggested price of the item."""
+    def suggested_price(self) -> Optional[float]:
+        """Optional[:class:`float`]: Returns the suggested price of the item."""
         return self._suggested_price
 
     @property
-    def avg_sale_price(self) -> float:
-        """:class:`str` Returns the avg sale price of the item."""
+    def avg_sale_price(self) -> Optional[float]:
+        """Optional[:class:`float`]: Returns the avg sale price of the item."""
         return self._avg_sale_price
 
     @property
     def sales_last_90d(self) -> int:
-        """:class:`str` Returns the sales last 90d of the item."""
+        """:class:`int`: Returns the sales last 90d of the item."""
         return self._sales_last_90d
 
 
 class ItemWithSales:
+    """Represents an item with sales history."""
+
     __slots__ = (
         "_market_hash_name",
         "_currency",
@@ -212,40 +215,40 @@ class ItemWithSales:
 
     @property
     def market_hash_name(self) -> str:
-        """:class:`str` Returns the name of the item under it displayed on skinport.com."""
+        """:class:`str`: Returns the name of the item under it displayed on skinport.com."""
         return self._market_hash_name
 
     @property
     def currency(self) -> Currency:
-        """:class:`str` Returns the currency of the item."""
+        """:class:`Currency`: Returns the currency of the item."""
         return Currency(self._currency)
 
     @property
     def item_page(self) -> str:
-        """:class:`str` Returns the item page of the item."""
+        """:class:`str`: Returns the item page of the item."""
         return self._item_page
 
     @property
     def market_page(self) -> str:
-        """:class:`str` Returns the market page of the item."""
+        """:class:`str`: Returns the market page of the item."""
         return self._market_page
 
     @property
     def sales(self) -> List[Sale]:
-        """:class:`str` Returns the sales of the item."""
+        """List[:class:`Sale`]: Returns a :class:`list` of :class:`Sale`."""
         return [Sale(data=sale) for sale in self._sales]
 
     @property
     def last_7_days(self) -> LastXDays:
-        """:class:`str` Returns the last 7 days of the item."""
+        """:class:`LastXDays`: Returns the last 7 days of the item."""
         return LastXDays(data=self._last_7_days)
 
     @property
     def last_30_days(self) -> LastXDays:
-        """:class:`str` Returns the last 30 days of the item."""
+        """:class:`LastXDays`: Returns the last 30 days of the item."""
         return LastXDays(data=self._last_30_days)
 
     @property
     def last_90_days(self) -> LastXDays:
-        """:class:`str` Returns the last 90 days of the item."""
+        """:class:`LastXDays`: Returns the last 90 days of the item."""
         return LastXDays(data=self._last_90_days)

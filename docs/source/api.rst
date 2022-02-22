@@ -15,10 +15,28 @@ Item
 .. autoclass:: Item
     :members:
 
+ItemWithSales
+~~~~~~~~~~~~~~
+
+.. autoclass:: ItemWithSales
+    :members:
+
+ItemOutOfStock
+~~~~~~~~~~~~~~~
+
+.. autoclass:: ItemOutOfStock
+    :members:
+
 Sale
 ~~~~~
 
 .. autoclass:: Sale
+    :members:
+
+LastXDays
+~~~~~~~~~~
+
+.. autoclass:: LastXDays
     :members:
 
 Transaction
