@@ -25,12 +25,12 @@ SOFTWARE.
 import asyncio
 import logging
 import signal
-from typing import Any, List, Union
+from typing import Any, Coroutine, Dict, List, Union
 
 import socketio
 
 
-from .enums import AppID, Currency
+from .enums import AppID, Currency, Locale
 from .errors import ParamRequired
 from .http import HTTPClient
 from .item import Item, ItemWithSales, ItemOutOfStock
@@ -82,6 +82,7 @@ def _cleanup_loop(loop: asyncio.AbstractEventLoop) -> None:
 class Client:
     def __init__(self):
         self.http: HTTPClient = HTTPClient()
+        self.ws: socketio.AsyncClient = socketio.AsyncClient()
         self._closed = False
 
     def set_auth(self, *, client_id: str, client_secret: str):
@@ -135,19 +136,19 @@ class Client:
                 # I am unsure why this gets raised here but suppress it anyway
                 return None
 
-    async def on_sale_feed(self, data) -> None:
-        pass
+    async def catch_all(self, event, data):
+        _log.debug(f"Received event {event}")
 
-    def event(self, coro):
-        """A decorator that registers an event to listen to.
+    def listen(self, name: str = None) -> Coroutine[Any, Any, Any]:
+        """A decorator that registers an event listener.
         The events must be a coroutine, if not, :exc:`TypeError` is raised.
         Example
         ---------
         .. code-block:: python3
 
-           @client.event
+           @client.listen("saleFeed")
            async def on_sale_feed(data):
-           print(data)
+               print(data)
 
         Raises
         --------
@@ -155,21 +156,48 @@ class Client:
             The coroutine passed is not actually a coroutine.
         """
 
-        if not asyncio.iscoroutinefunction(coro):
-            raise TypeError("event registered must be a coroutine function")
+        def decorator(func):
+            if not asyncio.iscoroutinefunction(func):
+                raise TypeError("event listener registered must be a coroutine function")
 
-        setattr(self, coro.__name__, coro)
-        _log.debug("%s has successfully been registered as an event", coro.__name__)
-        return coro
+            if name is None:
+                raise ValueError("name can't be None")
 
-    async def connect(self) -> None:
+            self.ws.on(name, func)
+            _log.debug("%s has successfully been registered as an event", func.__name__)
+            return func
+
+        return decorator
+
+    async def connect(self, *args: Any, **kwargs: Any) -> None:
+        """*coroutine*
+        Connects to the socket.io websocket.
+
+        Parameters
+        ----------
+        app_id: :class:`AppID`
+            The app_id for the inventory's game.
+            Defaults to ``730``.
+        currency: :class:`Currency`
+            The currency for pricing.
+            Defaults to ``EUR``.
+        locale: :class:`Locale`
+            Whether or not to show only tradable items.
+            Defaults to ``en``.
+        """
+        # Get parameters for the sale feed
+        app_id = kwargs.get("app_id", AppID.csgo)
+        currency = kwargs.get("currency", Currency.eur)
+        locale = kwargs.get("locale", Locale.en)
+
         while not self._closed:
             try:
-                ws = socketio.AsyncClient()
-                ws.on("saleFeed", self.on_sale_feed)
-                await ws.connect("https://skinport.com", transports=["websocket"])
-                await ws.emit("saleFeedJoin", {"currency": "EUR", "locale": "en", "appid": 730})
-                await ws.wait()
+                self.ws.on("*", self.catch_all)
+                await self.ws.connect("https://skinport.com", transports=["websocket"])
+                await self.ws.emit(
+                    "saleFeedJoin", {"currency": currency.value, "locale": locale.value, "appid": app_id.value}
+                )
+                await self.ws.wait()
             except asyncio.TimeoutError:
                 _log.info("Connection timed out.")
                 await self.close()
