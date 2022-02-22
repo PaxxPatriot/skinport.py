@@ -27,6 +27,7 @@ from enum import Enum, IntEnum
 __all__ = (
     "Currency",
     "AppID",
+    "Locale",
 )
 
 
@@ -57,3 +58,18 @@ class AppID(IntEnum):
     dota2 = 570
     rust = 252490
     tf2 = 440
+
+
+class Locale(Enum):
+    en = "en"
+    de = "de"
+    ru = "ru"
+    fr = "fr"
+    zh = "zh"
+    nl = "nl"
+    fi = "fi"
+    es = "es"
+    tr = "tr"
+
+    def __str__(self) -> str:
+        return self.value
