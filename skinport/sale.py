@@ -50,17 +50,17 @@ class Sale:
 
     @property
     def price(self) -> float:
-        """Returns the price of the item."""
+        """:class:`float`: Returns the price of the item."""
         return self._price
 
     @property
     def wear_value(self) -> Optional[float]:
-        """Returns the wear value of the item."""
+        """Optional[:class:`float`]: Returns the wear value of the item."""
         return self._wear_value
 
     @property
     def sold_at(self) -> datetime.datetime:
-        """Returns the date and time the item was sold."""
+        """:class:`datetime.datetime`: Returns the date and time the item was sold."""
         return datetime.datetime.fromtimestamp(self._sold_at)
 
 
@@ -84,20 +84,20 @@ class LastXDays:
 
     @property
     def min(self) -> Optional[float]:
-        """:class:`str` Returns the min of the last x days"""
+        """Optional[:class:`float`]: Returns the min of the last x days"""
         return self._min
 
     @property
     def max(self) -> Optional[float]:
-        """:class:`str` Returns the max of the last x days"""
+        """Optional[:class:`float`]: Returns the max of the last x days"""
         return self._max
 
     @property
     def avg(self) -> Optional[float]:
-        """:class:`str` Returns the avg of the last x days"""
+        """Optional[:class:`float`]: Returns the avg of the last x days"""
         return self._avg
 
     @property
     def volume(self) -> int:
-        """:class:`str` Returns the volume of the last x days"""
+        """:class:`int`: Returns the volume of the last x days"""
         return self._volume

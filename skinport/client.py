@@ -62,7 +62,7 @@ class Client:
         tradable: bool = False,
     ) -> List[Item]:
         """*coroutine*
-        Returns a :class:`list` of :class:`.Item`.
+        Returns a :class:`list` of :class:`Item`.
 
         Parameters
         ----------
@@ -78,7 +78,7 @@ class Client:
 
         Returns
         -------
-        :class:`list` of :class:`.Item`
+        :class:`list` of :class:`Item`
         """
 
         _tradable = str(tradable).lower()
@@ -97,7 +97,7 @@ class Client:
         currency: Currency = Currency.eur,
     ) -> List[ItemWithSales]:  # sourcery skip: default-mutable-arg
         """*coroutine*
-        Returns a :class:`list` of :class:`.ItemWithSales`.
+        Returns a :class:`list` of :class:`ItemWithSales`.
 
         Parameters
         ----------
@@ -110,7 +110,7 @@ class Client:
 
         Returns
         -------
-        :class:`list` of :class:`.ItemWithSales`
+        :class:`list` of :class:`ItemWithSales`
         """
         if not market_hash_names:
             raise ParamRequired("At least one market_hash_name is required.")
@@ -126,7 +126,7 @@ class Client:
         self, *, app_id: int = 730, currency: Currency = Currency.eur
     ) -> List[ItemOutOfStock]:
         """*coroutine*
-        Returns a :class:`list` of :class:`.ItemOutOfStock`.
+        Returns a :class:`list` of :class:`ItemOutOfStock`.
 
         Parameters
         ----------
@@ -139,7 +139,7 @@ class Client:
 
         Returns
         -------
-        :class:`list` of :class:`.ItemOutOfStock`
+        :class:`list` of :class:`ItemOutOfStock`
         """
         params = {"app_id": app_id, "currency": currency.value}
         data = await self.http.get_sales_out_of_stock(params=params)
@@ -149,7 +149,7 @@ class Client:
         self, *, page: int = 1, limit: int = 100, order: str = "desc"
     ) -> List[Union[Credit, Withdraw, Purchase]]:
         """*coroutine*
-        Returns a :class:`list` of :class:`.Transaction`.
+        Returns a :class:`list` of :class:`Transaction`.
 
         Parameters
         ----------
@@ -165,7 +165,7 @@ class Client:
 
         Returns
         -------
-        :class:`list` of :class:`.Transaction`
+        :class:`list` of :class:`Transaction`
 
         Raises
         ------
@@ -192,7 +192,7 @@ class Client:
 
         Returns
         -------
-        :class:`TransactionAsyncIterator` of :class:`.Item`
+        :class:`TransactionAsyncIterator` of :class:`Item`
 
         Raises
         ------
