@@ -48,6 +48,9 @@ class Currency(Enum):
     try_ = "TRY"
     usd = "USD"
 
+    def __str__(self) -> str:
+        return self.value
+
 
 class AppID(IntEnum):
     csgo = 730
