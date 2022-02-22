@@ -28,6 +28,7 @@ setup(
     long_description_content_type="text/markdown",
     install_requires=[
         "aiohttp",
+        "python-socketio[asyncio_client]",
     ],
     classifiers=[
         "Development Status :: 3 - Alpha",
