@@ -6,12 +6,12 @@ name = "pypi"
 [packages]
 aiohttp = "*"
 "python-socketio[asyncio_client]" = "*"
+sphinx = "*"
+sphinx_rtd_theme = "*"
 
 [dev-packages]
 black = "*"
 "skinport.py" = {editable = true, path = "."}
-sphinx = "*"
-sphinx_rtd_theme = "*"
 
 [requires]
 python_version = "3.7"
