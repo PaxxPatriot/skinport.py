@@ -51,7 +51,6 @@ class Tag:
         return self._name_localized
 
 
-
 class SaleFeedSale:
 
     __slots__ = (
