@@ -8,5 +8,6 @@ aiohttp = "*"
 sphinx = "*"
 sphinx_rtd_theme = "*"
 
-[requires]
-python_version = "3.7"
+[dev-packages]
+black = "*"
+"skinport.py" = {editable = true, path = "."}

@@ -13,7 +13,7 @@ import config
 
 class SkinportClientTestCase(unittest.IsolatedAsyncioTestCase):
     def run(self, result: Optional[unittest.TestResult] = None):
-        if sys.version_info[0] == 3 and sys.version_info[1] >= 8 and sys.platform.startswith('win'):
+        if sys.version_info[0] == 3 and sys.version_info[1] >= 8 and sys.platform.startswith("win"):
             asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
         return super().run(result)
 

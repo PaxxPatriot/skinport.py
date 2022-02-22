@@ -122,15 +122,15 @@ class HTTPClient:
 
     async def ws_connect(self, url: str, *, compress: int = 0) -> Any:
         kwargs = {
-            'proxy': self.proxy,
-            'proxy_auth': self.proxy_auth,
-            'max_msg_size': 0,
-            'timeout': 30.0,
-            'autoclose': False,
-            'headers': {
-                'User-Agent': self.user_agent,
+            "proxy": self.proxy,
+            "proxy_auth": self.proxy_auth,
+            "max_msg_size": 0,
+            "timeout": 30.0,
+            "autoclose": False,
+            "headers": {
+                "User-Agent": self.user_agent,
             },
-            'compress': compress,
+            "compress": compress,
         }
         return await self.__session.ws_connect(url, **kwargs)
 

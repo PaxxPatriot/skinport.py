@@ -74,5 +74,5 @@ class ItemTestCase(unittest.TestCase):
     def test_item_repr(self):
         self.assertEqual(
             repr(self.items[0]),
-            "<Item market_hash_name=AK-47 | Aquamarine Revenge (Battle-Scarred) market_page=https://skinport.com/market/730?cat=Rifle&item=Aquamarine+Revenge quantity=25>"
+            "<Item market_hash_name=AK-47 | Aquamarine Revenge (Battle-Scarred) market_page=https://skinport.com/market/730?cat=Rifle&item=Aquamarine+Revenge quantity=25>",
         )
