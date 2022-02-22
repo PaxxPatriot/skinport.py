@@ -58,10 +58,16 @@ class Route:
 
 
 class HTTPClient:
-    def __init__(self) -> None:
-        self.token = None
+    def __init__(
+        self,
+        *,
+        proxy: Optional[str] = None,
+        proxy_auth: Optional[aiohttp.BasicAuth] = None,
+    ) -> None:
         self.__session = aiohttp.ClientSession()
         self.auth = None
+        self.proxy: Optional[str] = proxy
+        self.proxy_auth: Optional[aiohttp.BasicAuth] = proxy_auth
 
         user_agent = "skinport.py {0}) Python/{1[0]}.{1[1]} aiohttp/{2}"
         self.user_agent: str = user_agent.format(__version__, sys.version_info, str(aiohttp.__version__))  #
@@ -86,9 +92,6 @@ class HTTPClient:
         headers: Dict[str, str] = {
             "User-Agent": self.user_agent,
         }
-
-        if self.token is not None:
-            headers["Authorization"] = f"Basic {self.token}"
 
         kwargs["headers"] = headers
 
@@ -116,6 +119,20 @@ class HTTPClient:
             if response.status == 404:
                 raise NotFound(response, data)
             raise HTTPException(response, data)
+
+    async def ws_connect(self, url: str, *, compress: int = 0) -> Any:
+        kwargs = {
+            'proxy': self.proxy,
+            'proxy_auth': self.proxy_auth,
+            'max_msg_size': 0,
+            'timeout': 30.0,
+            'autoclose': False,
+            'headers': {
+                'User-Agent': self.user_agent,
+            },
+            'compress': compress,
+        }
+        return await self.__session.ws_connect(url, **kwargs)
 
     async def get_items(self, **parameters: Any) -> List[Dict[str, Any]]:
         return await self.request(Route("GET", "/items"), **parameters)
