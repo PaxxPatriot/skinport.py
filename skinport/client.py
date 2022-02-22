@@ -169,7 +169,7 @@ class Client:
 
         Raises
         ------
-        :exc:`.AuthenticationError`
+        :exc:`AuthenticationError`
         """
         params = {"page": page, "limit": limit, "order": order}
         data = await self.http.get_account_transactions(params=params)
@@ -196,6 +196,6 @@ class Client:
 
         Raises
         ------
-        :exc:`.AuthenticationError`
+        :exc:`AuthenticationError`
         """
         return TransactionAsyncIterator(self.http.get_account_transactions)
