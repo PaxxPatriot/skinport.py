@@ -92,7 +92,9 @@ class Client:
         initialisation from you.
         If you want more control over the event loop then this
         function should not be used. Use :meth:`connect`.
+
         .. warning::
+
             This function must be the last function to call due to the fact that it
             is blocking. That means that registration of events or anything being
             called after this function call will not execute until it returns.
@@ -138,13 +140,15 @@ class Client:
 
     def event(self, coro):
         """A decorator that registers an event to listen to.
-        The events must be a :ref:`coroutine <coroutine>`, if not, :exc:`TypeError` is raised.
+        The events must be a coroutine, if not, :exc:`TypeError` is raised.
         Example
         ---------
         .. code-block:: python3
-            @client.event
-            async def on_sale_feed(data):
-            print(data)
+
+           @client.event
+           async def on_sale_feed(data):
+           print(data)
+
         Raises
         --------
         TypeError

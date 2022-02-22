@@ -45,6 +45,18 @@ Transaction
 .. autoclass:: Transaction
     :members:
 
+SaleFeed
+~~~~~~~~~
+
+.. autoclass:: SaleFeed
+    :members:
+
+.. autoclass:: SaleFeedSale
+    :members:
+
+.. autoclass:: Tag
+    :members:
+
 
 Exceptions
 ~~~~~~~~~~~~

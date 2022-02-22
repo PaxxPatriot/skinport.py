@@ -20,6 +20,7 @@ Manual
    :caption: Contents:
 
    api
+   logging
 
 
 
