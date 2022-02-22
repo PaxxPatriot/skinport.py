@@ -22,7 +22,12 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-from typing import List, Union
+import asyncio
+import logging
+import signal
+from typing import Any, List, Union
+
+import socketio
 
 
 from .enums import AppID, Currency
@@ -36,6 +41,41 @@ from .transaction import Credit, Withdraw, Purchase
 __all__ = ("Client",)
 
 
+_log = logging.getLogger(__name__)
+
+
+def _cancel_tasks(loop: asyncio.AbstractEventLoop) -> None:
+    tasks = {t for t in asyncio.all_tasks(loop=loop) if not t.done()}
+
+    if not tasks:
+        return
+
+    _log.info('Cleaning up after %d tasks.', len(tasks))
+    for task in tasks:
+        task.cancel()
+
+    loop.run_until_complete(asyncio.gather(*tasks, return_exceptions=True))
+    _log.info('All tasks finished cancelling.')
+
+    for task in tasks:
+        if task.cancelled():
+            continue
+        if task.exception() is not None:
+            loop.call_exception_handler({
+                'message': 'Unhandled exception during Client.run shutdown.',
+                'exception': task.exception(),
+                'task': task
+            })
+
+def _cleanup_loop(loop: asyncio.AbstractEventLoop) -> None:
+    try:
+        _cancel_tasks(loop)
+        loop.run_until_complete(loop.shutdown_asyncgens())
+    finally:
+        _log.info('Closing the event loop.')
+        loop.close()
+
+
 class Client:
     def __init__(self):
         self.http: HTTPClient = HTTPClient()
@@ -44,6 +84,89 @@ class Client:
     def set_auth(self, *, client_id: str, client_secret: str):
         self.http.set_auth(client_id, client_secret)
 
+    def run(self, *args: Any, **kwargs: Any) -> None:
+        """A blocking call that abstracts away the event loop
+        initialisation from you.
+        If you want more control over the event loop then this
+        function should not be used. Use :meth:`connect`.
+        .. warning::
+            This function must be the last function to call due to the fact that it
+            is blocking. That means that registration of events or anything being
+            called after this function call will not execute until it returns.
+        """
+        loop = asyncio.get_event_loop()
+
+        try:
+            loop.add_signal_handler(signal.SIGINT, lambda: loop.stop())
+            loop.add_signal_handler(signal.SIGTERM, lambda: loop.stop())
+        except NotImplementedError:
+            pass
+
+        async def runner():
+            try:
+                await self.connect(*args, **kwargs)
+            finally:
+                if not self._closed:
+                    await self.close()
+
+        def stop_loop_on_completion(f):
+            loop.stop()
+
+        future = asyncio.ensure_future(runner(), loop=loop)
+        future.add_done_callback(stop_loop_on_completion)
+        try:
+            loop.run_forever()
+        except KeyboardInterrupt:
+            _log.info('Received signal to terminate bot and event loop.')
+        finally:
+            future.remove_done_callback(stop_loop_on_completion)
+            _log.info('Cleaning up tasks.')
+            _cleanup_loop(loop)
+
+        if not future.cancelled():
+            try:
+                return future.result()
+            except KeyboardInterrupt:
+                # I am unsure why this gets raised here but suppress it anyway
+                return None
+
+    async def on_sale_feed(self, data) -> None:
+        pass
+
+    def event(self, coro):
+        """A decorator that registers an event to listen to.
+        The events must be a :ref:`coroutine <coroutine>`, if not, :exc:`TypeError` is raised.
+        Example
+        ---------
+        .. code-block:: python3
+            @client.event
+            async def on_sale_feed(data):
+            print(data)
+        Raises
+        --------
+        TypeError
+            The coroutine passed is not actually a coroutine.
+        """
+
+        if not asyncio.iscoroutinefunction(coro):
+            raise TypeError('event registered must be a coroutine function')
+
+        setattr(self, coro.__name__, coro)
+        _log.debug('%s has successfully been registered as an event', coro.__name__)
+        return coro
+
+    async def connect(self) -> None:
+        while not self._closed:
+            try:
+                ws = socketio.AsyncClient()
+                ws.on('saleFeed', self.on_sale_feed)
+                await ws.connect("https://skinport.com", transports=["websocket"])
+                await ws.emit("saleFeedJoin", {"currency": "EUR", "locale": "en", "appid": 730})
+                await ws.wait()
+            except asyncio.TimeoutError:
+                _log.info("Connection timed out.")
+                await self.close()
+        
     async def close(self) -> None:
         """*coroutine*
         Closes the `aiohttp.ClientSession`.
