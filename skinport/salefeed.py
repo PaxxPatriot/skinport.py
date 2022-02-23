@@ -211,7 +211,7 @@ class SaleFeedSale:
 
     @property
     def url(self) -> str:
-        return self._url
+        return f"https://skinport.com/item/{self._url}/{self._saleId}"
 
     @property
     def family(self) -> str:
