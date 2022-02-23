@@ -210,7 +210,8 @@ class Client:
             return
 
         self._closed = True
-        await self.ws.eio.http.close()
+        if self.ws.eio.http is not None:
+            await self.ws.eio.http.close()
         await self.http.close()
 
     async def get_items(
