@@ -36,43 +36,45 @@ TEST_ITEMS = """[
 
 class ItemTestCase(unittest.TestCase):
     def setUp(self):
-        _items = json.loads(TEST_ITEMS)
-        self.items = [Item(data=data) for data in _items]
+        self._items = json.loads(TEST_ITEMS)
 
     def test_item_constructor(self):
-        self.assertEqual(len(self.items), 2)
+        items = [Item(data=data) for data in self._items]
+        self.assertEqual(len(items), 2)
         self.assertEqual(
-            self.items[0].market_hash_name,
+            items[0].market_hash_name,
             "AK-47 | Aquamarine Revenge (Battle-Scarred)",
         )
-        self.assertEqual(self.items[0].currency, Currency.eur)
-        self.assertEqual(self.items[0].suggested_price, 13.18)
+        self.assertEqual(items[0].currency, Currency.eur)
+        self.assertEqual(items[0].suggested_price, 13.18)
         self.assertEqual(
-            self.items[0].item_page,
+            items[0].item_page,
             "https://skinport.com/item/csgo/ak-47-aquamarine-revenge-battle-scarred",
         )
         self.assertEqual(
-            self.items[0].market_page,
+            items[0].market_page,
             "https://skinport.com/market/730?cat=Rifle&item=Aquamarine+Revenge",
         )
-        self.assertEqual(self.items[0].min_price, 11.33)
-        self.assertEqual(self.items[0].max_price, 18.22)
-        self.assertEqual(self.items[0].mean_price, 12.58)
-        self.assertEqual(self.items[0].quantity, 25)
+        self.assertEqual(items[0].min_price, 11.33)
+        self.assertEqual(items[0].max_price, 18.22)
+        self.assertEqual(items[0].mean_price, 12.58)
+        self.assertEqual(items[0].quantity, 25)
         self.assertEqual(
-            self.items[0].created_at,
+            items[0].created_at,
             datetime.datetime.fromtimestamp(1535988253),
         )
         self.assertEqual(
-            self.items[0].updated_at,
+            items[0].updated_at,
             datetime.datetime.fromtimestamp(1568073728),
         )
 
     def test_item_str(self):
-        self.assertEqual(str(self.items[0]), "AK-47 | Aquamarine Revenge (Battle-Scarred)")
+        items = [Item(data=data) for data in self._items]
+        self.assertEqual(str(items[0]), "AK-47 | Aquamarine Revenge (Battle-Scarred)")
 
     def test_item_repr(self):
+        items = [Item(data=data) for data in self._items]
         self.assertEqual(
-            repr(self.items[0]),
+            repr(items[0]),
             "<Item market_hash_name=AK-47 | Aquamarine Revenge (Battle-Scarred) market_page=https://skinport.com/market/730?cat=Rifle&item=Aquamarine+Revenge quantity=25>",
         )
