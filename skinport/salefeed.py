@@ -42,6 +42,19 @@ class Tag:
         self._name = data.get("name", "")
         self._name_localized = data.get("name_localized", "")
 
+    def __repr__(self) -> str:
+        return f"Tag(data={{'name': {self._name}, 'name_localized': {self._name_localized}}})"
+
+    def __str__(self) -> str:
+        return self._name
+
+    def __eq__(self, __o: object) -> bool:
+        if isinstance(__o, str):
+            return self._name == __o or self._name_localized == __o
+        elif isinstance(__o, Tag):
+            return self._name == __o._name or self._name_localized == __o._name_localized
+        return False
+
     @property
     def name(self) -> str:
         return self._name
@@ -161,6 +174,12 @@ class SaleFeedSale:
         self._stattrak = data.get("stattrak", False)
         self._tags = data.get("tags", [])
         self._ownItem = data.get("ownItem", False)
+
+    def __repr__(self) -> str:
+        return f"<SaleFeedSale marketHashName={self._marketHashName} salePrice={self._salePrice} currency={self._currency}>"
+
+    def __str__(self) -> str:
+        return self._marketHashName
 
     @property
     def id_(self) -> int:
@@ -381,6 +400,9 @@ class SaleFeed:
     def __init__(self, *, data: Dict[str, Any]) -> None:
         self._event_type = data.get("eventType", "")
         self._sales = data.get("sales", [])
+
+    def __repr__(self) -> str:
+        return f"<SaleFeed event_type={self._event_type}>"
 
     @property
     def event_type(self) -> str:
