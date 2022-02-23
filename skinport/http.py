@@ -120,20 +120,6 @@ class HTTPClient:
                 raise NotFound(response, data)
             raise HTTPException(response, data)
 
-    async def ws_connect(self, url: str, *, compress: int = 0) -> Any:
-        kwargs = {
-            "proxy": self.proxy,
-            "proxy_auth": self.proxy_auth,
-            "max_msg_size": 0,
-            "timeout": 30.0,
-            "autoclose": False,
-            "headers": {
-                "User-Agent": self.user_agent,
-            },
-            "compress": compress,
-        }
-        return await self.__session.ws_connect(url, **kwargs)
-
     async def get_items(self, **parameters: Any) -> List[Dict[str, Any]]:
         return await self.request(Route("GET", "/items"), **parameters)
 
