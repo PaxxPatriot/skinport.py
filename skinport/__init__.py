@@ -9,7 +9,7 @@ __title__ = "skinport"
 __author__ = "PaxxPatriot"
 __license__ = "MIT"
 __copyright__ = "Copyright 2022 PaxxPatriot"
-__version__ = "0.4.1"
+__version__ = "0.4.2"
 
 __path__ = __import__("pkgutil").extend_path(__path__, __name__)
 
@@ -34,6 +34,6 @@ class VersionInfo(NamedTuple):
     serial: int
 
 
-version_info: VersionInfo = VersionInfo(major=0, minor=4, micro=1, releaselevel="final", serial=0)
+version_info: VersionInfo = VersionInfo(major=0, minor=4, micro=2, releaselevel="final", serial=0)
 
 logging.getLogger(__name__).addHandler(logging.NullHandler())
