@@ -37,8 +37,8 @@ import aiohttp
 from .errors import (
     HTTPException,
     AuthenticationError,
-    Forbidden,
     InsufficientFunds,
+    InvalidScope,
     NotFound,
     InternalServerError,
 )
@@ -115,7 +115,7 @@ class HTTPClient:
             if response.status == 402:
                 raise InsufficientFunds(response, data)
             if response.status == 403:
-                raise Forbidden(response, data)
+                raise InvalidScope(response, data)
             if response.status == 404:
                 raise NotFound(response, data)
             raise HTTPException(response, data)

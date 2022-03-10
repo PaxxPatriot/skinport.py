@@ -192,6 +192,4 @@ The following exceptions are thrown by the library.
 
 .. autoexception:: InvalidScope
 
-.. autoexception:: Forbidden
-
 .. autoexception:: InternalServerError
