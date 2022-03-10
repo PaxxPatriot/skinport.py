@@ -28,6 +28,7 @@ __all__ = (
     "Currency",
     "AppID",
     "Locale",
+    "SaleType",
 )
 
 
@@ -70,6 +71,14 @@ class Locale(Enum):
     fi = "fi"
     es = "es"
     tr = "tr"
+
+    def __str__(self) -> str:
+        return self.value
+
+
+class SaleType(Enum):
+    public = "public"
+    private = "private"
 
     def __str__(self) -> str:
         return self.value

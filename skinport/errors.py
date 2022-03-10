@@ -145,7 +145,7 @@ class NotFound(HTTPException):
 
 class InternalServerError(HTTPException):
     """Exception that’s raised for when a 500 range status code occurs.
-    
+
     Subclass of :exc:`HTTPException`"""
 
     pass
