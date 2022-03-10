@@ -17,6 +17,7 @@ import logging
 from typing import NamedTuple
 
 from .client import *
+from .color import *
 from .enums import *
 from .errors import *
 from .item import *
