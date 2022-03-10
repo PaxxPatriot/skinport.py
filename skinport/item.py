@@ -72,7 +72,7 @@ class Item:
 
     @property
     def market_hash_name(self) -> str:
-        """:class:`str`: Returns the name of the item under it displayed on skinport.com."""
+        """:class:`str`: Returns the name of the item under it is displayed on skinport.com."""
         return self._market_hash_name
 
     @property
