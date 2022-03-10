@@ -27,8 +27,6 @@ from typing import Any, Callable, Coroutine, Dict, List, Optional, Union
 
 from .transaction import Credit, Purchase, Withdraw
 
-from .errors import NoMoreItems
-
 
 class TransactionAsyncIterator:
     def __init__(
@@ -50,8 +48,8 @@ class TransactionAsyncIterator:
     async def __anext__(self):
         try:
             return await self.next()
-        except NoMoreItems as e:
-            raise StopAsyncIteration from e
+        except StopAsyncIteration as e:
+            raise
 
     def __aiter__(self):
         return self
@@ -66,11 +64,11 @@ class TransactionAsyncIterator:
         try:
             return self.transactions.get_nowait()
         except asyncio.QueueEmpty as e:
-            raise NoMoreItems from e
+            raise StopAsyncIteration from e
 
     async def fill_transactions(self):
         if not self.has_more:
-            raise NoMoreItems
+            raise StopAsyncIteration
 
         data: Dict[str, Any] = await self.getter()
         transactions: List[Dict[str, Any]] = data.get("data", [])

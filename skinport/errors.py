@@ -35,9 +35,7 @@ __all__ = (
     "InsufficientFunds",
     "InvalidScope",
     "NotFound",
-    "Forbidden",
     "InternalServerError",
-    "NoMoreItems",
 )
 
 
@@ -96,40 +94,58 @@ class HTTPException(SkinportException):
 
 
 class ParamRequired(ClientException):
+    """Exception that’s raised when a required parameter is not passed."""
+
     pass
 
 
 class ValidationError(ClientException):
+    """Exception that’s raised when validation of the passed parameters failed."""
+
     pass
 
 
 class InvalidRequest(ClientException):
+    """Exception that’s raised when the request couldn't be validated."""
+
     pass
 
 
 class AuthenticationError(HTTPException):
+    """Exception that’s raised for when status code 401 occurs.
+
+    Subclass of :exc:`HTTPException`"""
+
     pass
 
 
 class InsufficientFunds(HTTPException):
+    """Exception that’s raised for when status code 402 occurs.
+
+    Subclass of :exc:`HTTPException`"""
+
     pass
 
 
 class InvalidScope(HTTPException):
+    """Exception that’s raised for when status code 403 occurs.
+
+    Subclass of :exc:`HTTPException`"""
+
     pass
 
 
 class NotFound(HTTPException):
-    pass
+    """Exception that’s raised for when status code 404 occurs.
 
+    Subclass of :exc:`HTTPException`"""
 
-class Forbidden(HTTPException):
     pass
 
 
 class InternalServerError(HTTPException):
-    pass
+    """Exception that’s raised for when a 500 range status code occurs.
+    
+    Subclass of :exc:`HTTPException`"""
 
-
-class NoMoreItems(SkinportException):
     pass
