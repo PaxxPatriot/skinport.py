@@ -57,6 +57,12 @@ SaleFeed
 .. autoclass:: Tag
     :members:
 
+Color
+------
+
+.. autoclass:: Color
+    :members:
+
 Enumerations
 -------------
 
