@@ -173,15 +173,14 @@ All enumerations are subclasses of :class:`enum.Enum`.
 
         Turkish.
 
-..class:: SaleType
+.. class:: SaleType
 
     Specifies the type of a sale.
 
-    ..attribute:: public
-        
+    .. attribute:: public
+    
         Public sale.
-
-    ..attribute:: private
+    .. attribute:: private
             
         Private sale.
 
