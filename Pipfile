@@ -12,3 +12,6 @@ python-socketio = {extras = ["asyncio_client"], version = "*"}
 [dev-packages]
 black = "*"
 "skinport.py" = {editable = true, path = "."}
+
+[requires]
+python_version = "3.7"
