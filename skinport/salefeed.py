@@ -478,7 +478,7 @@ class SaleFeedSale:
         return self._collection_localized
 
     @property
-    def stickers(self) -> List[str]:
+    def stickers(self) -> List[Sticker]:
         """List[:class:`str`]: Returns a :class:`list` of :class:`str` with names of attached stickers. Can be empty."""
         return [Sticker(data=sticker) for sticker in self._stickers]
 
