@@ -1,6 +1,6 @@
 import json
-from typing import List, Union
 import unittest
+from typing import List, Union
 
 from skinport import Credit, Purchase, Withdraw
 

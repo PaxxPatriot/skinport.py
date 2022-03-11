@@ -24,26 +24,14 @@ SOFTWARE.
 
 import logging
 import sys
-from typing import (
-    Any,
-    Dict,
-    Iterable,
-    List,
-    Optional,
-)
+from typing import Any, Dict, Iterable, List, Optional
 
 import aiohttp
 
-from .errors import (
-    HTTPException,
-    AuthenticationError,
-    InsufficientFunds,
-    InvalidScope,
-    NotFound,
-    InternalServerError,
-)
 from skinport import __version__
 
+from .errors import (AuthenticationError, HTTPException, InsufficientFunds,
+                     InternalServerError, InvalidScope, NotFound)
 
 _log = logging.getLogger(__name__)
 

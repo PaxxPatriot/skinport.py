@@ -1,5 +1,6 @@
-from setuptools import setup
 import re
+
+from setuptools import setup
 
 version = ""
 with open("skinport/__init__.py") as f:

@@ -21,10 +21,10 @@ from .color import *
 from .enums import *
 from .errors import *
 from .item import *
-from .sale import *
-from .transaction import *
 from .iterators import *
+from .sale import *
 from .salefeed import *
+from .transaction import *
 
 
 class VersionInfo(NamedTuple):
