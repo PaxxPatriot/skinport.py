@@ -26,7 +26,8 @@ SOFTWARE.
 import datetime
 from typing import Any, Dict, List, Optional
 
-from .enums import Currency
+from .enums import AppID, Currency, SaleType
+from .color import Color
 
 __all__ = ("Tag", "SaleFeedSale", "SaleFeed")
 
@@ -57,10 +58,12 @@ class Tag:
 
     @property
     def name(self) -> str:
+        """:class:`str`: Returns the name of the item."""
         return self._name
 
     @property
     def name_localized(self) -> str:
+        """:class:`str`: Returns the localized name of the item."""
         return self._name_localized
 
 
@@ -183,71 +186,88 @@ class SaleFeedSale:
 
     @property
     def id_(self) -> int:
+        """:class:`int`: Returns the ID of the sale feed event."""
         return self._id
 
     @property
     def sale_id(self) -> int:
+        """:class:`int`: Returns the ID of the sale."""
         return self._saleId
 
     @property
     def product_id(self) -> int:
+        """:class:`int`: Returns the ID of the product."""
         return self._productId
 
     @property
     def asset_id(self) -> int:
+        """:class:`int`: Returns the ID of the asset."""
         return self._assetId
 
     @property
     def item_id(self) -> int:
+        """:class:`int`: Returns the ID of the item."""
         return self._itemId
 
     @property
-    def app_id(self) -> int:
-        return self._appid
+    def app_id(self) -> AppID:
+        """:class:`int`: Returns the ID of the app."""
+        return AppID(self._appid)
 
     @property
     def steam_id(self) -> str:
+        """:class:`str`: Returns the Steam ID of Skinport bot which holds the item."""
         return self._steamid
 
     @property
     def url(self) -> str:
+        """:class:`str`: Returns the listing URL of the item."""
         return f"https://skinport.com/item/{self._url}/{self._saleId}"
 
     @property
     def family(self) -> str:
+        """:class:`str`: Returns the family of the item."""
         return self._family
 
     @property
     def family_localized(self) -> str:
+        """:class:`str`: Returns the localized family of the item."""
         return self._family_localized
 
     @property
     def name(self) -> str:
+        """:class:`str`: Returns the name of the item."""
         return self._name
 
     @property
     def title(self) -> str:
+        """:class:`str`: Returns the title of the item."""
         return self._title
 
     @property
     def text(self) -> str:
+        """:class:`str`: Returns additional text of the item."""
         return self._text
 
     @property
     def market_name(self) -> str:
+        """:class:`str`: Returns the name of the item under it is displayed on skinport.com."""
         return self._marketName
 
     @property
     def market_hash_name(self) -> str:
+        """:class:`str`: Returns the name of the item under it is displayed on skinport.com."""
         return self._marketHashName
 
     @property
-    def color(self) -> str:
-        return self._color
+    def color(self) -> Color:
+        """:class:`Color`: Returns the color of the item."""
+        return Color(self._color)
 
     @property
-    def bg_color(self) -> Optional[str]:
-        return self._bgColor
+    def bg_color(self) -> Optional[Color]:
+        """Optional[:class:`Color`]: Returns the background color of the item."""
+        return self._bgColor if self._bgColor is not None else None
 
     @property
     def image(self) -> str:
@@ -263,130 +283,162 @@ class SaleFeedSale:
 
     @property
     def lock(self) -> datetime.datetime:
+        """:class:`datetime.datetime`: Returns the time until the item is trade-locked."""
         return datetime.datetime.strptime(self._lock, "%Y-%m-%dT%H:%M:%S.%fZ")
 
     @property
     def version(self) -> str:
+        """:class:`str`: Returns the item version."""
         return self._version
 
     @property
     def version_type(self) -> str:
+        """:class:`str`: Returns the type of the item version."""
         return self._versionType
 
     @property
     def stack_able(self) -> bool:
+        """:class:`bool`: Indicates if the item is stackable."""
         return self._stackAble
 
     @property
-    def suggested_price(self) -> int:
-        return self._suggestedPrice
+    def suggested_price(self) -> float:
+        """:class:`float`: Returns the suggested sale price of the item."""
+        return self._suggestedPrice / 100
 
     @property
-    def sale_price(self) -> int:
-        return self._salePrice
+    def sale_price(self) -> float:
+        """:class:`float`: Returns the sale price of the item."""
+        return self._salePrice / 100
 
     @property
     def currency(self) -> Currency:
+        """:class:`Currency`: Returns the currency of the item."""
         return Currency(self._currency)
 
     @property
     def sale_status(self) -> str:
+        """:class:`str`: Returns the sale status of the item."""
         return self._saleStatus
 
     @property
-    def sale_type(self) -> str:
-        return self._saleType
+    def sale_type(self) -> SaleType:
+        """:class:`SaleType`: Returns the sale type."""
+        return SaleType(self._saleType)
 
     @property
     def category(self) -> str:
+        """:class:`str`: Returns the category of the item."""
         return self._category
 
     @property
     def category_localized(self) -> str:
+        """:class:`str`: Returns the localized category of the item."""
         return self._category_localized
 
     @property
     def sub_category(self) -> Optional[str]:
+        """:class:`str`: Returns the sub category of the item."""
         return self._subCategory
 
     @property
     def sub_category_localized(self) -> Optional[str]:
+        """:class:`str`: Returns the localized sub category of the item."""
         return self._subCategory_localized
 
     @property
-    def pattern(self) -> Optional[str]:
+    def pattern(self) -> Optional[int]:
+        """Optional[:class:`int`]: Returns the pattern seed of the item."""
         return self._pattern
 
     @property
-    def finish(self) -> Optional[str]:
+    def finish(self) -> Optional[int]:
+        """Optional[:class:`int`]: Returns the finish seed of the item."""
         return self._finish
 
     @property
     def custom_name(self) -> Optional[str]:
+        """Optional[:class:`str`]: Returns the name tag of the item."""
         return self._customName
 
     @property
-    def wear(self) -> Optional[str]:
+    def wear(self) -> Optional[float]:
+        """Optional[:class:`float`]: Returns the wear of the item."""
         return self._wear
 
     @property
     def link(self) -> Optional[str]:
+        """Optional[:class:`str`]: Returns the link of the item to view it in-game."""
         return self._link
 
     @property
     def type(self) -> str:
+        """:class:`str`: Returns the type of the item."""
         return self._type
 
     @property
     def exterior(self) -> Optional[str]:
+        """Optional[:class:`str`]: Returns the exterior of the item."""
         return self._exterior
 
     @property
     def rarity(self) -> str:
+        """:class:`str`: Returns the rarity of the item."""
         return self._rarity
 
     @property
     def rarity_localized(self) -> str:
+        """:class:`str`: Returns the localized rarity of the item."""
         return self._rarity_localized
 
     @property
-    def rarity_color(self) -> str:
-        return self._rarityColor
+    def rarity_color(self) -> Color:
+        """:class:`Color`: Returns the color of the rarity."""
+        return Color(self._rarityColor)
 
     @property
     def collection(self) -> Optional[str]:
+        """Optional[:class:`str`]: Returns the collection of the item."""
         return self._collection
 
     @property
     def collection_localized(self) -> Optional[str]:
+        """Optional[:class:`str`]: Returns the localized collection of the item."""
         return self._collection_localized
 
     @property
     def stickers(self) -> List[str]:
+        """List[:class:`str`]: Returns a :class:`list` of :class:`str` with names of attached stickers. Can be empty."""
         return self._stickers
 
     @property
     def can_have_screenshots(self) -> bool:
+        """:class:`bool`: Indicates if the item can have screenshots."""
         return self._canHaveScreenshots
 
     @property
     def screenshots(self) -> List[str]:
+        """List[:class:`str`]: Returns a :class:`list` of :class:`str` of screenshots. Can be empty."""
         return self._screenshots
 
     @property
     def souvenir(self) -> bool:
+        """:class:`bool`: Indicates if the item is of Souvenir quality."""
         return self._souvenir
 
     @property
     def stattrak(self) -> bool:
+        """:class:`bool`: Indicates if the item is of StatTrak™ quality."""
         return self._stattrak
 
     @property
     def tags(self) -> List[Tag]:
+        """List[:class:`Tag`]: Returns a :class:`list` of :class:`Tag`."""
         return [Tag(data=tag) for tag in self._tags]
 
     @property
     def own_item(self) -> bool:
+        """:class:`bool`: Indicates if the item is your own."""
         return self._ownItem
 
 
@@ -406,8 +458,10 @@ class SaleFeed:
 
     @property
     def event_type(self) -> str:
+        """:class:`str`: Returns the type of the event."""
         return self._event_type
 
     @property
     def sales(self) -> List[SaleFeedSale]:
+        """List[:class:`SaleFeedSale`]: Returns a :class:`list` of :class:`SaleFeedSale`."""
         return [SaleFeedSale(data=sale) for sale in self._sales]
