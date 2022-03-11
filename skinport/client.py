@@ -193,7 +193,12 @@ class Client:
                 self.ws.on("*", self.catch_all)
                 await self.ws.connect("https://skinport.com", transports=["websocket"])
                 await self.ws.emit(
-                    "saleFeedJoin", {"currency": currency.value, "locale": locale.value, "appid": app_id.value}
+                    "saleFeedJoin",
+                    {
+                        "currency": currency.value,
+                        "locale": locale.value,
+                        "appid": app_id.value,
+                    },
                 )
                 await self.ws.wait()
             except asyncio.TimeoutError:

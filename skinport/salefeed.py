@@ -29,7 +29,7 @@ from typing import Any, Dict, List, Optional
 from .color import Color
 from .enums import AppID, Currency, SaleType
 
-__all__ = ("Tag", "SaleFeedSale", "SaleFeed")
+__all__ = ("Tag", "SaleFeedSale", "SaleFeed", "Sticker")
 
 
 class Tag:
@@ -65,6 +65,77 @@ class Tag:
     def name_localized(self) -> str:
         """:class:`str`: Returns the localized name of the item."""
         return self._name_localized
+
+
+class Sticker:
+
+    __slots__ = (
+        "_color",
+        "_img",
+        "_name",
+        "_name_localized",
+        "_slot",
+        "_sticker_id",
+        "_type",
+        "_type_localized",
+        "_wear",
+    )
+
+    def __init__(self, *, data: Dict[str, Any]) -> None:
+        self._color = data.get("color")
+        self._img = data.get("img")
+        self._name = data.get("name")
+        self._name_localized = data.get("name_localized")
+        self._slot = data.get("slot")
+        self._sticker_id = data.get("sticker_id")
+        self._type = data.get("type")
+        self._type_localized = data.get("type_localized")
+        self._wear = data.get("wear")
+
+    @property
+    def color(self) -> Optional[Color]:
+        """:class:`Color`: Returns the color of the sticker."""
+        return Color(self._color) if self._color is not None else None
+
+    @property
+    def img(self) -> str:
+        """:class:`str`: Returns the image URL of the sticker."""
+        return self._img
+
+    @property
+    def name(self) -> str:
+        """:class:`str`: Returns the name of the sticker."""
+        return self._name
+
+    @property
+    def name_localized(self) -> str:
+        """:class:`str`: Returns the localized name of the sticker."""
+        return self._name_localized
+
+    @property
+    def slot(self) -> int:
+        """:class:`int`: Returns the slot of the sticker."""
+        return self._slot
+
+    @property
+    def sticker_id(self) -> Optional[str]:
+        """Optional[:class:`str`]: Returns the sticker ID of the sticker."""
+        return self._sticker_id
+
+    @property
+    def type(self) -> Optional[str]:
+        """Optional[:class:`str`]: Returns the type of the sticker."""
+        return self._type
+
+    @property
+    def type_localized(self) -> Optional[str]:
+        """Optional[:class:`str`]: Returns the localized type of the sticker."""
+        return self._type
+
+    @property
+    def wear(self) -> Optional[float]:
+        """Optional[:class:`float`]: Returns the wear of the sticker."""
+        return self._wear
 
 
 class SaleFeedSale:
@@ -409,7 +480,7 @@ class SaleFeedSale:
     @property
     def stickers(self) -> List[str]:
         """List[:class:`str`]: Returns a :class:`list` of :class:`str` with names of attached stickers. Can be empty."""
-        return self._stickers
+        return [Sticker(data=sticker) for sticker in self._stickers]
 
     @property
     def can_have_screenshots(self) -> bool:
@@ -418,7 +489,7 @@ class SaleFeedSale:
 
     @property
     def screenshots(self) -> List[str]:
-        """List[:class:`str`]: Returns a :class:`list` of :class:`str` of screenshots. Can be empty."""
+        """List[:class:`str`]: Returns a :class:`list` of :class:`str` of available screenshots. Can be empty."""
         return self._screenshots
 
     @property
