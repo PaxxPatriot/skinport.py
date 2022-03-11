@@ -1,14 +1,13 @@
 import asyncio
 import datetime
-from typing import Optional
-import unittest
 import sys
-
-import skinport
-
-from skinport import AuthenticationError, Currency, ParamRequired
+import unittest
+from typing import Optional
 
 import config
+
+import skinport
+from skinport import AuthenticationError, Currency, ParamRequired
 
 
 class SkinportClientTestCase(unittest.IsolatedAsyncioTestCase):

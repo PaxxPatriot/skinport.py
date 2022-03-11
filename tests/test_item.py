@@ -2,7 +2,7 @@ import datetime
 import json
 import unittest
 
-from skinport import Item, Currency
+from skinport import Currency, Item
 
 TEST_ITEMS = """[
   {

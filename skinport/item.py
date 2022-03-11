@@ -23,7 +23,8 @@ SOFTWARE.
 """
 
 import datetime
-from typing import Any, Dict, Optional, List
+from typing import Any, Dict, List, Optional
+
 from .enums import Currency
 from .sale import LastXDays, Sale
 

@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-from typing import Dict, List, Any, Tuple
+from typing import Any, Dict, List, Tuple
 
 __all__ = (
     "SkinportException",
