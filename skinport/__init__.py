@@ -16,6 +16,7 @@ __path__ = __import__("pkgutil").extend_path(__path__, __name__)
 import logging
 from typing import NamedTuple
 
+from . import utils
 from .client import *
 from .color import *
 from .enums import *
