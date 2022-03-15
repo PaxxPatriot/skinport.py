@@ -2,6 +2,7 @@ import unittest
 
 import skinport
 
+
 class UtilsTestCase(unittest.TestCase):
     def test_market_hash_name_awp(self):
         market_hash_name = skinport.utils.market_hash_name("AWP | BOOM", skinport.Exterior.factory_new)
