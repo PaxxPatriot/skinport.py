@@ -29,6 +29,7 @@ __all__ = (
     "AppID",
     "Locale",
     "SaleType",
+    "Exterior",
 )
 
 
@@ -79,6 +80,17 @@ class Locale(Enum):
 class SaleType(Enum):
     public = "public"
     private = "private"
+
+    def __str__(self) -> str:
+        return self.value
+
+
+class Exterior(Enum):
+    factory_new = "Factory New"
+    minimal_wear = "Minimal Wear"
+    field_tested = "Field-Tested"
+    well_worn = "Well-Worn"
+    battle_scarred = "Battle-Scarred"
 
     def __str__(self) -> str:
         return self.value
