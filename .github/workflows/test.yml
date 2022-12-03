@@ -4,12 +4,11 @@ on: [push, pull_request]
 
 jobs:
   test:
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-latest
     environment: Test environment
     strategy:
       matrix:
         python-version: ['3.8', '3.9', '3.10', '3.11']
-        os: [macos-latest, windows-latest, ubuntu-latest]
 
     steps:
       - uses: actions/checkout@v2
