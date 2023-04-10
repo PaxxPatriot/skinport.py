@@ -8,6 +8,8 @@ aiohttp = "*"
 sphinx = "*"
 sphinx_rtd_theme = "*"
 python-socketio = {extras = ["asyncio_client"], version = "*"}
+cachetools = "*"
+asyncache = "*"
 
 [dev-packages]
 black = "*"

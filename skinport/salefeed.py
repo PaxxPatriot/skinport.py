@@ -33,7 +33,6 @@ __all__ = ("Tag", "SaleFeedSale", "SaleFeed", "Sticker")
 
 
 class Tag:
-
     __slots__ = (
         "_name",
         "_name_localized",
@@ -68,7 +67,6 @@ class Tag:
 
 
 class Sticker:
-
     __slots__ = (
         "_color",
         "_img",
@@ -139,7 +137,6 @@ class Sticker:
 
 
 class SaleFeedSale:
-
     __slots__ = (
         "_id",
         "_saleId",
@@ -514,7 +511,6 @@ class SaleFeedSale:
 
 
 class SaleFeed:
-
     __slots__ = (
         "_event_type",
         "_sales",
