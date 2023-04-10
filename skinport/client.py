@@ -204,6 +204,7 @@ class Client:
             except asyncio.TimeoutError:
                 _log.info("Connection timed out.")
                 await self.close()
+                await asyncio.sleep(5) # Sleep 5 seconds to handle connection closing
 
     async def close(self) -> None:
         """*coroutine*
