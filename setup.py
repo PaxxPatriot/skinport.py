@@ -29,6 +29,8 @@ setup(
     long_description_content_type="text/markdown",
     install_requires=[
         "aiohttp",
+        "asyncache",
+        "cachetools",
         "python-socketio[asyncio_client]",
     ],
     classifiers=[
