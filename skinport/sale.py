@@ -65,7 +65,6 @@ class Sale:
 
 
 class LastXDays:
-
     __slots__ = (
         "_min",
         "_max",

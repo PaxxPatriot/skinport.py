@@ -26,6 +26,8 @@ import asyncio
 import logging
 import signal
 from typing import Any, Coroutine, Dict, List, Union
+from asyncache import cached
+from cachetools import TTLCache
 
 import socketio
 
@@ -204,7 +206,7 @@ class Client:
             except asyncio.TimeoutError:
                 _log.info("Connection timed out.")
                 await self.close()
-                await asyncio.sleep(5) # Sleep 5 seconds to handle connection closing
+                await asyncio.sleep(5)  # Sleep 5 seconds to handle connection closing
 
     async def close(self) -> None:
         """*coroutine*
@@ -218,6 +220,7 @@ class Client:
             await self.ws.eio.http.close()
         await self.http.close()
 
+    @cached(cache=TTLCache(maxsize=128, ttl=300))
     async def get_items(
         self,
         *,
@@ -254,6 +257,7 @@ class Client:
         data = await self.http.get_items(params=params)
         return [Item(data=item) for item in data]
 
+    @cached(cache=TTLCache(maxsize=16, ttl=3600))
     async def get_sales_history(
         self,
         app_id: int = 730,
@@ -282,6 +286,7 @@ class Client:
         data = await self.http.get_sales_history(params=params)
         return [ItemWithSales(data=sale) for sale in data]
 
+    @cached(cache=TTLCache(maxsize=16, ttl=3600))
     async def get_sales_out_of_stock(
         self, *, app_id: int = 730, currency: Currency = Currency.eur
     ) -> List[ItemOutOfStock]:
