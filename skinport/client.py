@@ -256,7 +256,6 @@ class Client:
 
     async def get_sales_history(
         self,
-        *market_hash_names: str,
         app_id: int = 730,
         currency: Currency = Currency.eur,
     ) -> List[ItemWithSales]:  # sourcery skip: default-mutable-arg
@@ -276,10 +275,7 @@ class Client:
         -------
         :class:`list` of :class:`ItemWithSales`
         """
-        if not market_hash_names:
-            raise ParamRequired("At least one market_hash_name is required.")
         params = {
-            "market_hash_name": ",".join(market_hash_names),
             "app_id": app_id,
             "currency": currency.value,
         }
