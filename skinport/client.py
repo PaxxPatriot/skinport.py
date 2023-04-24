@@ -82,8 +82,9 @@ def _cleanup_loop(loop: asyncio.AbstractEventLoop) -> None:
 class Client:
     def __init__(self):
         self.http: HTTPClient = HTTPClient()
-        self.ws: socketio.AsyncClient = socketio.AsyncClient()
+        self.ws: socketio.AsyncClient = socketio.AsyncClient(logger=True, engineio_logger=True)
         self._closed = False
+        self._connected = False
 
     def set_auth(self, *, client_id: str, client_secret: str):
         self.http.set_auth(client_id, client_secret)
@@ -186,28 +187,42 @@ class Client:
             Defaults to ``en``.
         """
         # Get parameters for the sale feed
+        if self._connected:
+            _log.info("Client is already connected. Closing the existing connection.")
+            await self.close()
+
+        try:
+            self.ws.on("*", self.catch_all)
+            self.ws.on("connect", lambda: asyncio.ensure_future(self.on_connect(**kwargs)))
+            await self.ws.connect("https://skinport.com", transports=["websocket"])
+            self._connected = True
+            await self.ws.wait()
+        except asyncio.TimeoutError:
+            _log.info("Connection timed out.")
+            await self.close()
+            self._connected = False
+        except socketio.exceptions.ConnectionError:
+            _log.warning("Client is already connected. Skipping connection attempt.")
+
+
+    async def on_connect(self, **kwargs: Any) -> None:
+            _log.info("Connected to Skinport. Emitting saleFeedJoin event...")
+            await self._emit_sale_feed_join(kwargs)
+
+    async def _emit_sale_feed_join(self, kwargs: Dict[str, Any]) -> None:
         app_id = kwargs.get("app_id", AppID.csgo)
         currency = kwargs.get("currency", Currency.eur)
         locale = kwargs.get("locale", Locale.en)
-
-        while not self._closed:
-            try:
-                self.ws.on("*", self.catch_all)
-                await self.ws.connect("https://skinport.com", transports=["websocket"])
-                await self.ws.emit(
-                    "saleFeedJoin",
-                    {
-                        "currency": currency.value,
-                        "locale": locale.value,
-                        "appid": app_id.value,
-                    },
-                )
-                await self.ws.wait()
-            except asyncio.TimeoutError:
-                _log.info("Connection timed out.")
-                await self.close()
-                await asyncio.sleep(5)  # Sleep 5 seconds to handle connection closing
-
+        await self.ws.emit(
+            "saleFeedJoin",
+            {
+                "currency": currency.value,
+                "locale": locale.value,
+                "appid": app_id.value,
+            },
+        )
+        await self.ws.wait()
+        
     async def close(self) -> None:
         """*coroutine*
         Closes the `aiohttp.ClientSession`.
