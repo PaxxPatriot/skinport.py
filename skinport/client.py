@@ -83,7 +83,6 @@ class Client:
     def __init__(self):
         self.http: HTTPClient = HTTPClient()
         self.ws: socketio.AsyncClient = socketio.AsyncClient(logger=True, engineio_logger=True)
-        self._closed = False
         self._connected = False
 
     def set_auth(self, *, client_id: str, client_secret: str):
@@ -113,7 +112,7 @@ class Client:
             try:
                 await self.connect(*args, **kwargs)
             finally:
-                if not self._closed:
+                if self._connected:
                     await self.close()
 
         def stop_loop_on_completion(f):
@@ -227,10 +226,10 @@ class Client:
         """*coroutine*
         Closes the `aiohttp.ClientSession`.
         """
-        if self._closed:
+        if not self._connected:
             return
 
-        self._closed = True
+        self._connected = False
         if self.ws.eio.http is not None:
             await self.ws.eio.http.close()
         await self.http.close()
