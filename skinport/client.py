@@ -80,9 +80,9 @@ def _cleanup_loop(loop: asyncio.AbstractEventLoop) -> None:
 
 
 class Client:
-    def __init__(self):
+    def __init__(self, debug: bool = False):
         self.http: HTTPClient = HTTPClient()
-        self.ws: socketio.AsyncClient = socketio.AsyncClient(logger=True, engineio_logger=True)
+        self.ws: socketio.AsyncClient = socketio.AsyncClient(logger=debug, engineio_logger=debug)
         self._connected = False
 
     def set_auth(self, *, client_id: str, client_secret: str):
@@ -203,10 +203,9 @@ class Client:
         except socketio.exceptions.ConnectionError:
             _log.warning("Client is already connected. Skipping connection attempt.")
 
-
     async def on_connect(self, **kwargs: Any) -> None:
-            _log.info("Connected to Skinport. Emitting saleFeedJoin event...")
-            await self._emit_sale_feed_join(kwargs)
+        _log.info("Connected to Skinport. Emitting saleFeedJoin event...")
+        await self._emit_sale_feed_join(kwargs)
 
     async def _emit_sale_feed_join(self, kwargs: Dict[str, Any]) -> None:
         app_id = kwargs.get("app_id", AppID.csgo)
@@ -221,7 +220,7 @@ class Client:
             },
         )
         await self.ws.wait()
-        
+
     async def close(self) -> None:
         """*coroutine*
         Closes the `aiohttp.ClientSession`.
