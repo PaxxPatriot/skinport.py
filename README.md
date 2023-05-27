@@ -44,4 +44,4 @@ if __name__ == "__main__":
 Advanced Example
 -----------------
 
-With this library a automated script was created which forwards cheap listings to a Discord webhook. You can find it at [PaxxPatriot/cheapbot](https://github.com/PaxxPatriot/cheapbot).
+With this library an automated script was created which forwards cheap listings to a Discord webhook. You can find it at [PaxxPatriot/cheapbot](https://github.com/PaxxPatriot/cheapbot).
