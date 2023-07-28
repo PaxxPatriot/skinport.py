@@ -225,13 +225,15 @@ class Client:
         """*coroutine*
         Closes the `aiohttp.ClientSession`.
         """
+        # Always close the underlying session of the HTTPClient
+        await self.http.close()
+
         if not self._connected:
             return
 
         self._connected = False
         if self.ws.eio.http is not None:
             await self.ws.eio.http.close()
-        await self.http.close()
 
     @cached(cache=TTLCache(maxsize=128, ttl=300))
     async def get_items(
