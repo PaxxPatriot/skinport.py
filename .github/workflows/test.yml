@@ -1,4 +1,4 @@
-name: Test
+name: Run unittests
 
 on:
   push:
@@ -11,7 +11,7 @@ on:
       - master
 
 jobs:
-  test:
+  run-unittests:
     runs-on: ubuntu-latest
     environment: Test environment
     strategy:
