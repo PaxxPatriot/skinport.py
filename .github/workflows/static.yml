@@ -36,7 +36,7 @@ jobs:
         uses: actions/upload-artifact@v2
         if: always()
         with:
-          path: docs/_build/html/*
+          path: docs/build/html*
         
   deploy:
     needs: build
