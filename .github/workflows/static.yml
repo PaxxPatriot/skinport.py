@@ -31,6 +31,7 @@ jobs:
       - name: Build docs
         shell: bash
         run: |
+          pipenv shell
           sphinx-build -b html docs/source docs/build/html
       - name: Upload docs
         uses: actions/upload-artifact@v2
