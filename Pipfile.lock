@@ -153,11 +153,11 @@
         },
         "babel": {
             "hashes": [
-                "sha256:b4246fb7677d3b98f501a39d43396d3cafdc8eadb045f4a31be01863f655c610",
-                "sha256:cc2d99999cd01d44420ae725a21c9e3711b3aadc7976d6147f622d8581963455"
+                "sha256:04c3e2d28d2b7681644508f836be388ae49e0cfe91465095340395b60d00f210",
+                "sha256:fbfcae1575ff78e26c7449136f1abbefc3c13ce542eeb13d43d50d8b047216ec"
             ],
             "markers": "python_version >= '3.7'",
-            "version": "==2.12.1"
+            "version": "==2.13.0"
         },
         "bidict": {
             "hashes": [
@@ -551,11 +551,11 @@
         },
         "python-engineio": {
             "hashes": [
-                "sha256:52499e8ab94fea1a6525ffe872fe7028d04b575799c5fa8e2cf7880e032de42e",
-                "sha256:a8422e345cd9a21451303380b160742ff02197975b1c3a02cef115febe2b1b20"
+                "sha256:2a32585d8fecd0118264fe0c39788670456ca9aa466d7c026d995cfff68af164",
+                "sha256:6055ce35b7f32b70641d53846faf76e06f2af0107a714cedb2750595c69ade43"
             ],
             "markers": "python_version >= '3.6'",
-            "version": "==4.7.1"
+            "version": "==4.8.0"
         },
         "python-socketio": {
             "extras": [
@@ -578,11 +578,11 @@
         },
         "simple-websocket": {
             "hashes": [
-                "sha256:0ab46c8ffa51a46dc95eed94608b3b722841c0bf849def71d465c5c356679c82",
-                "sha256:62c36bacfd75cc867927bb39d91951342a7234bdfe20f41dd969a3b8bb1413b7"
+                "sha256:17d2c72f4a2bd85174a97e3e4c88b01c40c3f81b7b648b0cc3ce1305968928c8",
+                "sha256:1d5bf585e415eaa2083e2bcf02a3ecf91f9712e7b3e6b9fa0b461ad04e0837bc"
             ],
             "markers": "python_version >= '3.6'",
-            "version": "==0.10.1"
+            "version": "==1.0.0"
         },
         "snowballstemmer": {
             "hashes": [
@@ -666,12 +666,12 @@
         },
         "urllib3": {
             "hashes": [
-                "sha256:7a7c7003b000adf9e7ca2a377c9688bbc54ed41b985789ed576570342a375cd2",
-                "sha256:b19e1a85d206b56d7df1d5e683df4a7725252a964e3993648dd0fb5a1c157564"
+                "sha256:c97dfde1f7bd43a71c8d2a58e369e9b2bf692d1334ea9f9cae55add7d0dd0f84",
+                "sha256:fdb6d215c776278489906c2f8916e6e7d4f5a9b602ccbcfdf7f016fc8da0596e"
             ],
             "index": "pypi",
             "markers": "python_version >= '3.7'",
-            "version": "==2.0.6"
+            "version": "==2.0.7"
         },
         "wsproto": {
             "hashes": [
@@ -1237,11 +1237,11 @@
         },
         "python-engineio": {
             "hashes": [
-                "sha256:52499e8ab94fea1a6525ffe872fe7028d04b575799c5fa8e2cf7880e032de42e",
-                "sha256:a8422e345cd9a21451303380b160742ff02197975b1c3a02cef115febe2b1b20"
+                "sha256:2a32585d8fecd0118264fe0c39788670456ca9aa466d7c026d995cfff68af164",
+                "sha256:6055ce35b7f32b70641d53846faf76e06f2af0107a714cedb2750595c69ade43"
             ],
             "markers": "python_version >= '3.6'",
-            "version": "==4.7.1"
+            "version": "==4.8.0"
         },
         "python-socketio": {
             "extras": [
@@ -1259,11 +1259,11 @@
         },
         "simple-websocket": {
             "hashes": [
-                "sha256:0ab46c8ffa51a46dc95eed94608b3b722841c0bf849def71d465c5c356679c82",
-                "sha256:62c36bacfd75cc867927bb39d91951342a7234bdfe20f41dd969a3b8bb1413b7"
+                "sha256:17d2c72f4a2bd85174a97e3e4c88b01c40c3f81b7b648b0cc3ce1305968928c8",
+                "sha256:1d5bf585e415eaa2083e2bcf02a3ecf91f9712e7b3e6b9fa0b461ad04e0837bc"
             ],
             "markers": "python_version >= '3.6'",
-            "version": "==0.10.1"
+            "version": "==1.0.0"
         },
         "wsproto": {
             "hashes": [
