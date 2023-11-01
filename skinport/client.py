@@ -26,10 +26,10 @@ import asyncio
 import logging
 import signal
 from typing import Any, Coroutine, Dict, List, Union
-from asyncache import cached
-from cachetools import TTLCache
 
 import socketio
+from asyncache import cached
+from cachetools import TTLCache
 
 from .enums import AppID, Currency, Locale
 from .errors import ParamRequired
