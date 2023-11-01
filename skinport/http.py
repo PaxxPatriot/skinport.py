@@ -30,8 +30,14 @@ import aiohttp
 
 from skinport import __version__
 
-from .errors import (AuthenticationError, HTTPException, InsufficientFunds,
-                     InternalServerError, InvalidScope, NotFound)
+from .errors import (
+    AuthenticationError,
+    HTTPException,
+    InsufficientFunds,
+    InternalServerError,
+    InvalidScope,
+    NotFound,
+)
 
 _log = logging.getLogger(__name__)
 
