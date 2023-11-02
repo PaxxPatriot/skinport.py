@@ -70,7 +70,7 @@ class TransactionAsyncIterator:
         if not self.has_more:
             raise StopAsyncIteration
 
-        data: Dict[str, Any] = await self.getter()
+        data: Dict[str, Any] = await self.getter(params=self.kwargs)
         transactions: List[Dict[str, Any]] = data.get("data", [])
 
         for t in reversed(transactions):
@@ -85,5 +85,5 @@ class TransactionAsyncIterator:
         self.next_token = data["pagination"].get("page") + 1
         self.kwargs["page"] = self.next_token
 
-        if self.next_token >= data["pagination"].get("pages"):
+        if self.next_token > data["pagination"].get("pages"):
             self.has_more = False
