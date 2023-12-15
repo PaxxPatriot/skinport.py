@@ -34,7 +34,6 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
       - name: Download packages
         uses: actions/download-artifact@v4
         with:
@@ -45,10 +44,6 @@ jobs:
           python-version: '3.12'
       - name: Install dependencies
         run: python -m pip install --upgrade twine
-      - name: Create .pyirc from secret
-        env:
-          PYPIRC: ${{ secrets.PYPIRC }}
-        run: echo $PYIRC > ~/.pypirc
       - name: Upload to PyPI
         env:
           TWINE_REPOSITORY: ${{ vars.TWINE_REPOSITORY }}
