@@ -19,9 +19,9 @@ jobs:
         with:
           python-version: '3.12'
       - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip build
-          python -m build
+        run: python -m pip install --upgrade pip build
+      - name: Build
+        run: python -m build
       - name: Upload packages
         uses: actions/upload-artifact@v4
         with:
@@ -37,10 +37,11 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: packages
+          path: dist
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
       - name: Install dependencies
-        run: |
-          python -m pip install --upgrade twine
-          python -m twine upload .\dist\*
+        run: python -m pip install --upgrade twine
+      - name: Upload to PyPI
+        run: python -m twine upload dist/*
