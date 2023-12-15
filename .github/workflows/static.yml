@@ -3,6 +3,8 @@ name: Build and deploy docs
 on:
   push:
     branches: ["master"]
+    paths-ignore:
+      - ".github/**"
   workflow_dispatch:
 
 permissions:
