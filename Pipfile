@@ -16,4 +16,4 @@ black = "*"
 "skinport.py" = {editable = true, path = "."}
 
 [requires]
-python_version = "3.11"
+python_version = "3.12"
