@@ -48,4 +48,8 @@ jobs:
           PYPIRC: ${{ secrets.PYPIRC }}
         run: echo $PYIRC > ~/.pypirc
       - name: Upload to PyPI
-        run: python -m twine upload --non-interactive -r testpypi dist/*
+        env:
+          TWINE_REPOSITORY: ${{ vars.TWINE_REPOSITORY }}
+          TWINE_USERNAME: ${{ secrets.TWINE_USERNAME }}
+          TWINE_PASSWORD: ${{ secrets.TWINE_PASSWORD }}
+        run: python -m twine upload --non-interactive dist/*
