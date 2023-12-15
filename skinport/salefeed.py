@@ -339,7 +339,8 @@ class SaleFeedSale:
 
     @property
     def image(self) -> str:
-        return self._image
+        """:class:`str`: Returns link to the item image."""
+        return f"https://community.cloudflare.steamstatic.com/economy/image/{self._image}"
 
     @property
     def classid(self) -> str:
