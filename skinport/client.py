@@ -275,7 +275,7 @@ class Client:
     @cached(cache=TTLCache(maxsize=16, ttl=3600))
     async def get_sales_history(
         self,
-        app_id: int = 730,
+        app_id: AppID = AppID.csgo,
         currency: Currency = Currency.eur,
     ) -> List[ItemWithSales]:  # sourcery skip: default-mutable-arg
         """*coroutine*
@@ -303,7 +303,7 @@ class Client:
 
     @cached(cache=TTLCache(maxsize=16, ttl=3600))
     async def get_sales_out_of_stock(
-        self, *, app_id: int = 730, currency: Currency = Currency.eur
+        self, *, app_id: AppID = AppID.csgo, currency: Currency = Currency.eur
     ) -> List[ItemOutOfStock]:
         """*coroutine*
         Returns a :class:`list` of :class:`ItemOutOfStock`.
