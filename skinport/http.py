@@ -22,6 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
+import asyncio
 import logging
 import sys
 from typing import Any, Dict, Iterable, List, Optional
@@ -92,27 +93,33 @@ class HTTPClient:
         if params:
             kwargs["params"] = params
 
-        async with self.__session.request(method, url, auth=self.auth, **kwargs) as response:
-            _log.debug(f"{method} {url} with {kwargs} has returned {response.status}")
+        for _ in range(2):
+            async with self.__session.request(method, url, auth=self.auth, **kwargs) as response:
+                _log.debug(f"{method} {url} with {kwargs} has returned {response.status}")
 
-            data = await response.json()
+                data = await response.json()
 
-            if 300 > response.status >= 200:
-                _log.debug(f"{method} {url} has received {data}")
-                return data
+                if 300 > response.status >= 200:
+                    _log.debug(f"{method} {url} has received {data}")
+                    return data
 
-            if response.status in {500, 503}:
-                raise InternalServerError(response, data)
+                if response.status in {500, 503}:
+                    raise InternalServerError(response, data)
 
-            if response.status == 401:
-                raise AuthenticationError(response, data)
-            if response.status == 402:
-                raise InsufficientFunds(response, data)
-            if response.status == 403:
-                raise InvalidScope(response, data)
-            if response.status == 404:
-                raise NotFound(response, data)
-            raise HTTPException(response, data)
+                if response.status == 401:
+                    raise AuthenticationError(response, data)
+                if response.status == 402:
+                    raise InsufficientFunds(response, data)
+                if response.status == 403:
+                    raise InvalidScope(response, data)
+                if response.status == 404:
+                    raise NotFound(response, data)
+                if response.status == 429:
+                    # We are getting rate-limited, read retry-after header and try again
+                    retry_after = int(headers.get('Retry-After', 60))
+                    await asyncio.sleep(retry_after)
+                    continue
+                raise HTTPException(response, data)
 
     async def get_items(self, **parameters: Any) -> List[Dict[str, Any]]:
         return await self.request(Route("GET", "/items"), **parameters)
