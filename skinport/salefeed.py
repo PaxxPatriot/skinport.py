@@ -290,7 +290,15 @@ class SaleFeedSale:
     @property
     def url(self) -> str:
         """:class:`str`: Returns the listing URL of the item."""
-        return f"https://skinport.com/item/{self._url}/{self._saleId}"
+        match self.app_id:
+            case AppID.tf2:
+                return f"https://skinport.com/tf2/item/{self._url}/{self._saleId}"
+            case AppID.dota2:
+                return f"https://skinport.com/dota2/item/{self._url}/{self._saleId}"
+            case AppID.rust:
+                return f"https://skinport.com/rust/item/{self._url}/{self._saleId}"
+            case _:
+                return f"https://skinport.com/item/{self._url}/{self._saleId}"
 
     @property
     def family(self) -> str:
