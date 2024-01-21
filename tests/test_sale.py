@@ -7,7 +7,7 @@ TEST_SALES = """[
   {
     "market_hash_name": "Glove Case Key",
     "currency": "EUR",
-    "item_page": "https://skinport.com/item/csgo/glove-case-key",
+    "item_page": "https://skinport.com/item/glove-case-key",
     "market_page": "https://skinport.com/market/730?cat=Key&item=Glove+Case+Key",
     "sales": [
       {
@@ -47,7 +47,7 @@ TEST_SALES = """[
   },
   {
     "market_hash_name": "★ Karambit | Slaughter (Minimal Wear)",
-    "item_page": "https://skinport.com/item/csgo/karambit-slaughter-minimal-wear",
+    "item_page": "https://skinport.com/item/karambit-slaughter-minimal-wear",
     "market_page": "https://skinport.com/market/730?cat=Knife&type=Karambit&item=Slaughter",
     "currency": "EUR",  
     "sales": [
@@ -131,7 +131,7 @@ class SaleTestCase(unittest.TestCase):
         self.assertEqual(sales[0].currency, Currency.eur)
         self.assertEqual(
             sales[0].item_page,
-            "https://skinport.com/item/csgo/glove-case-key",
+            "https://skinport.com/item/glove-case-key",
         )
         self.assertEqual(
             sales[0].market_page,

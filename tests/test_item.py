@@ -9,7 +9,7 @@ TEST_ITEMS = """[
     "market_hash_name": "AK-47 | Aquamarine Revenge (Battle-Scarred)",
     "currency": "EUR",  
     "suggested_price": 13.18,
-    "item_page": "https://skinport.com/item/csgo/ak-47-aquamarine-revenge-battle-scarred",
+    "item_page": "https://skinport.com/item/ak-47-aquamarine-revenge-battle-scarred",
     "market_page": "https://skinport.com/market/730?cat=Rifle&item=Aquamarine+Revenge",
     "min_price": 11.33,
     "max_price": 18.22,
@@ -22,7 +22,7 @@ TEST_ITEMS = """[
     "market_hash_name": "★ M9 Bayonet | Fade (Factory New)",
     "currency": "EUR",
     "suggested_price": 319.11,
-    "item_page": "https://skinport.com/item/csgo/m9-bayonet-fade-factory-new",
+    "item_page": "https://skinport.com/item/m9-bayonet-fade-factory-new",
     "market_page": "https://skinport.com/market/730?cat=Knife&item=Fade",
     "min_price": null,
     "max_price": null,
@@ -49,7 +49,7 @@ class ItemTestCase(unittest.TestCase):
         self.assertEqual(items[0].suggested_price, 13.18)
         self.assertEqual(
             items[0].item_page,
-            "https://skinport.com/item/csgo/ak-47-aquamarine-revenge-battle-scarred",
+            "https://skinport.com/item/ak-47-aquamarine-revenge-battle-scarred",
         )
         self.assertEqual(
             items[0].market_page,
