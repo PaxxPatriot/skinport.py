@@ -118,7 +118,7 @@ class HTTPClient:
                         raise NotFound(response, data)
                     if response.status == 429:
                         # We are getting rate-limited, read retry-after header and try again
-                        retry_after = int(headers.get('Retry-After', 60))
+                        retry_after = int(headers.get("Retry-After", 60))
                         _log.debug(f"{method} {url} is getting rate-limited, retry after {retry_after} seconds")
                         await asyncio.sleep(retry_after)
                         continue
