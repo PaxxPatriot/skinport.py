@@ -88,11 +88,29 @@ class Client:
     def set_auth(self, *, client_id: str, client_secret: str):
         self.http.set_auth(client_id, client_secret)
 
-    def run(self, *args: Any, **kwargs: Any) -> None:
+    def run(
+        self,
+        *,
+        app_id: AppID = AppID.csgo,
+        currency: Currency = Currency.eur,
+        locale: Locale = Locale.en,
+    ) -> None:
         """A blocking call that abstracts away the event loop
         initialisation from you.
         If you want more control over the event loop then this
         function should not be used. Use :meth:`connect`.
+
+        Parameters
+        ----------
+        app_id: :class:`AppID`
+            The app_id for the inventory's game.
+            Defaults to ``AppID.csgo``.
+        currency: :class:`Currency`
+            The currency for pricing.
+            Defaults to ``Currency.eur``.
+        locale: :class:`Locale`
+            Whether or not to show only tradable items.
+            Defaults to ``Locale.en``.
 
         .. warning::
 
@@ -110,7 +128,7 @@ class Client:
 
         async def runner():
             try:
-                await self.connect(*args, **kwargs)
+                await self.connect(app_id=app_id, currency=currency, locale=locale)
             finally:
                 if self._connected:
                     await self.close()
@@ -169,7 +187,13 @@ class Client:
 
         return decorator
 
-    async def connect(self, *args: Any, **kwargs: Any) -> None:
+    async def connect(
+        self,
+        *,
+        app_id: AppID = AppID.csgo,
+        currency: Currency = Currency.eur,
+        locale: Locale = Locale.en,
+    ) -> None:
         """*coroutine*
         Connects to the socket.io websocket.
 
@@ -185,6 +209,7 @@ class Client:
             Whether or not to show only tradable items.
             Defaults to ``en``.
         """
+        kwargs = {"app_id": app_id, "currency": currency, "locale": locale}
         # Get parameters for the sale feed
         if self._connected:
             _log.info("Client is already connected. Closing the existing connection.")
