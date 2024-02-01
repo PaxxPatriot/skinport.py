@@ -5,6 +5,7 @@ A basic wrapper for the Skinport API.
 :copyright: (c) 2022 PaxxPatriot
 :license: MIT, see LICENSE for more details.
 """
+
 __title__ = "skinport"
 __author__ = "PaxxPatriot"
 __license__ = "MIT"
