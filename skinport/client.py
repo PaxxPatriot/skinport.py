@@ -218,7 +218,7 @@ class Client:
         try:
             self.ws.on("*", self.catch_all)
             self.ws.on("connect", lambda: asyncio.ensure_future(self.on_connect(**kwargs)))
-            await self.ws.connect("https://skinport.com", transports=["websocket"])
+            await self.ws.connect("https://skinport.com", transports=["websocket"], retry=True)
             self._connected = True
             await self.ws.wait()
         except asyncio.TimeoutError:
