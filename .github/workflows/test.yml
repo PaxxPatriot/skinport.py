@@ -14,7 +14,7 @@ on:
 
 jobs:
   run-unittests:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     environment: Test environment
     strategy:
       matrix:
