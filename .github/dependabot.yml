@@ -5,4 +5,9 @@ updates:
     schedule:
       interval: "monthly"
     groups:
-      update-types: "minor"
+      pip:
+        applies-to: version-updates
+        patterns: "*"
+        update-types:
+        - "minor"
+        - "patch"
