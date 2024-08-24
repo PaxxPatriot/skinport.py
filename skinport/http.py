@@ -23,9 +23,10 @@ SOFTWARE.
 """
 
 import asyncio
+import json
 import logging
 import sys
-from typing import Any, Dict, Iterable, List, Optional
+from typing import Any, Dict, Iterable, List, Optional, Union
 
 import aiohttp
 
@@ -41,6 +42,17 @@ from .errors import (
 )
 
 _log = logging.getLogger(__name__)
+
+
+async def json_or_text(response: aiohttp.ClientResponse) -> Union[Dict[str, Any], str]:
+    text = await response.text(encoding='utf-8')
+    try:
+        if response.headers['content-type'] == 'application/json':
+            return json.loads(text)
+    except KeyError:
+        pass
+
+    return text
 
 
 class Route:
@@ -99,7 +111,7 @@ class HTTPClient:
                 async with self.__session.request(method, url, auth=self.auth, **kwargs) as response:
                     _log.debug(f"{method} {url} with {kwargs} has returned {response.status}")
 
-                    data = await response.json()
+                    data = await json_or_text(response)
 
                     if 300 > response.status >= 200:
                         _log.debug(f"{method} {url} has received {data}")
