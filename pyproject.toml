@@ -27,7 +27,7 @@ classifiers = [
     "Typing :: Typed",
 ]
 dependencies = [
-    "aiohttp",
+    "aiohttp<3.10",
     "asyncache",
     "cachetools",
     "python-socketio[asyncio_client]",
