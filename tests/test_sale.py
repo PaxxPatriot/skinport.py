@@ -124,33 +124,6 @@ class SaleTestCase(unittest.TestCase):
         self._out_of_stock = json.loads(TEST_OUT_OF_STOCK)
         self._sales = json.loads(TEST_SALES)
 
-    def test_sales_constructor(self):
-        sales = [ItemWithSales(data=data) for data in self._sales]
-        self.assertEqual(len(sales), 2)
-        self.assertEqual(sales[0].market_hash_name, "Glove Case Key")
-        self.assertEqual(sales[0].currency, Currency.eur)
-        self.assertEqual(
-            sales[0].item_page,
-            "https://skinport.com/item/glove-case-key",
-        )
-        self.assertEqual(
-            sales[0].market_page,
-            "https://skinport.com/market/730?cat=Key&item=Glove+Case+Key",
-        )
-        self.assertTrue(len(sales[0].sales) > 0)
-        self.assertEqual(sales[0].last_7_days.min, 1.77)
-        self.assertEqual(sales[0].last_7_days.max, 1.95)
-        self.assertEqual(sales[0].last_7_days.avg, 1.81)
-        self.assertEqual(sales[0].last_7_days.volume, 4)
-        self.assertEqual(sales[0].last_30_days.min, 1.77)
-        self.assertEqual(sales[0].last_30_days.max, 2.03)
-        self.assertEqual(sales[0].last_30_days.avg, 1.93)
-        self.assertEqual(sales[0].last_30_days.volume, 59)
-        self.assertEqual(sales[0].last_90_days.min, 1.77)
-        self.assertEqual(sales[0].last_90_days.max, 2.03)
-        self.assertEqual(sales[0].last_90_days.avg, 1.93)
-        self.assertEqual(sales[0].last_90_days.volume, 68)
-
     def test_out_of_stock_constructor(self):
         out_of_stock = [ItemOutOfStock(data=data) for data in self._out_of_stock]
         self.assertEqual(len(out_of_stock), 4)

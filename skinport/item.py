@@ -26,7 +26,7 @@ import datetime
 from typing import Any, Dict, List, Optional
 
 from .enums import Currency
-from .sale import LastXDays, Sale
+from .sale import LastXDays
 
 __all__ = (
     "Item",
@@ -189,10 +189,11 @@ class ItemWithSales:
 
     __slots__ = (
         "_market_hash_name",
+        "_version",
         "_currency",
         "_item_page",
         "_market_page",
-        "_sales",
+        "_last_24_hours",
         "_last_7_days",
         "_last_30_days",
         "_last_90_days",
@@ -200,16 +201,17 @@ class ItemWithSales:
 
     def __init__(self, *, data: Dict[str, Any]) -> None:
         self._market_hash_name = data.get("market_hash_name", "")
+        self._version = data.get("version", None)
         self._currency = data.get("currency")
         self._item_page = data.get("item_page", "")
         self._market_page = data.get("market_page", "")
-        self._sales = data.get("sales", [])
+        self._last_24_hours = data.get("last_24_hours", {})
         self._last_7_days = data.get("last_7_days", {})
         self._last_30_days = data.get("last_30_days", {})
         self._last_90_days = data.get("last_90_days", {})
 
     def __repr__(self) -> str:
-        return f"<ItemWithSales market_hash_name={self._market_hash_name} Sales={len(self._sales)}>"
+        return f"<ItemWithSales market_hash_name={self._market_hash_name} version={self._version}>"
 
     def __str__(self) -> str:
         return f"{self._market_hash_name}"
@@ -218,6 +220,11 @@ class ItemWithSales:
     def market_hash_name(self) -> str:
         """:class:`str`: Returns the name of the item under it displayed on skinport.com."""
         return self._market_hash_name
+
+    @property
+    def version(self) -> Optional[str]:
+        """Optional[:class:`str`]: Returns the version of the item."""
+        return self._version
 
     @property
     def currency(self) -> Currency:
@@ -235,21 +242,21 @@ class ItemWithSales:
         return self._market_page
 
     @property
-    def sales(self) -> List[Sale]:
-        """List[:class:`Sale`]: Returns a :class:`list` of :class:`Sale`."""
-        return [Sale(data=sale) for sale in self._sales]
+    def last_24_hours(self) -> LastXDays:
+        """:class:`LastXDays`: Returns information about sales of the item in the last 24 hours."""
+        return LastXDays(data=self._last_24_hours)
 
     @property
     def last_7_days(self) -> LastXDays:
-        """:class:`LastXDays`: Returns the last 7 days of the item."""
+        """:class:`LastXDays`: Returns information about sales of the item in the last 7 days."""
         return LastXDays(data=self._last_7_days)
 
     @property
     def last_30_days(self) -> LastXDays:
-        """:class:`LastXDays`: Returns the last 30 days of the item."""
+        """:class:`LastXDays`: Returns information about sales of the item in the last 30 days."""
         return LastXDays(data=self._last_30_days)
 
     @property
     def last_90_days(self) -> LastXDays:
-        """:class:`LastXDays`: Returns the last 90 days of the item."""
+        """:class:`LastXDays`: Returns information about sales of the item in the last 90 days."""
         return LastXDays(data=self._last_90_days)

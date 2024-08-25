@@ -22,46 +22,11 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-import datetime
 from typing import Any, Dict, Optional
 
 __all__ = (
-    "Sale",
     "LastXDays",
 )
-
-
-class Sale:
-    """Represents a sale."""
-
-    __slots__ = (
-        "_price",
-        "_wear_value",
-        "_sold_at",
-    )
-
-    def __init__(self, *, data: Dict[str, Any]) -> None:
-        self._price: float = data.get("price", 0.0)
-        self._wear_value: Optional[float] = data.get("wear_value")
-        self._sold_at = data.get("sold_at", 0)
-
-    def __repr__(self) -> str:
-        return f"Sale({{'price': {self._price}, 'wear_value': {self._wear_value}, 'sold_at': {self._sold_at}}})"
-
-    @property
-    def price(self) -> float:
-        """:class:`float`: Returns the price of the item."""
-        return self._price
-
-    @property
-    def wear_value(self) -> Optional[float]:
-        """Optional[:class:`float`]: Returns the wear value of the item."""
-        return self._wear_value
-
-    @property
-    def sold_at(self) -> datetime.datetime:
-        """:class:`datetime.datetime`: Returns the date and time the item was sold."""
-        return datetime.datetime.fromtimestamp(self._sold_at)
 
 
 class LastXDays:
