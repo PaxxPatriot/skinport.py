@@ -71,7 +71,13 @@ class HTTPClient:
         proxy: Optional[str] = None,
         proxy_auth: Optional[aiohttp.BasicAuth] = None,
     ) -> None:
-        self.__session = aiohttp.ClientSession()
+        # Checks if the skinport.Client was initialized before or after the event loop started
+        # If it was not initialized, you have to call start_session()
+        try:
+            asyncio.get_running_loop()
+            self.__session = aiohttp.ClientSession()
+        except RuntimeError:
+            self.__session = None
         self.auth = None
         self.proxy: Optional[str] = proxy
         self.proxy_auth: Optional[aiohttp.BasicAuth] = proxy_auth
@@ -86,6 +92,9 @@ class HTTPClient:
     async def close(self) -> None:
         if self.__session:
             await self.__session.close()
+
+    async def start_session(self):
+        self.__session = aiohttp.ClientSession()
 
     async def request(
         self,
