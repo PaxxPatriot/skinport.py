@@ -83,6 +83,7 @@ class Client:
             is blocking. That means that registration of events or anything being
             called after this function call will not execute until it returns.
         """
+
         async def runner():
             try:
                 await self.connect(app_id=app_id, currency=currency, locale=locale)
@@ -155,7 +156,7 @@ class Client:
         """
         # Only create the aiohttp.ClientSession when the asyncio loop is already running
         await self.http.start_session()
-        
+
         kwargs = {"app_id": app_id, "currency": currency, "locale": locale}
         # Get parameters for the sale feed
         if self._connected:

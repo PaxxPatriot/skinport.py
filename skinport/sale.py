@@ -24,9 +24,7 @@ SOFTWARE.
 
 from typing import Any, Dict, Optional
 
-__all__ = (
-    "LastXDays",
-)
+__all__ = ("LastXDays",)
 
 
 class LastXDays:
