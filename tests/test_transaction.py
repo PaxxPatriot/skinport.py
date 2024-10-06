@@ -2,7 +2,7 @@ import json
 import unittest
 from typing import List, Union
 
-from skinport import Credit, Purchase, Withdraw
+from skinport import Transaction
 
 TEST_TRANSACTIONS = """{
     "pagination": {
@@ -71,11 +71,6 @@ class TransactionTestCase(unittest.TestCase):
         self._transactions = json.loads(TEST_TRANSACTIONS)
 
     def test_transaction_constructors(self):
-        transactions: List[Union[Credit, Withdraw, Purchase]] = []
+        transactions: List[Transaction] = []
         for transaction in self._transactions["data"]:
-            if transaction["type"] == "credit":
-                transactions.append(Credit(data=transaction))
-            elif transaction["type"] == "withdraw":
-                transactions.append(Withdraw(data=transaction))
-            elif transaction["type"] == "purchase":
-                transactions.append(Purchase(data=transaction))
+            transactions.append(Transaction(data=transaction))
