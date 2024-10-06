@@ -36,7 +36,7 @@ from .errors import ParamRequired
 from .http import HTTPClient
 from .item import Item, ItemOutOfStock, ItemWithSales
 from .iterators import TransactionAsyncIterator
-from .transaction import Credit, Purchase, Withdraw
+from .transaction import Transaction
 
 __all__ = ("Client",)
 
@@ -300,7 +300,7 @@ class Client:
 
     async def get_account_transactions(
         self, *, page: int = 1, limit: int = 100, order: str = "desc"
-    ) -> List[Union[Credit, Withdraw, Purchase]]:
+    ) -> List[Transaction]:
         """*coroutine*
         Returns a :class:`list` of :class:`Transaction`.
 
@@ -327,15 +327,9 @@ class Client:
         params = {"page": page, "limit": limit, "order": order}
         data = await self.http.get_account_transactions(params=params)
 
-        transactions: List[Union[Credit, Withdraw, Purchase]] = []
+        transactions: List[Transaction] = []
         for transaction in data["data"]:
-            if transaction["type"] == "credit":
-                transactions.append(Credit(data=transaction))
-            elif transaction["type"] == "withdraw":
-                transactions.append(Withdraw(data=transaction))
-            elif transaction["type"] == "purchase":
-                transactions.append(Purchase(data=transaction))
-
+            transactions.append(Transaction(data=transaction))
         return transactions
 
     async def fetch_all_account_transactions(self) -> TransactionAsyncIterator:
