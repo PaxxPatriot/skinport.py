@@ -298,9 +298,7 @@ class Client:
         data = await self.http.get_sales_out_of_stock(params=params)
         return [ItemOutOfStock(data=sale) for sale in data]
 
-    async def get_account_transactions(
-        self, *, page: int = 1, limit: int = 100, order: str = "desc"
-    ) -> List[Transaction]:
+    async def get_account_transactions(self, *, page: int = 1, limit: int = 100, order: str = "desc") -> List[Transaction]:
         """*coroutine*
         Returns a :class:`list` of :class:`Transaction`.
 
