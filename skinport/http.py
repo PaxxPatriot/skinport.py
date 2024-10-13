@@ -25,6 +25,7 @@ SOFTWARE.
 import asyncio
 import json
 import logging
+import ssl
 import sys
 from typing import Any, Dict, Iterable, List, Optional, Union
 
@@ -115,9 +116,14 @@ class HTTPClient:
         if params:
             kwargs["params"] = params
 
+        # Pinning to TLS v1.3 (thanks CloudFlare)
+        ssl_context = ssl.create_default_context()
+        ssl_context.minimum_version = ssl.TLSVersion.TLSv1_3
+        ssl_context.maximum_version = ssl.TLSVersion.TLSv1_3
+
         async with self.ratelimit_lock:
             for _ in range(2):
-                async with self.__session.request(method, url, auth=self.auth, **kwargs) as response:
+                async with self.__session.request(method, url, auth=self.auth, ssl=ssl_context, **kwargs) as response:
                     _log.debug(f"{method} {url} with {kwargs} has returned {response.status}")
 
                     data = await json_or_text(response)
