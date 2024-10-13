@@ -25,8 +25,10 @@ SOFTWARE.
 import asyncio
 import logging
 import signal
+import ssl
 from typing import Any, Coroutine, Dict, List, Union
 
+import aiohttp
 import socketio
 from asyncache import cached
 from cachetools import TTLCache
@@ -47,8 +49,9 @@ _log = logging.getLogger(__name__)
 class Client:
     def __init__(self, debug: bool = False):
         self.http: HTTPClient = HTTPClient()
-        self.ws: socketio.AsyncClient = socketio.AsyncClient(logger=debug, engineio_logger=debug)
         self._connected = False
+        self.ws = None
+        self.listeners = dict()
 
     def set_auth(self, *, client_id: str, client_secret: str):
         self.http.set_auth(client_id, client_secret)
@@ -126,7 +129,9 @@ class Client:
             if name is None:
                 raise ValueError("name can't be None")
 
-            self.ws.on(name, func)
+            # Save the listeners to add them during connect
+            self.listeners[name] = func
+
             _log.debug("%s has successfully been registered as an event", func.__name__)
             return func
 
@@ -156,6 +161,18 @@ class Client:
         """
         # Only create the aiohttp.ClientSession when the asyncio loop is already running
         await self.http.start_session()
+
+        # Pinning to TLS v1.3 (thanks CloudFlare)
+        ssl_context = ssl.create_default_context()
+        ssl_context.minimum_version = ssl.TLSVersion.TLSv1_3
+        ssl_context.maximum_version = ssl.TLSVersion.TLSv1_3
+        connector = aiohttp.TCPConnector(ssl=ssl_context)
+        http_session = aiohttp.ClientSession(connector=connector)
+        self.ws: socketio.AsyncClient = socketio.AsyncClient(http_session=http_session)
+
+        # Attach the listeners
+        for name, func in self.listeners.items():
+            self.ws.on(name, func)
 
         kwargs = {"app_id": app_id, "currency": currency, "locale": locale}
         # Get parameters for the sale feed
