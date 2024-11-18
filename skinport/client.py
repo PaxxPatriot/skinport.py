@@ -168,7 +168,7 @@ class Client:
         ssl_context.maximum_version = ssl.TLSVersion.TLSv1_3
         connector = aiohttp.TCPConnector(ssl=ssl_context)
         http_session = aiohttp.ClientSession(connector=connector)
-        self.ws: socketio.AsyncClient = socketio.AsyncClient(http_session=http_session)
+        self.ws: socketio.AsyncClient = socketio.AsyncClient(serializer="msgpack", http_session=http_session)
 
         # Attach the listeners
         for name, func in self.listeners.items():
