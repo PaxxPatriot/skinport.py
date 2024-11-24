@@ -33,6 +33,7 @@ __all__ = (
     "InsufficientFunds",
     "InvalidScope",
     "NotFound",
+    "NotAcceptable",
     "InternalServerError",
 )
 
@@ -135,6 +136,14 @@ class InvalidScope(HTTPException):
 
 class NotFound(HTTPException):
     """Exception that’s raised for when status code 404 occurs.
+
+    Subclass of :exc:`HTTPException`"""
+
+    pass
+
+
+class NotAcceptable(HTTPException):
+    """Exception that’s raised for when status code 406 occurs. This occurs when the Accept-Encoding header is missing or incompatible.
 
     Subclass of :exc:`HTTPException`"""
 
