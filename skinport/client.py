@@ -24,9 +24,8 @@ SOFTWARE.
 
 import asyncio
 import logging
-import signal
 import ssl
-from typing import Any, Coroutine, Dict, List, Union
+from typing import Any, Coroutine, Dict, List
 
 import aiohttp
 import engineio.base_client
@@ -47,7 +46,9 @@ __all__ = ("Client",)
 _log = logging.getLogger(__name__)
 
 import engineio
-engineio.base_client.BaseClient._get_url_timestamp = lambda x: ''
+
+engineio.base_client.BaseClient._get_url_timestamp = lambda x: ""
+
 
 class Client:
     def __init__(self):
