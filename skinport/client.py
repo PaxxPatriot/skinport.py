@@ -50,7 +50,7 @@ import engineio
 engineio.base_client.BaseClient._get_url_timestamp = lambda x: ''
 
 class Client:
-    def __init__(self, debug: bool = False):
+    def __init__(self):
         self.http: HTTPClient = HTTPClient()
         self._connected = False
         self.ws = None
