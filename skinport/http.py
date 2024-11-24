@@ -109,6 +109,7 @@ class HTTPClient:
         # header creation
         headers: Dict[str, str] = {
             "User-Agent": self.user_agent,
+            "Accept-Encoding": "br",
         }
 
         kwargs["headers"] = headers
