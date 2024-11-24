@@ -29,6 +29,7 @@ import ssl
 from typing import Any, Coroutine, Dict, List, Union
 
 import aiohttp
+import engineio.base_client
 import socketio
 from asyncache import cached
 from cachetools import TTLCache
@@ -45,6 +46,8 @@ __all__ = ("Client",)
 
 _log = logging.getLogger(__name__)
 
+import engineio
+engineio.base_client.BaseClient._get_url_timestamp = lambda x: ''
 
 class Client:
     def __init__(self, debug: bool = False):
@@ -168,7 +171,7 @@ class Client:
         ssl_context.maximum_version = ssl.TLSVersion.TLSv1_3
         connector = aiohttp.TCPConnector(ssl=ssl_context)
         http_session = aiohttp.ClientSession(connector=connector)
-        self.ws: socketio.AsyncClient = socketio.AsyncClient(serializer="msgpack", http_session=http_session)
+        self.ws: socketio.AsyncClient = socketio.AsyncClient(http_session=http_session, serializer="msgpack", logger=True, engineio_logger=True)
 
         # Attach the listeners
         for name, func in self.listeners.items():
@@ -183,7 +186,7 @@ class Client:
         try:
             self.ws.on("*", self.catch_all)
             self.ws.on("connect", lambda: asyncio.ensure_future(self.on_connect(**kwargs)))
-            await self.ws.connect("https://skinport.com", transports=["websocket"], retry=True)
+            await self.ws.connect("https://skinport.com", transports=["websocket"], retry=True, auth=dict())
             self._connected = True
             await self.ws.wait()
         except asyncio.TimeoutError:
