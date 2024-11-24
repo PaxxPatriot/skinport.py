@@ -31,7 +31,8 @@ dependencies = [
     "asyncache",
     "cachetools",
     "python-socketio[asyncio_client]",
-    "msgpack"
+    "msgpack",
+    "brotli"
 ]
 dynamic = ["version"]
 
