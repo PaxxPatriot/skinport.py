@@ -23,7 +23,7 @@ SOFTWARE.
 """
 
 import asyncio
-from typing import Any, Callable, Coroutine, Dict, List, Optional, Union
+from typing import Any, Callable, Coroutine, Dict, List, Optional
 
 from .transaction import Transaction
 
