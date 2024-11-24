@@ -2,7 +2,7 @@
 Skinport API Wrapper
 ~~~~~~~~~~~~~~~~~~~
 A basic wrapper for the Skinport API.
-:copyright: (c) 2022 PaxxPatriot
+:copyright: (c) 2022-present PaxxPatriot
 :license: MIT, see LICENSE for more details.
 """
 
