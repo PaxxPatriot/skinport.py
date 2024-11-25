@@ -27,12 +27,6 @@ ItemOutOfStock
 .. autoclass:: ItemOutOfStock
     :members:
 
-Sale
------
-
-.. autoclass:: Sale
-    :members:
-
 LastXDays
 ----------
 
