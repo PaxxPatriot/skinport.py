@@ -11,11 +11,14 @@ python-socketio = {extras = ["asyncio_client"], version = "*"}
 cachetools = "*"
 asyncache = "*"
 msgpack = "*"
+brotli = "*"
 
 [dev-packages]
 black = "*"
 "skinport.py" = {editable = true, path = "."}
 ruff = "*"
+isort = "*"
+autoflake = "*"
 
 [requires]
-python_version = "3.12"
+python_version = "3.13"
