@@ -34,7 +34,6 @@ from asyncache import cached
 from cachetools import TTLCache
 
 from .enums import AppID, Currency, Locale
-from .errors import ParamRequired
 from .http import HTTPClient
 from .item import Item, ItemOutOfStock, ItemWithSales
 from .iterators import TransactionAsyncIterator
@@ -269,6 +268,8 @@ class Client:
     @cached(cache=TTLCache(maxsize=16, ttl=3600))
     async def get_sales_history(
         self,
+        /,
+        *market_hash_names,
         app_id: AppID = AppID.csgo,
         currency: Currency = Currency.eur,
     ) -> List[ItemWithSales]:  # sourcery skip: default-mutable-arg
@@ -277,6 +278,10 @@ class Client:
 
         Parameters
         ----------
+        *market_hash_names: :class:`str`
+            A variable number of market_hash_names to get the sale history for.
+            If the function is called without any positional argument,
+            the sale history for all items is retrieved.
         app_id: :class:`.AppID`
             The app_id for the inventory's game.
             Defaults to ``730``.
@@ -292,6 +297,10 @@ class Client:
             "app_id": app_id,
             "currency": currency.value,
         }
+
+        if len(market_hash_names) > 0:
+            params["market_hash_name"] = ",".join(market_hash_names)
+
         data = await self.http.get_sales_history(params=params)
         return [ItemWithSales(data=sale) for sale in data]
 
