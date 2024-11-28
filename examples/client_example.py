@@ -1,7 +1,7 @@
 import asyncio
 
 import skinport
-from skinport import AppID, Credit
+from skinport import AppID
 
 
 async def main():
@@ -9,8 +9,7 @@ async def main():
     try:
         transactions = await client.get_account_transactions(limit=10)
         for transaction in transactions:
-            if isinstance(transaction, Credit):
-                print(transaction.amount)
+            print(transaction.amount)
     except skinport.AuthenticationError:
         print("Authentication failed")
 
