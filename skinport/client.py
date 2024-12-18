@@ -28,7 +28,6 @@ import ssl
 from typing import Any, Coroutine, Dict, List
 
 import aiohttp
-import engineio.base_client
 import socketio
 from asyncache import cached
 from cachetools import TTLCache
@@ -43,10 +42,6 @@ __all__ = ("Client",)
 
 
 _log = logging.getLogger(__name__)
-
-import engineio
-
-engineio.base_client.BaseClient._get_url_timestamp = lambda x: ""
 
 
 class Client:
@@ -171,7 +166,9 @@ class Client:
         ssl_context.maximum_version = ssl.TLSVersion.TLSv1_3
         connector = aiohttp.TCPConnector(ssl=ssl_context)
         http_session = aiohttp.ClientSession(connector=connector)
-        self.ws: socketio.AsyncClient = socketio.AsyncClient(serializer="msgpack", http_session=http_session)
+        self.ws: socketio.AsyncClient = socketio.AsyncClient(
+            serializer="msgpack", http_session=http_session, timestamp_requests=False
+        )
 
         # Attach the listeners
         for name, func in self.listeners.items():
