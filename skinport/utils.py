@@ -29,9 +29,17 @@ from .enums import Exterior
 
 def market_hash_name(item_name: str, exterior: Exterior):
     """
-    Generates a market hash name from an item name and exterior.
-    :param item_name: The name of the item.
-    :param exterior: The exterior of the item.
-    :return: The market hash name.
+    Generates and returns a market hash name from an item name and exterior.
+
+    Parameters
+    ----------
+    item_name: :class:`str`
+        The name of the item.
+    exterior: :class:`.Exterior`
+        The exterior of the item.
+
+    Returns
+    -------
+    :class:`str`:
     """
     return f"{item_name} ({exterior})"

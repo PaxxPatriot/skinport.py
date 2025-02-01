@@ -37,13 +37,13 @@ class TransactionItem:
     """Represents an item from a transaction."""
 
     __slots__ = (
-        "_asset_id",
-        "_sale_id",
-        "_market_hash_name",
-        "_buyer_country",
-        "_seller_country",
         "_amount",
+        "_asset_id",
+        "_buyer_country",
         "_currency",
+        "_market_hash_name",
+        "_sale_id",
+        "_seller_country",
     )
 
     def __init__(self, *, data: Dict[str, Any]) -> None:
@@ -101,15 +101,15 @@ class Transaction:
     """Represents a transaction."""
 
     __slots__ = (
+        "_amount",
+        "_created_at",
+        "_currency",
+        "_fee",
+        "_items",
+        "_status",
+        "_sub_type",
         "_transaction_id",
         "_type",
-        "_sub_type",
-        "_status",
-        "_amount",
-        "_fee",
-        "_currency",
-        "_items",
-        "_created_at",
         "_updated_at",
     )
 
@@ -129,50 +129,50 @@ class Transaction:
 
     @property
     def transaction_id(self) -> int:
-        """Returns the sale ID."""
+        """:class:`int`: Returns the sale ID."""
         return self._transaction_id
 
     @property
     def type(self) -> str:
-        """Returns the transaction type."""
+        """:class:`str`: Returns the transaction type."""
         return self._type
 
     @property
     def sub_type(self) -> Optional[str]:
-        """Returns the transaction subtype."""
+        """Optional[:class:`str`]: Returns the transaction subtype."""
         return self._sub_type
 
     @property
     def status(self) -> str:
-        """Returns the transaction status."""
+        """:class:`str`: Returns the transaction status."""
         return self._status
 
     @property
     def amount(self) -> float:
-        """Returns the transaction amount."""
+        """:class:`float`: Returns the transaction amount."""
         return self._amount
 
     @property
     def fee(self) -> Optional[float]:
-        """Returns the fee for the transaction."""
+        """Optional[:class:`float`]: Returns the fee for the transaction."""
         return self._fee
 
     @property
     def currency(self) -> Currency:
-        """Returns the transaction currency."""
+        """:class:`Currency`: Returns the transaction currency."""
         return Currency(self._currency)
 
     @property
     def items(self) -> Optional[List[TransactionItem]]:
-        """Returns the transaction items."""
+        """Optional[List[:class:`float`]]:Returns the transaction items."""
         return self._items
 
     @property
     def created_at(self) -> datetime.datetime:
-        """Returns the date and time the transaction was created."""
+        """:class:`datetime.datetime`: Returns the date and time the transaction was created."""
         return datetime.datetime.strptime(self._created_at, "%Y-%m-%dT%H:%M:%S.%fZ")
 
     @property
     def updated_at(self) -> datetime.datetime:
-        """Returns the date and time the transaction was updated."""
+        """:class:`datetime.datetime`: Returns the date and time the transaction was updated."""
         return datetime.datetime.strptime(self._updated_at, "%Y-%m-%dT%H:%M:%S.%fZ")

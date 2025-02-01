@@ -1,7 +1,7 @@
 import json
 import unittest
 
-from skinport import SaleFeed, SaleFeedSale, Tag
+from skinport import SaleFeed
 
 TEST_SALEFEED = """{
     "eventType": "listed",

@@ -29,10 +29,10 @@ __all__ = ("LastXDays",)
 
 class LastXDays:
     __slots__ = (
-        "_min",
-        "_max",
         "_avg",
+        "_max",
         "_median",
+        "_min",
         "_volume",
     )
 

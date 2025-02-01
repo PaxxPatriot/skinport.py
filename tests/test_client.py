@@ -7,7 +7,7 @@ from typing import Optional
 import config
 
 import skinport
-from skinport import AuthenticationError, Currency, ParamRequired
+from skinport import AuthenticationError, Currency
 
 
 class SkinportClientTestCase(unittest.IsolatedAsyncioTestCase):

@@ -19,6 +19,7 @@ black = "*"
 ruff = "*"
 isort = "*"
 autoflake = "*"
+pydocstyle = "*"
 
 [requires]
 python_version = "3.13"
