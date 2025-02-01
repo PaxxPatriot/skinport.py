@@ -62,6 +62,11 @@ class TransactionItem:
         return self._market_hash_name
 
     @property
+    def asset_id(self) -> int:
+        """Returns the asset ID."""
+        return self._asset_id
+
+    @property
     def sale_id(self) -> int:
         """Returns the sale ID."""
         return self._sale_id
