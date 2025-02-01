@@ -212,7 +212,7 @@ class SaleFeedSale:
         self._image = data.get("image", "")
         self._classid = data.get("classid", "")
         self._assetid = data.get("assetid", "")
-        self._lock = data.get("lock", "")
+        self._lock = data.get("lock", "1970-01-01T00:00:00.000Z")
         self._version = data.get("version", "")
         self._versionType = data.get("versionType", "")
         self._stackAble = data.get("stackAble", False)
