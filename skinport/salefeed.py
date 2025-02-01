@@ -139,6 +139,7 @@ class SaleFeedSale:
     __slots__ = (
         "_id",
         "_saleId",
+        "_shortId",
         "_productId",
         "_assetId",
         "_itemId",
@@ -177,12 +178,14 @@ class SaleFeedSale:
         "_link",
         "_type",
         "_exterior",
+        "_quality",
         "_rarity",
         "_rarity_localized",
         "_rarityColor",
         "_collection",
         "_collection_localized",
         "_stickers",
+        "_charms",
         "_canHaveScreenshots",
         "_screenshots",
         "_souvenir",
@@ -194,6 +197,7 @@ class SaleFeedSale:
     def __init__(self, *, data: Dict[str, Any]) -> None:
         self._id = data.get("id", 0)
         self._saleId = data.get("saleId", 0)
+        self._shortId = data.get("shortId", "")
         self._productId = data.get("productId", 0)
         self._assetId = data.get("assetId", 0)
         self._itemId = data.get("itemId", 0)
@@ -232,12 +236,14 @@ class SaleFeedSale:
         self._link = data.get("link")
         self._type = data.get("type", "")
         self._exterior = data.get("exterior")
+        self._quality = data.get("quality", "")
         self._rarity = data.get("rarity", "")
         self._rarity_localized = data.get("rarity_localized", "")
         self._rarityColor = data.get("rarityColor", "")
         self._collection = data.get("collection")
         self._collection_localized = data.get("collection_localized")
         self._stickers = data.get("stickers", [])
+        self._charms = data.get("charms", [])
         self._canHaveScreenshots = data.get("canHaveScreenshots", False)
         self._screenshots = data.get("screenshots", [])
         self._souvenir = data.get("souvenir", False)
@@ -260,6 +266,11 @@ class SaleFeedSale:
     def sale_id(self) -> int:
         """:class:`int`: Returns the ID of the sale."""
         return self._saleId
+
+    @property
+    def short_id(self) -> str:
+        """:class:`str`: Returns the short ID of the sale."""
+        return self._shortId
 
     @property
     def product_id(self) -> int:
@@ -458,6 +469,11 @@ class SaleFeedSale:
         return self._exterior
 
     @property
+    def quality(self) -> str:
+        """:class:`str`: Returns the quality of the item."""
+        return self._quality
+
+    @property
     def rarity(self) -> str:
         """:class:`str`: Returns the rarity of the item."""
         return self._rarity
@@ -486,6 +502,11 @@ class SaleFeedSale:
     def stickers(self) -> List[Sticker]:
         """List[:class:`str`]: Returns a :class:`list` of :class:`str` with names of attached stickers. Can be empty."""
         return [Sticker(data=sticker) for sticker in self._stickers]
+
+    @property
+    def charms(self) -> List[str]:
+        """List[:class:`str`]: Returns a :class:`list` of :class:`str` with names of attached charms. Can be empty."""
+        return self._charms
 
     @property
     def can_have_screenshots(self) -> bool:
