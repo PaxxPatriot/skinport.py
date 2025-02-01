@@ -30,8 +30,8 @@ from .sale import LastXDays
 
 __all__ = (
     "Item",
-    "ItemWithSales",
     "ItemOutOfStock",
+    "ItemWithSales",
 )
 
 
@@ -39,17 +39,17 @@ class Item:
     """Represents an item."""
 
     __slots__ = (
-        "_market_hash_name",
+        "_created_at",
         "_currency",
-        "_suggested_price",
         "_item_page",
+        "_market_hash_name",
         "_market_page",
-        "_min_price",
         "_max_price",
         "_mean_price",
         "_median_price",
+        "_min_price",
         "_quantity",
-        "_created_at",
+        "_suggested_price",
         "_updated_at",
     )
 
@@ -138,12 +138,12 @@ class ItemOutOfStock:
     """Represents an item which is out of stock."""
 
     __slots__ = (
-        "_market_hash_name",
-        "_version",
-        "_currency",
-        "_suggested_price",
         "_avg_sale_price",
+        "_currency",
+        "_market_hash_name",
         "_sales_last_90d",
+        "_suggested_price",
+        "_version",
     )
 
     def __init__(self, *, data: Dict[str, Any]) -> None:
@@ -195,15 +195,15 @@ class ItemWithSales:
     """Represents an item with sales history."""
 
     __slots__ = (
-        "_market_hash_name",
-        "_version",
         "_currency",
         "_item_page",
-        "_market_page",
-        "_last_24_hours",
         "_last_7_days",
+        "_last_24_hours",
         "_last_30_days",
         "_last_90_days",
+        "_market_hash_name",
+        "_market_page",
+        "_version",
     )
 
     def __init__(self, *, data: Dict[str, Any]) -> None:

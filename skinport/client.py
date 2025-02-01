@@ -117,7 +117,7 @@ class Client:
 
         Raises
         --------
-        TypeError
+        :exc:`TypeError`
             The coroutine passed is not actually a coroutine.
         """
 

@@ -28,7 +28,7 @@ from typing import Any, Dict, List, Optional
 from .color import Color
 from .enums import AppID, Currency, SaleType
 
-__all__ = ("Tag", "SaleFeedSale", "SaleFeed", "Sticker")
+__all__ = ("SaleFeed", "SaleFeedSale", "Sticker", "Tag")
 
 
 class Tag:
@@ -67,21 +67,21 @@ class Tag:
 
 class Sticker:
     __slots__ = (
-        "_sticker_id",
-        "_wear",
+        "_color",
         "_img",
         "_name",
-        "_type",
-        "_slot",
-        "_color",
-        "_value",
-        "_slug",
-        "_scale",
-        "_rotation",
+        "_name_localized",
         "_offset_x",
         "_offset_y",
-        "_name_localized",
+        "_rotation",
+        "_scale",
+        "_slot",
+        "_slug",
+        "_sticker_id",
+        "_type",
         "_type_localized",
+        "_value",
+        "_wear",
     )
 
     def __init__(self, *, data: Dict[str, Any]) -> None:
@@ -179,61 +179,61 @@ class Sticker:
 
 class SaleFeedSale:
     __slots__ = (
-        "_id",
-        "_saleId",
-        "_shortId",
-        "_productId",
-        "_assetId",
-        "_itemId",
         "_appid",
-        "_steamid",
-        "_url",
-        "_family",
-        "_family_localized",
-        "_name",
-        "_title",
-        "_text",
-        "_marketName",
-        "_marketHashName",
-        "_color",
-        "_bgColor",
-        "_image",
-        "_classid",
+        "_assetId",
         "_assetid",
-        "_lock",
-        "_version",
-        "_versionType",
-        "_stackAble",
-        "_suggestedPrice",
-        "_salePrice",
-        "_currency",
-        "_saleStatus",
-        "_saleType",
+        "_bgColor",
+        "_canHaveScreenshots",
         "_category",
         "_category_localized",
-        "_subCategory",
-        "_subCategory_localized",
-        "_pattern",
-        "_finish",
-        "_customName",
-        "_wear",
-        "_link",
-        "_type",
-        "_exterior",
-        "_quality",
-        "_rarity",
-        "_rarity_localized",
-        "_rarityColor",
+        "_charms",
+        "_classid",
         "_collection",
         "_collection_localized",
-        "_stickers",
-        "_charms",
-        "_canHaveScreenshots",
-        "_screenshots",
-        "_souvenir",
-        "_stattrak",
-        "_tags",
+        "_color",
+        "_currency",
+        "_customName",
+        "_exterior",
+        "_family",
+        "_family_localized",
+        "_finish",
+        "_id",
+        "_image",
+        "_itemId",
+        "_link",
+        "_lock",
+        "_marketHashName",
+        "_marketName",
+        "_name",
         "_ownItem",
+        "_pattern",
+        "_productId",
+        "_quality",
+        "_rarity",
+        "_rarityColor",
+        "_rarity_localized",
+        "_saleId",
+        "_salePrice",
+        "_saleStatus",
+        "_saleType",
+        "_screenshots",
+        "_shortId",
+        "_souvenir",
+        "_stackAble",
+        "_stattrak",
+        "_steamid",
+        "_stickers",
+        "_subCategory",
+        "_subCategory_localized",
+        "_suggestedPrice",
+        "_tags",
+        "_text",
+        "_title",
+        "_type",
+        "_url",
+        "_version",
+        "_versionType",
+        "_wear",
     )
 
     def __init__(self, *, data: Dict[str, Any]) -> None:
@@ -467,12 +467,12 @@ class SaleFeedSale:
 
     @property
     def sub_category(self) -> Optional[str]:
-        """:class:`str`: Returns the sub category of the item."""
+        """Optional[:class:`str`]: Returns the sub category of the item."""
         return self._subCategory
 
     @property
     def sub_category_localized(self) -> Optional[str]:
-        """:class:`str`: Returns the localized sub category of the item."""
+        """Optional[:class:`str`]: Returns the localized sub category of the item."""
         return self._subCategory_localized
 
     @property

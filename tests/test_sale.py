@@ -1,7 +1,7 @@
 import json
 import unittest
 
-from skinport import Currency, ItemOutOfStock, ItemWithSales
+from skinport import Currency, ItemOutOfStock
 
 TEST_SALES = """[
   {

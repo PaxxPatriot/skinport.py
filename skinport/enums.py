@@ -25,11 +25,11 @@ SOFTWARE.
 from enum import Enum, IntEnum
 
 __all__ = (
-    "Currency",
     "AppID",
+    "Currency",
+    "Exterior",
     "Locale",
     "SaleType",
-    "Exterior",
 )
 
 

@@ -1,6 +1,6 @@
 import json
 import unittest
-from typing import List, Union
+from typing import List
 
 from skinport import Transaction
 

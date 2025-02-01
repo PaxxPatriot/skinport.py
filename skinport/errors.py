@@ -23,18 +23,18 @@ SOFTWARE.
 """
 
 __all__ = (
-    "SkinportException",
+    "AuthenticationError",
     "ClientException",
     "HTTPException",
-    "ParamRequired",
-    "ValidationError",
-    "InvalidRequest",
-    "AuthenticationError",
     "InsufficientFunds",
-    "InvalidScope",
-    "NotFound",
-    "NotAcceptable",
     "InternalServerError",
+    "InvalidRequest",
+    "InvalidScope",
+    "NotAcceptable",
+    "NotFound",
+    "ParamRequired",
+    "SkinportException",
+    "ValidationError",
 )
 
 
@@ -93,25 +93,25 @@ class HTTPException(SkinportException):
 
 
 class ParamRequired(ClientException):
-    """Exception that’s raised when a required parameter is not passed."""
+    """Exception that's raised when a required parameter is not passed."""
 
     pass
 
 
 class ValidationError(ClientException):
-    """Exception that’s raised when validation of the passed parameters failed."""
+    """Exception that's raised when validation of the passed parameters failed."""
 
     pass
 
 
 class InvalidRequest(ClientException):
-    """Exception that’s raised when the request couldn't be validated."""
+    """Exception that's raised when the request couldn't be validated."""
 
     pass
 
 
 class AuthenticationError(HTTPException):
-    """Exception that’s raised for when status code 401 occurs.
+    """Exception that's raised for when status code 401 occurs.
 
     Subclass of :exc:`HTTPException`"""
 
@@ -119,7 +119,7 @@ class AuthenticationError(HTTPException):
 
 
 class InsufficientFunds(HTTPException):
-    """Exception that’s raised for when status code 402 occurs.
+    """Exception that's raised for when status code 402 occurs.
 
     Subclass of :exc:`HTTPException`"""
 
@@ -127,7 +127,7 @@ class InsufficientFunds(HTTPException):
 
 
 class InvalidScope(HTTPException):
-    """Exception that’s raised for when status code 403 occurs.
+    """Exception that's raised for when status code 403 occurs.
 
     Subclass of :exc:`HTTPException`"""
 
@@ -135,7 +135,7 @@ class InvalidScope(HTTPException):
 
 
 class NotFound(HTTPException):
-    """Exception that’s raised for when status code 404 occurs.
+    """Exception that's raised for when status code 404 occurs.
 
     Subclass of :exc:`HTTPException`"""
 
@@ -143,7 +143,7 @@ class NotFound(HTTPException):
 
 
 class NotAcceptable(HTTPException):
-    """Exception that’s raised for when status code 406 occurs. This occurs when the Accept-Encoding header is missing or incompatible.
+    """Exception that's raised for when status code 406 occurs. This occurs when the Accept-Encoding header is missing or incompatible.
 
     Subclass of :exc:`HTTPException`"""
 
@@ -151,7 +151,7 @@ class NotAcceptable(HTTPException):
 
 
 class InternalServerError(HTTPException):
-    """Exception that’s raised for when a 500 range status code occurs.
+    """Exception that's raised for when a 500 range status code occurs.
 
     Subclass of :exc:`HTTPException`"""
 
