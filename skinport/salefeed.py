@@ -67,32 +67,49 @@ class Tag:
 
 class Sticker:
     __slots__ = (
-        "_color",
+        "_sticker_id",
+        "_wear",
         "_img",
         "_name",
-        "_name_localized",
-        "_slot",
-        "_sticker_id",
         "_type",
+        "_slot",
+        "_color",
+        "_value",
+        "_slug",
+        "_scale",
+        "_rotation",
+        "_offset_x",
+        "_offset_y",
+        "_name_localized",
         "_type_localized",
-        "_wear",
     )
 
     def __init__(self, *, data: Dict[str, Any]) -> None:
-        self._color = data.get("color")
+        self._sticker_id = data.get("sticker_id")
+        self._wear = data.get("wear")
         self._img = data.get("img")
         self._name = data.get("name")
-        self._name_localized = data.get("name_localized")
-        self._slot = data.get("slot")
-        self._sticker_id = data.get("sticker_id")
         self._type = data.get("type")
+        self._slot = data.get("slot")
+        self._color = data.get("color")
+        self._value = data.get("value")
+        self._slug = data.get("slug")
+        self._scale = data.get("scale")
+        self._rotation = data.get("rotation")
+        self._offset_x = data.get("offset_x")
+        self._offset_y = data.get("offset_y")
+        self._name_localized = data.get("name_localized")
         self._type_localized = data.get("type_localized")
-        self._wear = data.get("wear")
 
     @property
-    def color(self) -> Optional[Color]:
-        """:class:`Color`: Returns the color of the sticker."""
-        return Color(self._color) if self._color is not None else None
+    def sticker_id(self) -> Optional[str]:
+        """Optional[:class:`str`]: Returns the sticker ID of the sticker."""
+        return self._sticker_id
+
+    @property
+    def wear(self) -> Optional[float]:
+        """Optional[:class:`float`]: Returns the wear of the sticker."""
+        return self._wear
 
     @property
     def img(self) -> str:
@@ -105,9 +122,9 @@ class Sticker:
         return self._name
 
     @property
-    def name_localized(self) -> str:
-        """:class:`str`: Returns the localized name of the sticker."""
-        return self._name_localized
+    def type(self) -> Optional[str]:
+        """Optional[:class:`str`]: Returns the type of the sticker."""
+        return self._type
 
     @property
     def slot(self) -> int:
@@ -115,30 +132,56 @@ class Sticker:
         return self._slot
 
     @property
-    def sticker_id(self) -> Optional[str]:
-        """Optional[:class:`str`]: Returns the sticker ID of the sticker."""
-        return self._sticker_id
+    def color(self) -> Optional[Color]:
+        """:class:`Color`: Returns the color of the sticker."""
+        return Color(self._color) if self._color is not None else None
 
     @property
-    def type(self) -> Optional[str]:
-        """Optional[:class:`str`]: Returns the type of the sticker."""
-        return self._type
+    def value(self) -> Optional[str]:
+        """Optional[:class:`str`]: Returns the value of the sticker."""
+        return self._value
+
+    @property
+    def slug(self) -> Optional[str]:
+        """Optional[:class:`str`]: Returns the slug of the sticker."""
+        return self._slug
+
+    @property
+    def scale(self) -> Optional[float]:
+        """Optional[:class:`float`]: Returns the scale of the sticker."""
+        return self._scale
+
+    @property
+    def rotation(self) -> Optional[float]:
+        """Optional[:class:`float`]: Returns the rotation of the sticker."""
+        return self._rotation
+
+    @property
+    def offset_x(self) -> Optional[float]:
+        """Optional[:class:`float`]: Returns the X offset of the sticker."""
+        return self._offset_x
+
+    @property
+    def offset_y(self) -> Optional[float]:
+        """Optional[:class:`float`]: Returns the Y offset of the sticker."""
+        return self._offset_y
+
+    @property
+    def name_localized(self) -> str:
+        """:class:`str`: Returns the localized name of the sticker."""
+        return self._name_localized
 
     @property
     def type_localized(self) -> Optional[str]:
         """Optional[:class:`str`]: Returns the localized type of the sticker."""
         return self._type
 
-    @property
-    def wear(self) -> Optional[float]:
-        """Optional[:class:`float`]: Returns the wear of the sticker."""
-        return self._wear
-
 
 class SaleFeedSale:
     __slots__ = (
         "_id",
         "_saleId",
+        "_shortId",
         "_productId",
         "_assetId",
         "_itemId",
@@ -177,12 +220,14 @@ class SaleFeedSale:
         "_link",
         "_type",
         "_exterior",
+        "_quality",
         "_rarity",
         "_rarity_localized",
         "_rarityColor",
         "_collection",
         "_collection_localized",
         "_stickers",
+        "_charms",
         "_canHaveScreenshots",
         "_screenshots",
         "_souvenir",
@@ -194,6 +239,7 @@ class SaleFeedSale:
     def __init__(self, *, data: Dict[str, Any]) -> None:
         self._id = data.get("id", 0)
         self._saleId = data.get("saleId", 0)
+        self._shortId = data.get("shortId", "")
         self._productId = data.get("productId", 0)
         self._assetId = data.get("assetId", 0)
         self._itemId = data.get("itemId", 0)
@@ -232,12 +278,14 @@ class SaleFeedSale:
         self._link = data.get("link")
         self._type = data.get("type", "")
         self._exterior = data.get("exterior")
+        self._quality = data.get("quality", "")
         self._rarity = data.get("rarity", "")
         self._rarity_localized = data.get("rarity_localized", "")
         self._rarityColor = data.get("rarityColor", "")
         self._collection = data.get("collection")
         self._collection_localized = data.get("collection_localized")
         self._stickers = data.get("stickers", [])
+        self._charms = data.get("charms", [])
         self._canHaveScreenshots = data.get("canHaveScreenshots", False)
         self._screenshots = data.get("screenshots", [])
         self._souvenir = data.get("souvenir", False)
@@ -260,6 +308,11 @@ class SaleFeedSale:
     def sale_id(self) -> int:
         """:class:`int`: Returns the ID of the sale."""
         return self._saleId
+
+    @property
+    def short_id(self) -> str:
+        """:class:`str`: Returns the short ID of the sale."""
+        return self._shortId
 
     @property
     def product_id(self) -> int:
@@ -458,6 +511,11 @@ class SaleFeedSale:
         return self._exterior
 
     @property
+    def quality(self) -> str:
+        """:class:`str`: Returns the quality of the item."""
+        return self._quality
+
+    @property
     def rarity(self) -> str:
         """:class:`str`: Returns the rarity of the item."""
         return self._rarity
@@ -486,6 +544,11 @@ class SaleFeedSale:
     def stickers(self) -> List[Sticker]:
         """List[:class:`str`]: Returns a :class:`list` of :class:`str` with names of attached stickers. Can be empty."""
         return [Sticker(data=sticker) for sticker in self._stickers]
+
+    @property
+    def charms(self) -> List[str]:
+        """List[:class:`str`]: Returns a :class:`list` of :class:`str` with names of attached charms. Can be empty."""
+        return self._charms
 
     @property
     def can_have_screenshots(self) -> bool:

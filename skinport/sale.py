@@ -32,6 +32,7 @@ class LastXDays:
         "_min",
         "_max",
         "_avg",
+        "_median",
         "_volume",
     )
 
@@ -39,10 +40,11 @@ class LastXDays:
         self._min = data.get("min")
         self._max = data.get("max")
         self._avg = data.get("avg")
+        self._median = data.get("median")
         self._volume: int = data.get("volume", 0)
 
     def __repr__(self) -> str:
-        return f"LastXDays({{'min': {self._min}, 'max': {self._max}, 'avg': {self._avg}, 'volume': {self._volume}}}"
+        return f"LastXDays({{'min': {self._min}, 'max': {self._max}, 'avg': {self._avg}, 'median': {self._median}, 'volume': {self._volume}}}"
 
     @property
     def min(self) -> Optional[float]:
@@ -58,6 +60,11 @@ class LastXDays:
     def avg(self) -> Optional[float]:
         """Optional[:class:`float`]: Returns the avg of the last x days"""
         return self._avg
+
+    @property
+    def median(self) -> Optional[float]:
+        """Optional[:class:`float`]: Returns the median of the last x days"""
+        return self._median
 
     @property
     def volume(self) -> int:
