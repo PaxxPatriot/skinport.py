@@ -47,6 +47,7 @@ class Item:
         "_min_price",
         "_max_price",
         "_mean_price",
+        "_median_price",
         "_quantity",
         "_created_at",
         "_updated_at",
@@ -61,6 +62,7 @@ class Item:
         self._min_price = data.get("min_price")
         self._max_price = data.get("max_price")
         self._mean_price = data.get("mean_price")
+        self._median_price = data.get("median_price")
         self._quantity = data.get("quantity", 0)
         self._created_at = data.get("created_at", 0)
         self._updated_at = data.get("updated_at", 0)
@@ -110,6 +112,11 @@ class Item:
     def mean_price(self) -> Optional[float]:
         """Optional[:class:`float`]: Returns the mean price of the item."""
         return self._mean_price
+
+    @property
+    def median_price(self) -> Optional[float]:
+        """Optional[:class:`float`]: Returns the median price of the item."""
+        return self._median_price
 
     @property
     def quantity(self) -> int:
