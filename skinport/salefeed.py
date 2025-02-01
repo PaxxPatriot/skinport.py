@@ -212,7 +212,7 @@ class SaleFeedSale:
         self._image = data.get("image", "")
         self._classid = data.get("classid", "")
         self._assetid = data.get("assetid", "")
-        self._lock = data.get("lock", "1970-01-01T00:00:00.000Z")
+        self._lock = data.get("lock", None)
         self._version = data.get("version", "")
         self._versionType = data.get("versionType", "")
         self._stackAble = data.get("stackAble", False)
@@ -358,9 +358,9 @@ class SaleFeedSale:
         return self._assetid
 
     @property
-    def lock(self) -> datetime.datetime:
-        """:class:`datetime.datetime`: Returns the time until the item is trade-locked."""
-        return datetime.datetime.strptime(self._lock, "%Y-%m-%dT%H:%M:%S.%fZ")
+    def lock(self) -> Optional[datetime.datetime]:
+        """Optional[:class:`datetime.datetime`]`: Returns the time until the item is trade-locked."""
+        return self._lock.to_datetime() if self._lock is not None else None
 
     @property
     def version(self) -> str:

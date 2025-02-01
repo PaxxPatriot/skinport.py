@@ -32,6 +32,7 @@ import socketio
 from asyncache import cached
 from cachetools import TTLCache
 
+from .skinport_msgpack_packet import SkinportMsgPackPacket
 from .enums import AppID, Currency, Locale
 from .http import HTTPClient
 from .item import Item, ItemOutOfStock, ItemWithSales
@@ -167,7 +168,7 @@ class Client:
         connector = aiohttp.TCPConnector(ssl=ssl_context)
         http_session = aiohttp.ClientSession(connector=connector)
         self.ws: socketio.AsyncClient = socketio.AsyncClient(
-            serializer="msgpack", http_session=http_session, timestamp_requests=False
+            serializer=SkinportMsgPackPacket, http_session=http_session, timestamp_requests=False
         )
 
         # Attach the listeners
