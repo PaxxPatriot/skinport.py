@@ -79,6 +79,7 @@ class Client:
             Whether or not to show only tradable items.
             Defaults to ``Locale.en``.
 
+
         .. warning::
 
             This function must be the last function to call due to the fact that it
@@ -107,6 +108,7 @@ class Client:
     def listen(self, name: str = None) -> Coroutine[Any, Any, Any]:
         """A decorator that registers an event listener.
         The events must be a coroutine, if not, :exc:`TypeError` is raised.
+
         Example
         ---------
         .. code-block:: python3
