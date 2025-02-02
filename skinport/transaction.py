@@ -164,7 +164,7 @@ class Transaction:
 
     @property
     def items(self) -> Optional[List[TransactionItem]]:
-        """Optional[List[:class:`float`]]:Returns the transaction items."""
+        """Optional[List[:class:`float`]]: Returns the transaction items."""
         return self._items
 
     @property
