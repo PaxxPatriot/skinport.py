@@ -76,5 +76,5 @@ class ItemTestCase(unittest.TestCase):
         items = [Item(data=data) for data in self._items]
         self.assertEqual(
             repr(items[0]),
-            "<Item market_hash_name=AK-47 | Aquamarine Revenge (Battle-Scarred) market_page=https://skinport.com/market/730?cat=Rifle&item=Aquamarine+Revenge quantity=25>",
+            "Item(data={'market_hash_name': 'AK-47 | Aquamarine Revenge (Battle-Scarred)', 'currency': 'EUR', 'suggested_price': 13.18, 'item_page': 'https://skinport.com/item/ak-47-aquamarine-revenge-battle-scarred', 'market_page': 'https://skinport.com/market/730?cat=Rifle&item=Aquamarine+Revenge', 'min_price': 11.33, 'max_price': 18.22, 'mean_price': 12.58, 'median_price': None, 'quantity': 25, 'created_at': 1535988253, 'updated_at': 1568073728})",
         )
