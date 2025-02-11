@@ -54,21 +54,21 @@ class Item:
     )
 
     def __init__(self, *, data: Dict[str, Any]) -> None:
-        self._market_hash_name = data.get("market_hash_name", "")
+        self._market_hash_name = data.get("market_hash_name")
         self._currency = data.get("currency")
         self._suggested_price = data.get("suggested_price")
-        self._item_page = data.get("item_page", "")
-        self._market_page = data.get("market_page", "")
+        self._item_page = data.get("item_page")
+        self._market_page = data.get("market_page")
         self._min_price = data.get("min_price")
         self._max_price = data.get("max_price")
         self._mean_price = data.get("mean_price")
         self._median_price = data.get("median_price")
-        self._quantity = data.get("quantity", 0)
-        self._created_at = data.get("created_at", 0)
-        self._updated_at = data.get("updated_at", 0)
+        self._quantity = data.get("quantity")
+        self._created_at = data.get("created_at")
+        self._updated_at = data.get("updated_at")
 
     def __repr__(self) -> str:
-        return f"<Item market_hash_name={self._market_hash_name} market_page={self._market_page} quantity={self._quantity}>"
+       return f"Item(data={{'market_hash_name': '{self._market_hash_name}', 'currency': '{self._currency}', 'suggested_price': {self._suggested_price}, 'item_page': '{self._item_page}', 'market_page': '{self._market_page}', 'min_price': {self._min_price}, 'max_price': {self._max_price}, 'mean_price': {self._mean_price}, 'median_price': {self._median_price}, 'quantity': {self._quantity}, 'created_at': {self._created_at}, 'updated_at': {self._updated_at}}})"
 
     def __str__(self) -> str:
         return f"{self._market_hash_name}"
@@ -147,15 +147,15 @@ class ItemOutOfStock:
     )
 
     def __init__(self, *, data: Dict[str, Any]) -> None:
-        self._market_hash_name = data.get("market_hash_name", "")
+        self._market_hash_name = data.get("market_hash_name")
         self._version = data.get("version")
         self._currency = data.get("currency")
-        self._suggested_price = data.get("suggested_price", 0.0)
-        self._avg_sale_price = data.get("avg_sale_price", 0.0)
-        self._sales_last_90d = data.get("sales_last_90d", 0)
+        self._suggested_price = data.get("suggested_price")
+        self._avg_sale_price = data.get("avg_sale_price")
+        self._sales_last_90d = data.get("sales_last_90d")
 
     def __repr__(self) -> str:
-        return f"SaleOutOfStock({{'market_hash_name': {self._market_hash_name}, 'version': {self._version}, 'currency': {self._currency}, 'suggested_price': {self._suggested_price}, 'avg_sale_price': {self._avg_sale_price}, 'sales_last_90d': {self._sales_last_90d}}}"
+        return f"SaleOutOfStock(data={{'market_hash_name': '{self._market_hash_name}', 'version': {self._version}, 'currency': '{self._currency}', 'suggested_price': {self._suggested_price}, 'avg_sale_price': {self._avg_sale_price}, 'sales_last_90d': {self._sales_last_90d}}}"
 
     def __str__(self) -> str:
         return f"{self._market_hash_name}"
@@ -218,7 +218,7 @@ class ItemWithSales:
         self._last_90_days = data.get("last_90_days", {})
 
     def __repr__(self) -> str:
-        return f"<ItemWithSales market_hash_name={self._market_hash_name} version={self._version}>"
+        return f"ItemWithSales(data={{'market_hash_name': '{self._market_hash_name}', 'version': {self._version}, 'currency': {self._currency}, 'item_page': '{self._item_page}', 'market_page': '{self._market_page}', 'last_24_hours': {self._last_24_hours}, 'last_7_days': {self._last_7_days}, 'last_30_days': {self._last_30_days}, 'last_90_days': {self._last_90_days}}})"
 
     def __str__(self) -> str:
         return f"{self._market_hash_name}"
