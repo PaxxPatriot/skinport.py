@@ -40,8 +40,3 @@ async def main():
 if __name__ == "__main__":
     asyncio.run(main())
 ```
-
-Advanced Example
------------------
-
-With this library an automated script was created which forwards cheap listings to a Discord webhook. You can find it at [PaxxPatriot/cheapbot](https://github.com/PaxxPatriot/cheapbot).
