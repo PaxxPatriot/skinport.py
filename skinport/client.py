@@ -265,7 +265,7 @@ class Client:
         data = await self.http.get_items(params=params)
         return [Item(data=item) for item in data]
 
-    @cached(cache=TTLCache(maxsize=16, ttl=3600))
+    @cached(cache=TTLCache(maxsize=128, ttl=300))
     async def get_sales_history(
         self,
         /,
