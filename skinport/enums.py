@@ -57,6 +57,7 @@ class Currency(Enum):
 
 class AppID(IntEnum):
     csgo = 730
+    cs2 = 730
     dota2 = 570
     rust = 252490
     tf2 = 440
