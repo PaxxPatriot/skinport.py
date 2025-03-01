@@ -38,4 +38,4 @@ class ColorTestCase(unittest.TestCase):
         color = Color("#eb4b4b")
 
         self.assertEqual(str(color), "#eb4b4b")
-        self.assertEqual(repr(color), "<Color value=15420235>")
+        self.assertEqual(repr(color), "Color(value=15420235)")
