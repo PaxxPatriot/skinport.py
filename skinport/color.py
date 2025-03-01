@@ -54,7 +54,7 @@ class Color:
         return self.value
 
     def __repr__(self) -> str:
-        return f"<Color value={self.value}>"
+        return f"Color(value={self.value!r})"
 
     def __hash__(self) -> int:
         return hash(self.value)

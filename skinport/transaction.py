@@ -56,7 +56,7 @@ class TransactionItem:
         self._currency: str = data.get("currency", Currency.eur.value)
 
     def __repr__(self) -> str:
-        return f"TransactionItem(data={{'asset_id': {self._asset_id}, 'sale_id': {self._sale_id}, 'market_hash_name': '{self._market_hash_name}', 'seller_country': '{self._seller_country}', 'buyer_country': '{self._buyer_country}', 'amount': {self._amount}, 'currency': '{self._currency}'}})"
+        return f"TransactionItem(data={{'asset_id': {self._asset_id!r}, 'sale_id': {self._sale_id!r}, 'market_hash_name': {self._market_hash_name!r}, 'seller_country': {self._seller_country!r}, 'buyer_country': {self._buyer_country!r}, 'amount': {self._amount!r}, 'currency': {self._currency!r}}})"
 
     def __str__(self) -> str:
         return self._market_hash_name
@@ -128,7 +128,7 @@ class Transaction:
         self._updated_at: str = data.get("updated_at", "1970-01-01T00:00:00.000Z")
 
     def __repr__(self) -> str:
-        return f"Transaction(data={{'id': {self._transaction_id}, 'type': '{self._type}', 'sub_type': '{self._sub_type}', 'status': '{self._status}', 'amount': {self._amount}, 'fee': {self._fee}, 'currency': '{self._currency}', 'items': {self._items}, 'created_at': '{self._created_at}', 'updated_at': '{self._updated_at}'}})"
+        return f"Transaction(data={{'id': {self._transaction_id!r}, 'type': {self._type!r}, 'sub_type': {self._sub_type!r}, 'status': {self._status!r}, 'amount': {self._amount!r}, 'fee': {self._fee!r}, 'currency': {self._currency!r}, 'items': {self._items!r}, 'created_at': {self._created_at!r}, 'updated_at': {self._updated_at!r}}})"
 
     @property
     def transaction_id(self) -> int:

@@ -44,7 +44,7 @@ class LastXDays:
         self._volume: int = data.get("volume")
 
     def __repr__(self) -> str:
-        return f"LastXDays(data={{'min': {self._min}, 'max': {self._max}, 'avg': {self._avg}, 'median': {self._median}, 'volume': {self._volume}}}"
+        return f"LastXDays(data={{'min': {self._min!r}, 'max': {self._max!r}, 'avg': {self._avg!r}, 'median': {self._median!r}, 'volume': {self._volume!r}}}"
 
     @property
     def min(self) -> Optional[float]:
