@@ -68,7 +68,7 @@ class Item:
         self._updated_at = data.get("updated_at")
 
     def __repr__(self) -> str:
-       return f"Item(data={{'market_hash_name': '{self._market_hash_name}', 'currency': '{self._currency}', 'suggested_price': {self._suggested_price}, 'item_page': '{self._item_page}', 'market_page': '{self._market_page}', 'min_price': {self._min_price}, 'max_price': {self._max_price}, 'mean_price': {self._mean_price}, 'median_price': {self._median_price}, 'quantity': {self._quantity}, 'created_at': {self._created_at}, 'updated_at': {self._updated_at}}})"
+        return f"Item(data={{'market_hash_name': {self._market_hash_name!r}, 'currency': {self._currency!r}, 'suggested_price': {self._suggested_price!r}, 'item_page': {self._item_page!r}, 'market_page': {self._market_page!r}, 'min_price': {self._min_price!r}, 'max_price': {self._max_price!r}, 'mean_price': {self._mean_price!r}, 'median_price': {self._median_price!r}, 'quantity': {self._quantity!r}, 'created_at': {self._created_at!r}, 'updated_at': {self._updated_at!r}}})"
 
     def __str__(self) -> str:
         return f"{self._market_hash_name}"
@@ -155,7 +155,7 @@ class ItemOutOfStock:
         self._sales_last_90d = data.get("sales_last_90d")
 
     def __repr__(self) -> str:
-        return f"SaleOutOfStock(data={{'market_hash_name': '{self._market_hash_name}', 'version': {self._version}, 'currency': '{self._currency}', 'suggested_price': {self._suggested_price}, 'avg_sale_price': {self._avg_sale_price}, 'sales_last_90d': {self._sales_last_90d}}}"
+        return f"ItemOutOfStock(data={{'market_hash_name': {self._market_hash_name!r}, 'version': {self._version!r}, 'currency': {self._currency!r}, 'suggested_price': {self._suggested_price!r}, 'avg_sale_price': {self._avg_sale_price!r}, 'sales_last_90d': {self._sales_last_90d!r}}}"
 
     def __str__(self) -> str:
         return f"{self._market_hash_name}"
@@ -218,7 +218,7 @@ class ItemWithSales:
         self._last_90_days = data.get("last_90_days", {})
 
     def __repr__(self) -> str:
-        return f"ItemWithSales(data={{'market_hash_name': '{self._market_hash_name}', 'version': {self._version}, 'currency': {self._currency}, 'item_page': '{self._item_page}', 'market_page': '{self._market_page}', 'last_24_hours': {self._last_24_hours}, 'last_7_days': {self._last_7_days}, 'last_30_days': {self._last_30_days}, 'last_90_days': {self._last_90_days}}})"
+        return f"ItemWithSales(data={{'market_hash_name': {self._market_hash_name!r}, 'version': {self._version!r}, 'currency': {self._currency!r}, 'item_page': {self._item_page!r}, 'market_page': {self._market_page!r}, 'last_24_hours': {self._last_24_hours!r}, 'last_7_days': {self._last_7_days!r}, 'last_30_days': {self._last_30_days!r}, 'last_90_days': {self._last_90_days!r}}})"
 
     def __str__(self) -> str:
         return f"{self._market_hash_name}"
