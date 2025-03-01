@@ -28,7 +28,62 @@ from typing import Any, Dict, List, Optional
 from .color import Color
 from .enums import AppID, Currency, SaleType
 
-__all__ = ("SaleFeed", "SaleFeedSale", "Sticker", "Tag")
+__all__ = ("SaleFeed", "SaleFeedSale", "Sticker", "Tag", "Charm")
+
+
+class Charm:
+    __slots__ = (
+        "_name",
+        "_name_localized",
+        "_img",
+        "_pattern",
+        "_slug",
+        "_value",
+    )
+
+    def __init__(self, *, data: Dict[str, Any]) -> None:
+        self._name = data.get("name")
+        self._name_localized = data.get("name_localized")
+        self._img = data.get("img")
+        self._pattern = data.get("pattern")
+        self._slug = data.get("slug")
+        self._value = data.get("value")
+
+    def __repr__(self) -> str:
+        return f"Charm(data={{'name': {self._name!r}, 'name_localized': {self._name_localized!r}, 'img': {self._img!r}, 'pattern': {self._pattern!r}, 'slug': {self._slug!r}, 'value': {self._value!r}}})"
+
+    def __str__(self) -> str:
+        return self._name
+
+    @property
+    def name(self) -> str:
+        """:class:`str`: Returns the name of the charm."""
+        return self._name
+
+    @property
+    def name_localized(self) -> str:
+        """:class:`str`: Returns the localized name of the charm."""
+        return self._name_localized
+
+    @property
+    def img(self) -> str:
+        """:class:`str`: Returns the image URL of the charm."""
+        return self._img
+
+    @property
+    def pattern(self) -> int:
+        """:class:`str`: Returns the pattern of the charm."""
+        return self._pattern
+
+    @property
+    def slug(self) -> Optional[str]:
+        """Optional[:class:`str`]: Returns the slug of the charm."""
+        return self._slug
+
+    @property
+    def value(self) -> Optional[str]:
+        """Optional[:class:`str`]: Returns the value of the charm."""
+        return self._value
 
 
 class Tag:
@@ -42,7 +97,7 @@ class Tag:
         self._name_localized = data.get("name_localized", "")
 
     def __repr__(self) -> str:
-        return f"Tag(data={{'name': {self._name}, 'name_localized': {self._name_localized}}})"
+        return f"Tag(data={{'name': {self._name!r}, 'name_localized': {self._name_localized!r}}})"
 
     def __str__(self) -> str:
         return self._name
@@ -89,7 +144,9 @@ class Sticker:
         self._wear = data.get("wear")
         self._img = data.get("img")
         self._name = data.get("name")
+        self._name_localized = data.get("name_localized")
         self._type = data.get("type")
+        self._type_localized = data.get("type_localized")
         self._slot = data.get("slot")
         self._color = data.get("color")
         self._value = data.get("value")
@@ -98,8 +155,9 @@ class Sticker:
         self._rotation = data.get("rotation")
         self._offset_x = data.get("offset_x")
         self._offset_y = data.get("offset_y")
-        self._name_localized = data.get("name_localized")
-        self._type_localized = data.get("type_localized")
+
+    def __repr__(self) -> str:
+        return f"Sticker(data={{'sticker_id': {self._sticker_id!r}, 'wear': {self._wear!r}, 'img': {self._img!r}, 'name': {self._name!r}, 'name_localized': {self._name_localized!r},'type': {self._type!r}, 'type_localized': {self._type_localized!r}, 'slot': {self._slot!r}, 'color': {self._color!r}, 'value': {self._value!r}, 'slug': {self._slug!r}, 'scale': {self._scale!r}, 'rotation': {self._rotation!r}, 'offset_x': {self._offset_x!r}, 'offset_y': {self._offset_y!r}}})"
 
     @property
     def sticker_id(self) -> Optional[str]:
@@ -122,9 +180,19 @@ class Sticker:
         return self._name
 
     @property
+    def name_localized(self) -> str:
+        """:class:`str`: Returns the localized name of the sticker."""
+        return self._name_localized
+
+    @property
     def type(self) -> Optional[str]:
         """Optional[:class:`str`]: Returns the type of the sticker."""
         return self._type
+
+    @property
+    def type_localized(self) -> Optional[str]:
+        """Optional[:class:`str`]: Returns the localized type of the sticker."""
+        return self._type_localized
 
     @property
     def slot(self) -> int:
@@ -165,16 +233,6 @@ class Sticker:
     def offset_y(self) -> Optional[float]:
         """Optional[:class:`float`]: Returns the Y offset of the sticker."""
         return self._offset_y
-
-    @property
-    def name_localized(self) -> str:
-        """:class:`str`: Returns the localized name of the sticker."""
-        return self._name_localized
-
-    @property
-    def type_localized(self) -> Optional[str]:
-        """Optional[:class:`str`]: Returns the localized type of the sticker."""
-        return self._type
 
 
 class SaleFeedSale:
@@ -546,9 +604,9 @@ class SaleFeedSale:
         return [Sticker(data=sticker) for sticker in self._stickers]
 
     @property
-    def charms(self) -> List[str]:
+    def charms(self) -> List[Charm]:
         """List[:class:`str`]: Returns a :class:`list` of :class:`str` with names of attached charms. Can be empty."""
-        return self._charms
+        return [Charm(data=charm) for charm in self._charms]
 
     @property
     def can_have_screenshots(self) -> bool:
