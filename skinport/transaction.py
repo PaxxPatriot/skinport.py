@@ -25,7 +25,7 @@ SOFTWARE.
 import datetime
 from typing import Any, Dict, List, Optional
 
-from .enums import Currency
+from .enums import Currency, TransactionType
 
 __all__ = (
     "Transaction",
@@ -114,18 +114,18 @@ class Transaction:
     )
 
     def __init__(self, *, data: Dict[str, Any]) -> None:
-        self._transaction_id: int = data.get("id", 0)
-        self._type: str = data.get("type", "")
+        self._transaction_id: int = data.get("id")
+        self._type: str = data.get("type")
         self._sub_type: Optional[str] = data.get("sub_type")
-        self._status: str = data.get("status", "")
-        self._amount: float = data.get("amount", 0.0)
+        self._status: str = data.get("status")
+        self._amount: float = data.get("amount")
         self._fee: Optional[float] = data.get("fee")
-        self._currency: str = data.get("currency", Currency.eur.value)
+        self._currency: str = data.get("currency")
         self._items: Optional[List[TransactionItem]] = (
             [TransactionItem(data=item) for item in data.get("items")] if data.get("items") is not None else None
         )
-        self._created_at: str = data.get("created_at", "1970-01-01T00:00:00.000Z")
-        self._updated_at: str = data.get("updated_at", "1970-01-01T00:00:00.000Z")
+        self._created_at: str = data.get("created_at")
+        self._updated_at: str = data.get("updated_at")
 
     def __repr__(self) -> str:
         return f"Transaction(data={{'id': {self._transaction_id!r}, 'type': {self._type!r}, 'sub_type': {self._sub_type!r}, 'status': {self._status!r}, 'amount': {self._amount!r}, 'fee': {self._fee!r}, 'currency': {self._currency!r}, 'items': {self._items!r}, 'created_at': {self._created_at!r}, 'updated_at': {self._updated_at!r}}})"
@@ -136,9 +136,9 @@ class Transaction:
         return self._transaction_id
 
     @property
-    def type(self) -> str:
+    def type(self) -> TransactionType:
         """:class:`str`: Returns the transaction type."""
-        return self._type
+        return TransactionType(self._type)
 
     @property
     def sub_type(self) -> Optional[str]:

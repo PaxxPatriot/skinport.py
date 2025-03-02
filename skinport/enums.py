@@ -30,6 +30,7 @@ __all__ = (
     "Exterior",
     "Locale",
     "SaleType",
+    "TransactionType",
 )
 
 
@@ -94,4 +95,13 @@ class Exterior(Enum):
     battle_scarred = "Battle-Scarred"
 
     def __str__(self) -> str:
+        return self.value
+
+
+class TransactionType(Enum):
+    purchase = "purchase"
+    credit = "credit"
+    withdraw = "withdraw"
+
+    def __str__(self):
         return self.value
