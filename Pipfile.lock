@@ -961,12 +961,12 @@
         },
         "sphinx": {
             "hashes": [
-                "sha256:b5d2bb3cdf6207fcacde9f92085d2b97667b05b9c346eaec426ca4be8af505e9",
-                "sha256:e4b932951b9c18b039f73b72e4e63afe967d90408700ec222b981ac24647c01e"
+                "sha256:398ad29dee7f63a75888314e9424d40f52ce5a6a87ae88e7071e80af296ec348",
+                "sha256:4405915165f13521d875a8c29c8970800a0141c14cc5416a38feca4ea5d9b9c3"
             ],
             "index": "pypi",
             "markers": "python_version >= '3.11'",
-            "version": "==8.2.1"
+            "version": "==8.2.3"
         },
         "sphinx-rtd-theme": {
             "hashes": [
