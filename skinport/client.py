@@ -26,6 +26,7 @@ import asyncio
 import logging
 import ssl
 from typing import Any, Coroutine, Dict, List
+from collections.abc import Callable
 
 import aiohttp
 import socketio
@@ -105,7 +106,7 @@ class Client:
     async def catch_all(self, event, data):
         _log.debug(f"Received event {event}")
 
-    def listen(self, name: str = None) -> Coroutine[Any, Any, Any]:
+    def listen(self, name: str = None) -> Callable[[Callable[..., Coroutine[Any, Any, Any]]], Callable[..., Coroutine[Any, Any, Any]]]:
         """A decorator that registers an event listener.
         The events must be a coroutine, if not, :exc:`TypeError` is raised.
 
