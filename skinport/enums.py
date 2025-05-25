@@ -31,6 +31,7 @@ __all__ = (
     "Locale",
     "SaleType",
     "TransactionType",
+    "SteamStatus",
 )
 
 
@@ -105,3 +106,10 @@ class TransactionType(Enum):
 
     def __str__(self):
         return self.value
+
+
+class SteamStatus(Enum):
+    operational = "operational"
+    offline = "offline"
+    degraded = "degraded"
+    critical = "critical"
