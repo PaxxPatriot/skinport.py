@@ -137,7 +137,7 @@ class Transaction:
 
     @property
     def type(self) -> TransactionType:
-        """:class:`str`: Returns the transaction type."""
+        """:class:`TransactionType`: Returns the transaction type."""
         return TransactionType(self._type)
 
     @property
@@ -167,7 +167,7 @@ class Transaction:
 
     @property
     def items(self) -> Optional[List[TransactionItem]]:
-        """Optional[List[:class:`float`]]: Returns the transaction items."""
+        """Optional[List[:class:`TransactionItem`]]: Returns the transaction items."""
         return self._items
 
     @property

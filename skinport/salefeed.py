@@ -389,7 +389,7 @@ class SaleFeedSale:
 
     @property
     def app_id(self) -> AppID:
-        """:class:`int`: Returns the ID of the app."""
+        """:class:`AppID`: Returns the ID of the app."""
         return AppID(self._appid)
 
     @property
@@ -462,10 +462,12 @@ class SaleFeedSale:
 
     @property
     def classid(self) -> str:
+        """:class:`str`: Returns the class ID of the item."""
         return self._classid
 
     @property
     def assetid(self) -> str:
+        """:class:`str`: Returns the asset ID to the item."""
         return self._assetid
 
     @property
@@ -600,12 +602,12 @@ class SaleFeedSale:
 
     @property
     def stickers(self) -> List[Sticker]:
-        """List[:class:`str`]: Returns a :class:`list` of :class:`str` with names of attached stickers. Can be empty."""
+        """List[:class:`Sticker`]: Returns a :class:`list` of :class:`str` with names of attached stickers. Can be empty."""
         return [Sticker(data=sticker) for sticker in self._stickers]
 
     @property
     def charms(self) -> List[Charm]:
-        """List[:class:`str`]: Returns a :class:`list` of :class:`str` with names of attached charms. Can be empty."""
+        """List[:class:`Charm`]: Returns a :class:`list` of :class:`str` with names of attached charms. Can be empty."""
         return [Charm(data=charm) for charm in self._charms]
 
     @property
