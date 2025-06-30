@@ -31,6 +31,7 @@ __all__ = (
     "Locale",
     "EventType",
     "SaleType",
+    "TransactionStatus",
     "TransactionType",
     "SteamStatus",
 )
@@ -105,6 +106,15 @@ class Exterior(Enum):
     battle_scarred = "Battle-Scarred"
 
     def __str__(self) -> str:
+        return self.value
+
+
+class TransactionStatus(Enum):
+    initiate = 'initiate'
+    canceled = 'canceled'
+    complete = 'complete'
+
+    def __str__(self):
         return self.value
 
 
