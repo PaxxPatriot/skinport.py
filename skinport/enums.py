@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-from enum import Enum, IntEnum
+from enum import Enum, Flag, IntEnum
 
 __all__ = (
     "AppID",
@@ -31,6 +31,7 @@ __all__ = (
     "Locale",
     "SaleType",
     "TransactionType",
+    "MaintenanceStatus",
     "SteamStatus",
 )
 
@@ -106,6 +107,11 @@ class TransactionType(Enum):
 
     def __str__(self):
         return self.value
+
+
+class MaintenanceStatus(Flag):
+    false = False
+    true = True
 
 
 class SteamStatus(Enum):
