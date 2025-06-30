@@ -26,7 +26,7 @@ import datetime
 from typing import Any, Dict, List, Optional
 
 from .color import Color
-from .enums import AppID, Currency, SaleType
+from .enums import AppID, Currency, SaleType, EventType
 
 __all__ = ("SaleFeed", "SaleFeedSale", "Sticker", "Tag", "Charm")
 
@@ -653,9 +653,9 @@ class SaleFeed:
         return f"<SaleFeed event_type={self._event_type}>"
 
     @property
-    def event_type(self) -> str:
-        """:class:`str`: Returns the type of the event."""
-        return self._event_type
+    def event_type(self) -> EventType:
+        """:class:`EventType`: Returns the type of the event."""
+        return EventType(self._event_type)
 
     @property
     def sales(self) -> List[SaleFeedSale]:
