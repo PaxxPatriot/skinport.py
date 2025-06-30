@@ -25,7 +25,7 @@ SOFTWARE.
 import datetime
 from typing import Any, Dict, List, Optional
 
-from .enums import Currency, TransactionType
+from .enums import Currency, TransactionStatus, TransactionType
 
 __all__ = (
     "Transaction",
@@ -146,9 +146,9 @@ class Transaction:
         return self._sub_type
 
     @property
-    def status(self) -> str:
-        """:class:`str`: Returns the transaction status."""
-        return self._status
+    def status(self) -> TransactionStatus:
+        """:class:`TransactionStatus`: Returns the transaction status."""
+        return TransactionStatus(self._status)
 
     @property
     def amount(self) -> float:
