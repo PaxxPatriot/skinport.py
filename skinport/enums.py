@@ -29,6 +29,7 @@ __all__ = (
     "Currency",
     "Exterior",
     "Locale",
+    "EventType",
     "SaleType",
     "TransactionType",
     "SteamStatus",
@@ -75,6 +76,14 @@ class Locale(Enum):
     fi = "fi"
     es = "es"
     tr = "tr"
+
+    def __str__(self) -> str:
+        return self.value
+
+
+class EventType(Enum):
+    listed = "listed"
+    sold = "sold"
 
     def __str__(self) -> str:
         return self.value
