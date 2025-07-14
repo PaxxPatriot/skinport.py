@@ -20,6 +20,7 @@ ruff = "*"
 isort = "*"
 autoflake = "*"
 pydocstyle = "*"
+coverage = "*"
 
 [requires]
 python_version = "3.13"
