@@ -25,7 +25,7 @@ SOFTWARE.
 import datetime
 from typing import Any, Dict, List, Optional
 
-from .enums import Currency, TransactionType
+from .enums import Currency, TransactionStatus, TransactionType
 
 __all__ = (
     "Transaction",
@@ -137,7 +137,7 @@ class Transaction:
 
     @property
     def type(self) -> TransactionType:
-        """:class:`str`: Returns the transaction type."""
+        """:class:`TransactionType`: Returns the transaction type."""
         return TransactionType(self._type)
 
     @property
@@ -146,9 +146,9 @@ class Transaction:
         return self._sub_type
 
     @property
-    def status(self) -> str:
-        """:class:`str`: Returns the transaction status."""
-        return self._status
+    def status(self) -> TransactionStatus:
+        """:class:`TransactionStatus`: Returns the transaction status."""
+        return TransactionStatus(self._status)
 
     @property
     def amount(self) -> float:
@@ -167,7 +167,7 @@ class Transaction:
 
     @property
     def items(self) -> Optional[List[TransactionItem]]:
-        """Optional[List[:class:`float`]]: Returns the transaction items."""
+        """Optional[List[:class:`TransactionItem`]]: Returns the transaction items."""
         return self._items
 
     @property

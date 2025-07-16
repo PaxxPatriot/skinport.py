@@ -27,7 +27,7 @@ __all__ = ("market_hash_name",)
 from .enums import Exterior
 
 
-def market_hash_name(item_name: str, exterior: Exterior):
+def market_hash_name(item_name: str, exterior: Exterior) -> str:
     """
     Generates and returns a market hash name from an item name and exterior.
 
