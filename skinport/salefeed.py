@@ -284,6 +284,7 @@ class SaleFeedSale:
         "_subCategory",
         "_subCategory_localized",
         "_suggestedPrice",
+        "_referencePrice",
         "_tags",
         "_text",
         "_title",
@@ -321,6 +322,7 @@ class SaleFeedSale:
         self._versionType = data.get("versionType", "")
         self._stackAble = data.get("stackAble", False)
         self._suggestedPrice = data.get("suggestedPrice", 0)
+        self._referencePrice = data.get("referencePrice", 0)
         self._salePrice = data.get("salePrice", 0)
         self._currency = data.get("currency", "")
         self._saleStatus = data.get("saleStatus", "")
@@ -494,6 +496,11 @@ class SaleFeedSale:
     def suggested_price(self) -> float:
         """:class:`float`: Returns the suggested sale price of the item."""
         return self._suggestedPrice / 100
+
+    @property
+    def reference_price(self) -> float:
+        """:class:`float`: Returns the reference price of the item."""
+        return self._referencePrice / 100
 
     @property
     def sale_price(self) -> float:
