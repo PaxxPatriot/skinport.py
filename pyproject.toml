@@ -10,11 +10,11 @@ authors = [
 description = "A Python wrapper for the Skinport API"
 readme = "README.md"
 keywords = ["Skinport", "Counter-Strike 2", "Team Fortress 2", "Dota 2", "Rust"]
+license = "MIT"
 classifiers = [
     "Development Status :: 3 - Alpha",
     "Environment :: Console",
     "Framework :: aiohttp",
-    "License :: OSI Approved :: MIT License",
     "Intended Audience :: Developers",
     "Natural Language :: English",
     "Operating System :: OS Independent",
