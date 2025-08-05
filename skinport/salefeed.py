@@ -26,7 +26,7 @@ import datetime
 from typing import Any, Dict, List, Optional
 
 from .color import Color
-from .enums import AppID, Currency, SaleType, EventType
+from .enums import AppID, Currency, EventType, SaleType
 
 __all__ = ("SaleFeed", "SaleFeedSale", "Sticker", "Tag", "Charm")
 

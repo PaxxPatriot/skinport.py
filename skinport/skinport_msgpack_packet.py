@@ -1,7 +1,7 @@
 import struct
 
 import msgpack
-from msgpack import Timestamp, ExtType
+from msgpack import ExtType, Timestamp
 from socketio.msgpack_packet import MsgPackPacket
 
 
@@ -38,4 +38,3 @@ class SkinportMsgPackPacket(MsgPackPacket):
     def _encode_timestamp_to_ext(obj):
         milliseconds = int(obj.to_unix() * 1000)
         return ExtType(0, struct.pack("!Q", milliseconds))
-

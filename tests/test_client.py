@@ -1,11 +1,11 @@
 import asyncio
 import datetime
+import os
 import sys
 import unittest
 from typing import Optional
 
 import config
-
 import skinport
 from skinport import AuthenticationError, Currency
 
@@ -40,6 +40,7 @@ class SkinportClientTestCase(unittest.IsolatedAsyncioTestCase):
         with self.assertRaises(AuthenticationError):
             await self.client.get_account_transactions()
 
+    @unittest.skipIf(os.getenv('GITHUB_ACTOR') == 'dependabot[bot]', 'dependabot[bot] is not allowed to access secrets')
     async def test_get_account_inventory(self):
         self.client.set_auth(client_id=config.client_id, client_secret=config.client_secret)
         await self.client.get_account_transactions()
