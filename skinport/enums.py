@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-from enum import Enum, IntEnum
+from enum import StrEnum, IntEnum
 
 __all__ = (
     "AppID",
@@ -37,7 +37,7 @@ __all__ = (
 )
 
 
-class Currency(Enum):
+class Currency(StrEnum):
     aud = "AUD"
     brl = "BRL"
     cad = "CAD"
@@ -67,7 +67,7 @@ class AppID(IntEnum):
     tf2 = 440
 
 
-class Locale(Enum):
+class Locale(StrEnum):
     en = "en"
     de = "de"
     ru = "ru"
@@ -82,7 +82,7 @@ class Locale(Enum):
         return self.value
 
 
-class EventType(Enum):
+class EventType(StrEnum):
     listed = "listed"
     sold = "sold"
 
@@ -90,7 +90,7 @@ class EventType(Enum):
         return self.value
 
 
-class SaleType(Enum):
+class SaleType(StrEnum):
     public = "public"
     private = "private"
 
@@ -98,7 +98,7 @@ class SaleType(Enum):
         return self.value
 
 
-class Exterior(Enum):
+class Exterior(StrEnum):
     factory_new = "Factory New"
     minimal_wear = "Minimal Wear"
     field_tested = "Field-Tested"
@@ -109,16 +109,16 @@ class Exterior(Enum):
         return self.value
 
 
-class TransactionStatus(Enum):
-    initiate = 'initiate'
-    canceled = 'canceled'
-    complete = 'complete'
+class TransactionStatus(StrEnum):
+    initiate = "initiate"
+    canceled = "canceled"
+    complete = "complete"
 
     def __str__(self):
         return self.value
 
 
-class TransactionType(Enum):
+class TransactionType(StrEnum):
     purchase = "purchase"
     credit = "credit"
     withdraw = "withdraw"
@@ -127,7 +127,7 @@ class TransactionType(Enum):
         return self.value
 
 
-class SteamStatus(Enum):
+class SteamStatus(StrEnum):
     operational = "operational"
     offline = "offline"
     degraded = "degraded"
