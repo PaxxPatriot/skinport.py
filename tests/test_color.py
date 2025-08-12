@@ -39,3 +39,18 @@ class ColorTestCase(unittest.TestCase):
 
         self.assertEqual(str(color), "#eb4b4b")
         self.assertEqual(repr(color), "Color(value=15420235)")
+
+    def test_int(self):
+        color = Color("#eb4b4b")
+
+        self.assertEqual(int(color), 0xEB4B4B)
+
+    def test_hash(self):
+        color = Color("#eb4b4b")
+
+        self.assertEqual(hash(color), 0xEB4B4B)
+
+    def test_to_rgb(self):
+        color = Color("#eb4b4b")
+
+        self.assertEqual(color.to_rgb(), (235, 75, 75))
