@@ -104,7 +104,7 @@ class Client:
             return
 
     async def catch_all(self, event, data):
-        _log.debug(f"Received event {event}")
+        _log.debug(f"Received event {event} with data: {data}")
 
     def listen(self, name: str = None) -> Callable[[Callable[..., Coroutine[Any, Any, Any]]], Callable[..., Coroutine[Any, Any, Any]]]:
         """A decorator that registers an event listener.
