@@ -12,6 +12,9 @@ on:
 
 jobs:
   build:
+    permissions:
+      contents: write
+
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -32,6 +35,8 @@ jobs:
 
   upload:
     needs: build
+    permissions:
+      contents: read
     runs-on: ubuntu-latest
     steps:
       - name: Download packages
