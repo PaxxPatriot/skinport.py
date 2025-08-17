@@ -16,7 +16,7 @@ async def main():
     items = await client.get_items(app_id=AppID.tf2)
     print(len(items))
 
-    items = await client.get_items(app_id=AppID.csgo)
+    items = await client.get_items(app_id=AppID.cs2)
     print(len(items))
 
     await client.close()

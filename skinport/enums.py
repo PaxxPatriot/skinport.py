@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-from enum import StrEnum, IntEnum
+from enum import IntEnum, StrEnum
 
 __all__ = (
     "AppID",

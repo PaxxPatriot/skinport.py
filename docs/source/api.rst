@@ -122,9 +122,12 @@ All enumerations are subclasses of :class:`enum.Enum`.
 
     Specifies the id of a game.
 
+    .. attribute:: cs2
+        
+        Counter-Strike 2.
     .. attribute:: csgo
         
-        Counter-Strike: Global Offensive.
+        Counter-Strike: Global Offensive/Counter-Strike 2.
     .. attribute:: dota2
             
         Dota 2.
