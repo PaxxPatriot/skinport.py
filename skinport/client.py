@@ -26,7 +26,7 @@ import asyncio
 import logging
 import ssl
 from collections.abc import Callable
-from typing import Any, Coroutine, Dict, List
+from typing import Any, Coroutine, List
 
 import aiohttp
 import socketio
@@ -52,6 +52,7 @@ class Client:
         self._connected = False
         self.ws = None
         self.listeners = dict()
+        self.sale_feeds = list()
 
     def set_auth(self, *, client_id: str, client_secret: str):
         self.http.set_auth(client_id, client_secret)
@@ -59,7 +60,7 @@ class Client:
     def run(
         self,
         *,
-        app_id: AppID = AppID.csgo,
+        app_id: AppID = AppID.cs2,
         currency: Currency = Currency.eur,
         locale: Locale = Locale.en,
     ) -> None:
@@ -90,7 +91,9 @@ class Client:
 
         async def runner():
             try:
-                await self.connect(app_id=app_id, currency=currency, locale=locale)
+                if len(self.sale_feeds) == 0:
+                    self.add_sale_feed(app_id=app_id, currency=currency, locale=locale)
+                await self.connect()
             finally:
                 if self._connected:
                     await self.close()
@@ -139,27 +142,9 @@ class Client:
 
         return decorator
 
-    async def connect(
-        self,
-        *,
-        app_id: AppID = AppID.csgo,
-        currency: Currency = Currency.eur,
-        locale: Locale = Locale.en,
-    ) -> None:
+    async def connect(self) -> None:
         """*coroutine*
         Connects to the socket.io websocket.
-
-        Parameters
-        ----------
-        app_id: :class:`AppID`
-            The app_id for the inventory's game.
-            Defaults to ``730``.
-        currency: :class:`Currency`
-            The currency for pricing.
-            Defaults to ``EUR``.
-        locale: :class:`Locale`
-            Whether or not to show only tradable items.
-            Defaults to ``en``.
         """
         # Only create the aiohttp.ClientSession when the asyncio loop is already running
         await self.http.start_session()
@@ -178,15 +163,13 @@ class Client:
         for name, func in self.listeners.items():
             self.ws.on(name, func)
 
-        kwargs = {"app_id": app_id, "currency": currency, "locale": locale}
-        # Get parameters for the sale feed
         if self._connected:
             _log.info("Client is already connected. Closing the existing connection.")
             await self.close()
 
         try:
             self.ws.on("*", self.catch_all)
-            self.ws.on("connect", lambda: asyncio.ensure_future(self.on_connect(**kwargs)))
+            self.ws.on("connect", lambda: asyncio.ensure_future(self.on_connect()))
             await self.ws.connect("https://skinport.com", transports=["websocket"], retry=True)
             self._connected = True
             await self.ws.wait()
@@ -197,22 +180,24 @@ class Client:
         except socketio.exceptions.ConnectionError:
             _log.warning("Client is already connected. Skipping connection attempt.")
 
-    async def on_connect(self, **kwargs: Any) -> None:
+    async def on_connect(self) -> None:
         _log.info("Connected to Skinport. Emitting saleFeedJoin event...")
-        await self._emit_sale_feed_join(kwargs)
+        await self._emit_sale_feed_join()
 
-    async def _emit_sale_feed_join(self, kwargs: Dict[str, Any]) -> None:
-        app_id = kwargs.get("app_id", AppID.csgo)
-        currency = kwargs.get("currency", Currency.eur)
-        locale = kwargs.get("locale", Locale.en)
-        await self.ws.emit(
-            "saleFeedJoin",
-            {
-                "currency": currency.value,
-                "locale": locale.value,
-                "appid": app_id.value,
-            },
-        )
+    def add_sale_feed(self, app_id: AppID = AppID.cs2, currency: Currency = Currency.eur, locale: Locale = Locale.en):
+        self.sale_feeds.append({"currency": currency.value, "locale": locale.value, "appid": app_id.value})
+
+    async def _emit_sale_feed_join(self) -> None:
+        for sale_feed in self.sale_feeds:
+            _log.debug(f"Emitting saleFeedJoin event for {sale_feed} ...")
+            await self.ws.emit(
+                "saleFeedJoin",
+                {
+                    "currency": sale_feed["currency"],
+                    "locale": sale_feed["locale"],
+                    "appid": sale_feed["appid"],
+                },
+            )
         await self.ws.wait()
 
     async def close(self) -> None:
