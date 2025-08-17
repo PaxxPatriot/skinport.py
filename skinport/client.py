@@ -205,6 +205,21 @@ class Client:
         await self._emit_sale_feed_join()
 
     def add_sale_feed(self, app_id: AppID = AppID.cs2, currency: Currency = Currency.eur, locale: Locale = Locale.en):
+        """
+        Allows the user to emit multiple saleFeedJoin events to listen to multiple streams on the socket.io websocket.
+
+        Parameters
+        ----------
+        app_id: :class:`AppID`
+            The app_id for the inventory's game.
+            Defaults to ``730``.
+        currency: :class:`Currency`
+            The currency for pricing.
+            Defaults to ``EUR``.
+        locale: :class:`Locale`
+            Whether or not to show only tradable items.
+            Defaults to ``en``.
+        """
         self.sale_feeds.append({"currency": currency.value, "locale": locale.value, "appid": app_id.value})
 
     async def _emit_sale_feed_join(self) -> None:
