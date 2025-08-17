@@ -91,9 +91,7 @@ class Client:
 
         async def runner():
             try:
-                if len(self.sale_feeds) == 0:
-                    self.add_sale_feed(app_id=app_id, currency=currency, locale=locale)
-                await self.connect()
+                await self.connect(app_id=app_id, currency=currency, locale=locale)
             finally:
                 if self._connected:
                     await self.close()
@@ -142,9 +140,27 @@ class Client:
 
         return decorator
 
-    async def connect(self) -> None:
+    async def connect(
+        self,
+        *,
+        app_id: AppID = AppID.cs2,
+        currency: Currency = Currency.eur,
+        locale: Locale = Locale.en,
+    ) -> None:
         """*coroutine*
         Connects to the socket.io websocket.
+
+        Parameters
+        ----------
+        app_id: :class:`AppID`
+            The app_id for the inventory's game.
+            Defaults to ``730``.
+        currency: :class:`Currency`
+            The currency for pricing.
+            Defaults to ``EUR``.
+        locale: :class:`Locale`
+            Whether or not to show only tradable items.
+            Defaults to ``en``.
         """
         # Only create the aiohttp.ClientSession when the asyncio loop is already running
         await self.http.start_session()
@@ -166,6 +182,10 @@ class Client:
         if self._connected:
             _log.info("Client is already connected. Closing the existing connection.")
             await self.close()
+
+        
+        if len(self.sale_feeds) == 0:
+            self.add_sale_feed(app_id=app_id, currency=currency, locale=locale)
 
         try:
             self.ws.on("*", self.catch_all)
