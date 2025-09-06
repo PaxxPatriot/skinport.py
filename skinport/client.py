@@ -146,6 +146,7 @@ class Client:
         app_id: AppID = AppID.cs2,
         currency: Currency = Currency.eur,
         locale: Locale = Locale.en,
+        reconnection_delay_max: int = 300,
     ) -> None:
         """*coroutine*
         Connects to the socket.io websocket.
@@ -172,7 +173,7 @@ class Client:
         connector = aiohttp.TCPConnector(ssl=ssl_context)
         http_session = aiohttp.ClientSession(connector=connector)
         self.ws: socketio.AsyncClient = socketio.AsyncClient(
-            serializer=SkinportMsgPackPacket, http_session=http_session, timestamp_requests=False
+            serializer=SkinportMsgPackPacket, http_session=http_session, timestamp_requests=False, reconnection_delay_max=reconnection_delay_max
         )
 
         # Attach the listeners
