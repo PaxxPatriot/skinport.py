@@ -7,9 +7,9 @@ on:
     branches:
       - master
     paths-ignore:
-      - ".github/**"
-    paths:
-      - ".github/workflows/test.yml"
+      - ".github/workflows/release.yml"
+      - ".github/workflows/static.yml"
+      - ".github/dependabot.yml"
   pull_request:
     branches:
       - master
