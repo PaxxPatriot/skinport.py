@@ -51,6 +51,7 @@ class Item:
         "_quantity",
         "_suggested_price",
         "_updated_at",
+        "_version",
     )
 
     def __init__(self, *, data: Dict[str, Any]) -> None:
@@ -66,9 +67,10 @@ class Item:
         self._quantity = data.get("quantity")
         self._created_at = data.get("created_at")
         self._updated_at = data.get("updated_at")
+        self._version = data.get("version")
 
     def __repr__(self) -> str:
-        return f"Item(data={{'market_hash_name': {self._market_hash_name!r}, 'currency': {self._currency!r}, 'suggested_price': {self._suggested_price!r}, 'item_page': {self._item_page!r}, 'market_page': {self._market_page!r}, 'min_price': {self._min_price!r}, 'max_price': {self._max_price!r}, 'mean_price': {self._mean_price!r}, 'median_price': {self._median_price!r}, 'quantity': {self._quantity!r}, 'created_at': {self._created_at!r}, 'updated_at': {self._updated_at!r}}})"
+        return f"Item(data={{'market_hash_name': {self._market_hash_name!r}, 'currency': {self._currency!r}, 'suggested_price': {self._suggested_price!r}, 'item_page': {self._item_page!r}, 'market_page': {self._market_page!r}, 'min_price': {self._min_price!r}, 'max_price': {self._max_price!r}, 'mean_price': {self._mean_price!r}, 'median_price': {self._median_price!r}, 'quantity': {self._quantity!r}, 'created_at': {self._created_at!r}, 'updated_at': {self._updated_at!r}, 'version': {self._version!r}}})"
 
     def __str__(self) -> str:
         return f"{self._market_hash_name}"
@@ -132,6 +134,11 @@ class Item:
     def updated_at(self) -> datetime.datetime:
         """:class:`datetime.datetime`: Returns the updated at of the item."""
         return datetime.datetime.fromtimestamp(self._updated_at)
+
+    @property
+    def version(self) -> Optional[str]:
+        """Optional[:class:`str`]: Returns the version of the item, e.g. Ruby, Sapphire or Emerald."""
+        return self._version
 
 
 class ItemOutOfStock:
