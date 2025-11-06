@@ -11,7 +11,7 @@ python-socketio = {extras = ["asyncio_client"], version = "*"}
 cachetools = "*"
 asyncache = "*"
 msgpack = "*"
-brotli = "*"
+brotli = ">=1.2.0"
 
 [dev-packages]
 black = "*"
