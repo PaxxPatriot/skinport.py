@@ -1088,22 +1088,22 @@
         },
         "python-engineio": {
             "hashes": [
-                "sha256:35633e55ec30915e7fc8f7e34ca8d73ee0c080cec8a8cd04faf2d7396f0a7a7a",
-                "sha256:7c099abb2a27ea7ab429c04da86ab2d82698cdd6c52406cb73766fe454feb7e1"
+                "sha256:57b94eac094fa07b050c6da59f48b12250ab1cd920765f4849963e3d89ad9de3",
+                "sha256:f9c51a8754d2742ba832c24b46ed425fdd3064356914edd5a1e8ffde76ab7709"
             ],
-            "markers": "python_version >= '3.6'",
-            "version": "==4.12.3"
+            "markers": "python_version >= '3.8'",
+            "version": "==4.13.0"
         },
         "python-socketio": {
             "extras": [
                 "asyncio_client"
             ],
             "hashes": [
-                "sha256:54fe3e5580ea06a1b29b541e8ef32fe956846c99a76059e343e43aada754efdd",
-                "sha256:abc3528803563ed9a2010bc76829afe21d7a308a1e5651171fdb582d12e2ace0"
+                "sha256:d95802961e15c7bd54ecf884c6e7644f81be8460f0a02ee66b473df58088ee8a",
+                "sha256:f79403c7f1ba8b84460aa8fe4c671414c8145b21a501b46b676f3740286356fd"
             ],
             "markers": "python_version >= '3.8'",
-            "version": "==5.15.1"
+            "version": "==5.16.0"
         },
         "requests": {
             "hashes": [
@@ -2375,22 +2375,22 @@
         },
         "python-engineio": {
             "hashes": [
-                "sha256:35633e55ec30915e7fc8f7e34ca8d73ee0c080cec8a8cd04faf2d7396f0a7a7a",
-                "sha256:7c099abb2a27ea7ab429c04da86ab2d82698cdd6c52406cb73766fe454feb7e1"
+                "sha256:57b94eac094fa07b050c6da59f48b12250ab1cd920765f4849963e3d89ad9de3",
+                "sha256:f9c51a8754d2742ba832c24b46ed425fdd3064356914edd5a1e8ffde76ab7709"
             ],
-            "markers": "python_version >= '3.6'",
-            "version": "==4.12.3"
+            "markers": "python_version >= '3.8'",
+            "version": "==4.13.0"
         },
         "python-socketio": {
             "extras": [
                 "asyncio_client"
             ],
             "hashes": [
-                "sha256:54fe3e5580ea06a1b29b541e8ef32fe956846c99a76059e343e43aada754efdd",
-                "sha256:abc3528803563ed9a2010bc76829afe21d7a308a1e5651171fdb582d12e2ace0"
+                "sha256:d95802961e15c7bd54ecf884c6e7644f81be8460f0a02ee66b473df58088ee8a",
+                "sha256:f79403c7f1ba8b84460aa8fe4c671414c8145b21a501b46b676f3740286356fd"
             ],
             "markers": "python_version >= '3.8'",
-            "version": "==5.15.1"
+            "version": "==5.16.0"
         },
         "pytokens": {
             "hashes": [
