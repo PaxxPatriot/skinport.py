@@ -241,6 +241,7 @@ class SaleFeedSale:
         "_assetId",
         "_assetid",
         "_bgColor",
+        "_blue",
         "_canHaveScreenshots",
         "_category",
         "_category_localized",
@@ -252,6 +253,7 @@ class SaleFeedSale:
         "_currency",
         "_customName",
         "_exterior",
+        "_fade",
         "_family",
         "_family_localized",
         "_finish",
@@ -351,6 +353,8 @@ class SaleFeedSale:
         self._souvenir = data.get("souvenir", False)
         self._stattrak = data.get("stattrak", False)
         self._tags = data.get("tags", [])
+        self._fade = data.get("fade")
+        self._blue = data.get("blue")
         self._ownItem = data.get("ownItem", False)
 
     def __repr__(self) -> str:
@@ -641,6 +645,16 @@ class SaleFeedSale:
     def tags(self) -> List[Tag]:
         """List[:class:`Tag`]: Returns a :class:`list` of :class:`Tag`."""
         return [Tag(data=tag) for tag in self._tags]
+
+    @property
+    def fade(self) -> Optional[float]:
+        """Optional[:class:`float`]: Returns the fade value of the item."""
+        return self._fade
+
+    @property
+    def blue(self) -> Optional[float]:
+        """Optional[:class:`float`]: Returns the blue value of the item."""
+        return self._blue
 
     @property
     def own_item(self) -> bool:
