@@ -299,8 +299,8 @@ class SaleFeedSale:
 
     def __init__(self, *, data: Dict[str, Any]) -> None:
         self._id = data.get("id", 0)
-        self._saleId = data.get("saleId", 0)
-        self._shortId = data.get("shortId", "")
+        self._saleId = data.get("saleId")
+        self._shortId = data.get("shortId")
         self._productId = data.get("productId", 0)
         self._assetId = data.get("assetId", 0)
         self._itemId = data.get("itemId", 0)
@@ -405,16 +405,8 @@ class SaleFeedSale:
 
     @property
     def url(self) -> str:
-        """:class:`str`: Returns the listing URL of the item."""
-        match self.app_id:
-            case AppID.tf2:
-                return f"https://skinport.com/tf2/item/{self._url}/{self._saleId}"
-            case AppID.dota2:
-                return f"https://skinport.com/dota2/item/{self._url}/{self._saleId}"
-            case AppID.rust:
-                return f"https://skinport.com/rust/item/{self._url}/{self._saleId}"
-            case _:
-                return f"https://skinport.com/item/{self._url}/{self._saleId}"
+        """:class:`str`: Returns the URL of the item."""
+        return self._url
 
     @property
     def family(self) -> str:
