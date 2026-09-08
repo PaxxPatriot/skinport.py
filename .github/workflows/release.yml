@@ -20,7 +20,7 @@ jobs:
       - uses: actions/checkout@v7
         with:
           ref: ${{ inputs.releaseTag }}
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v7
         with:
           python-version: '3.13'
       - name: Install dependencies
@@ -44,7 +44,7 @@ jobs:
         with:
           name: packages
           path: dist
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v7
         with:
           python-version: '3.13'
       - name: Install dependencies
