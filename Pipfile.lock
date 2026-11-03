@@ -1354,11 +1354,11 @@
                 "asyncio_client"
             ],
             "hashes": [
-                "sha256:b5826fd2f8aa02e11347816349b74ac6b53e8a4f4e4b1cf1388e1aff19b7f3f4",
-                "sha256:c3bbfc4937dcfea7c4d1b182afa94d4a30335d153987e8f2078b344beacf95a0"
+                "sha256:2a3183d7172e5ff772b9c24ef94f1fdf84a09b746925c997b7687ae8017f7247",
+                "sha256:b9a2cc5d4f7155c107d60e6efe6d3f3000197f44b979ac4657641e8a211634fe"
             ],
             "markers": "python_version >= '3.8'",
-            "version": "==5.17.0"
+            "version": "==5.17.1"
         },
         "requests": {
             "hashes": [
